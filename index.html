@@ -139,8 +139,7 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
   position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 3/4; background: var(--surface-2);
 }
 .ghost-stage img { position:absolute; inset:0; width:100%; height:100%; object-fit: cover; }
-.ghost-stage .after { z-index:1; }
-.ghost-stage .before { z-index:2; }
+.ghost-stage .stage-img { will-change: opacity; }
 .ghost-grid {
   position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0.5;
   background-image: linear-gradient(var(--frost) 1px, transparent 1px), linear-gradient(90deg, var(--frost) 1px, transparent 1px);
@@ -216,12 +215,12 @@ section.block { padding: 6rem 0; position: relative; }
   position:absolute; bottom:0; left:0; right:0; font-size:0.6rem; font-weight:600; color:#fff;
   background: linear-gradient(transparent, rgba(0,0,0,0.6)); padding: 0.9rem 0.4rem 0.35rem; text-align:center;
 }
-.filmstrip .frame:first-child { grid-column: span 2; grid-row: span 2; }
 @media (max-width: 820px){
   .journey { grid-template-columns: 1fr; gap: 1.6rem; }
   .journey:nth-child(even) .journey-copy { order: 0; }
-  .filmstrip { grid-template-columns: repeat(3, 1fr); }
-  .filmstrip .frame:first-child { grid-column: span 3; grid-row:auto; }
+  /* Keep all five in one row on mobile too, just smaller */
+  .filmstrip { gap: 0.4rem; }
+  .filmstrip .frame .stamp { font-size: 0.5rem; padding: 0.6rem 0.2rem 0.25rem; }
 }
 
 .feature-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
@@ -367,18 +366,21 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
 
     <div class="ghost-demo reveal">
       <div class="ghost-stage" id="ghostStage">
-        <img class="after" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="Later photo in a skin-tracking record">
-        <img class="before" id="beforeImg" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample1.png?v=1783356542" alt="Earlier photo shown as a ghost overlay" style="opacity:0.55">
+        <img class="stage-img" data-stage="0" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample1.png?v=1783356546" alt="Cactus at month 1" style="opacity:1">
+        <img class="stage-img" data-stage="1" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample2.png?v=1783356546" alt="Cactus at month 4" style="opacity:0">
+        <img class="stage-img" data-stage="2" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample3.png?v=1783356546" alt="Cactus at month 7" style="opacity:0">
+        <img class="stage-img" data-stage="3" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample4.png?v=1783356546" alt="Cactus at month 10" style="opacity:0">
+        <img class="stage-img" data-stage="4" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample5.png?v=1783356546" alt="Cactus at month 12" style="opacity:0">
         <div class="ghost-grid"></div>
-        <div class="ghost-badge"><span class="rec"></span> Ghost overlay · Day 1</div>
+        <div class="ghost-badge"><span class="rec"></span> Ghost overlay · <span id="stageLabel">Month 1</span></div>
       </div>
       <div class="ghost-controls">
         <div class="row">
-          <label for="opacity">Overlay opacity</label>
-          <span class="val" id="opacityVal">55%</span>
+          <label for="growth">Growth timeline</label>
+          <span class="val" id="growthVal">Month 1</span>
         </div>
-        <input type="range" id="opacity" min="0" max="100" value="55" style="--fill:55%" aria-label="Ghost overlay opacity">
-        <p class="ghost-hint">Drag to line up today's shot with your last one — perfect alignment, every time.</p>
+        <input type="range" id="growth" min="0" max="100" value="0" step="1" style="--fill:0%" aria-label="Cactus growth timeline">
+        <p class="ghost-hint">Drag to watch the cactus grow — each frame perfectly aligned by ghost overlay.</p>
       </div>
     </div>
   </div>
@@ -646,15 +648,33 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     });
   }
 
-  // Ghost overlay opacity
-  var op = document.getElementById('opacity');
-  var beforeImg = document.getElementById('beforeImg');
-  var opVal = document.getElementById('opacityVal');
-  if (op && beforeImg) {
-    op.addEventListener('input', function () {
-      beforeImg.style.opacity = op.value / 100;
-      if (opVal) opVal.textContent = op.value + '%';
-      op.style.setProperty('--fill', op.value + '%');
+  // Ghost overlay — 5-stage cactus growth stepper
+  var growth = document.getElementById('growth');
+  var stageImgs = document.querySelectorAll('.stage-img');
+  var growthVal = document.getElementById('growthVal');
+  var stageLabel = document.getElementById('stageLabel');
+  var labels = ['Month 1', 'Month 4', 'Month 7', 'Month 10', 'Month 12'];
+  if (growth && stageImgs.length) {
+    var n = stageImgs.length;               // 5 frames
+    var segs = n - 1;                        // 4 transitions
+    growth.addEventListener('input', function () {
+      var t = growth.value / 100;           // 0..1 across the whole timeline
+      var pos = t * segs;                    // 0..4 continuous position
+      var lower = Math.floor(pos);
+      if (lower >= segs) lower = segs - 1;   // clamp at the end
+      var frac = pos - lower;                // 0..1 within the current segment
+      // Fade every frame: the current one fades out as the next fades in.
+      for (var i = 0; i < n; i++) {
+        var o = 0;
+        if (i === lower) o = 1 - frac;
+        else if (i === lower + 1) o = frac;
+        stageImgs[i].style.opacity = o;
+      }
+      // Snap the badge/label to whichever frame is most visible.
+      var nearest = frac < 0.5 ? lower : lower + 1;
+      if (growthVal) growthVal.textContent = labels[nearest];
+      if (stageLabel) stageLabel.textContent = labels[nearest];
+      growth.style.setProperty('--fill', growth.value + '%');
     });
   }
 

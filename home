@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Witness — Track change over time</title>
+<meta name="description" content="Witness is a premium iOS photo journaling app for tracking meaningful change over time. Perfectly aligned photos with ghost overlay technology, custom metrics, and privacy-first local storage.">
+<meta name="keywords" content="photo journaling app, progress tracking photos, before and after photo app, time-lapse transformation, visual diary, fitness progress photos, skin care tracking, home renovation app, private photo journal">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Witness — Track change over time">
+<meta property="og:description" content="The beautiful, private way to document transformation. Perfectly aligned photos, custom metrics, and your data stays on your device.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Brand */
+  --peach: #ED8C85;
+  --peach-deep: #E0736B;
+  --peach-soft: #F6B4AE;
+
+  /* Light mode */
+  --bg: #FDF5F0;
+  --surface: #FFFFFF;
+  --surface-2: #FBEFE8;
+  --ink: #2A2226;          /* plum-ink headings */
+  --text: #333333;
+  --text-2: #808080;
+  --line: #EADFD7;
+  --glow: rgba(237,140,133,0.22);
+  --shadow: rgba(103, 74, 68, 0.12);
+  --frost: rgba(255,255,255,0.62);
+}
+[data-theme="dark"] {
+  --bg: #1C1C1E;
+  --surface: #2C2C2E;
+  --surface-2: #262628;
+  --ink: #F2F2F2;
+  --text: #E7E4E2;
+  --text-2: #B3B3B3;
+  --line: #3A3A3D;
+  --glow: rgba(237,140,133,0.20);
+  --shadow: rgba(0,0,0,0.45);
+  --frost: rgba(44,44,46,0.55);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+h1,h2,h3,h4 { font-family: 'Fraunces', Georgia, serif; color: var(--ink); font-weight: 400; letter-spacing: -0.01em; line-height: 1.08; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.wrap { width: min(1160px, 92vw); margin: 0 auto; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.6rem; border-radius: 14px; font-weight: 600; font-size: 0.95rem;
+  cursor: pointer; border: none; transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%);
+  color: #fff; box-shadow: 0 8px 24px var(--glow);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 34px var(--glow); }
+.btn-primary:active { transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { border-color: var(--peach); color: var(--peach-deep); }
+:focus-visible { outline: 3px solid var(--peach); outline-offset: 3px; border-radius: 6px; }
+
+.appstore {
+  display: inline-flex; align-items: center; gap: 0.65rem;
+  background: var(--ink); color: var(--bg); padding: 0.75rem 1.35rem; border-radius: 14px;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
+}
+[data-theme="dark"] .appstore { background: #fff; color: #111; }
+.appstore:hover { transform: translateY(-3px); }
+.appstore svg { width: 22px; height: 22px; flex: none; }
+.appstore small { display: block; font-size: 0.62rem; opacity: 0.8; line-height: 1; margin-bottom: 2px; }
+.appstore span { font-weight: 600; font-size: 1.05rem; line-height: 1; }
+
+/* ---------- Nav ---------- */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  background: var(--frost); border-bottom: 1px solid var(--line);
+}
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.brand { display: flex; align-items: center; gap: 0.6rem; font-family: 'Fraunces'; font-size: 1.4rem; color: var(--ink); font-weight: 500; letter-spacing: -0.02em; }
+.brand .aperture { width: 26px; height: 26px; flex: none; }
+.navlinks { display: flex; align-items: center; gap: 2rem; }
+.navlinks a { font-size: 0.9rem; color: var(--text-2); transition: color 0.2s; }
+.navlinks a:hover { color: var(--peach-deep); }
+.nav-actions { display: flex; align-items: center; gap: 0.9rem; }
+.theme-toggle {
+  width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--ink);
+  transition: border-color 0.2s, transform 0.3s;
+}
+.theme-toggle:hover { border-color: var(--peach); transform: rotate(15deg); }
+.theme-toggle svg { width: 20px; height: 20px; }
+@media (max-width: 780px){ .navlinks{ display:none; } }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; padding: 5.5rem 0 4rem; overflow: hidden; }
+.hero::before {
+  content:""; position:absolute; top:-30%; left:50%; transform:translateX(-50%);
+  width: 900px; height: 900px; border-radius: 50%;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 62%);
+  pointer-events:none; z-index:0;
+}
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; align-items: center; }
+.eyebrow {
+  display:inline-flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
+  color: var(--peach-deep); background: var(--surface-2); padding: 0.4rem 0.85rem; border-radius: 999px; margin-bottom: 1.6rem;
+  border: 1px solid var(--line);
+}
+.eyebrow .dot { width:7px; height:7px; border-radius:50%; background: var(--peach); }
+.hero h1 { font-size: clamp(2.6rem, 5.2vw, 4rem); margin-bottom: 1.3rem; }
+.hero h1 em { font-style: italic; color: var(--peach-deep); }
+.hero .lede { font-size: 1.18rem; color: var(--text-2); max-width: 30ch; margin-bottom: 2.2rem; }
+.hero-cta { display:flex; align-items:center; gap: 1rem; flex-wrap: wrap; }
+.hero-note { margin-top: 1.4rem; font-size: 0.85rem; color: var(--text-2); display:flex; align-items:center; gap:0.5rem; }
+.hero-note svg { width:16px; height:16px; color: var(--peach); }
+
+/* ---------- Ghost overlay demo (signature) ---------- */
+.ghost-demo {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 1.1rem;
+  box-shadow: 0 30px 70px var(--shadow); position: relative;
+}
+.ghost-stage {
+  position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 3/4; background: var(--surface-2);
+}
+.ghost-stage img { position:absolute; inset:0; width:100%; height:100%; object-fit: cover; }
+.ghost-stage .after { z-index:1; }
+.ghost-stage .before { z-index:2; }
+.ghost-grid {
+  position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0.5;
+  background-image: linear-gradient(var(--frost) 1px, transparent 1px), linear-gradient(90deg, var(--frost) 1px, transparent 1px);
+  background-size: 33.33% 33.33%;
+  mix-blend-mode: overlay;
+}
+.ghost-badge {
+  position:absolute; top: 0.9rem; left: 0.9rem; z-index: 4;
+  backdrop-filter: blur(10px); background: rgba(20,20,22,0.55); color:#fff;
+  font-size:0.72rem; font-weight:600; letter-spacing:0.04em; padding: 0.35rem 0.7rem; border-radius: 999px;
+  display:flex; align-items:center; gap:0.4rem;
+}
+.ghost-badge .rec { width:7px; height:7px; border-radius:50%; background: var(--peach); animation: pulse 1.8s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.ghost-controls { padding: 1rem 0.6rem 0.4rem; }
+.ghost-controls .row { display:flex; align-items:center; justify-content:space-between; margin-bottom: 0.5rem; }
+.ghost-controls label { font-size:0.82rem; font-weight:600; color: var(--ink); }
+.ghost-controls .val { font-size:0.82rem; color: var(--peach-deep); font-weight:600; font-variant-numeric: tabular-nums; }
+input[type=range] {
+  -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:999px;
+  background: linear-gradient(90deg, var(--peach) var(--fill,50%), var(--line) var(--fill,50%));
+  cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:#fff;
+  border: 3px solid var(--peach); box-shadow: 0 2px 8px var(--glow); cursor:pointer;
+}
+input[type=range]::-moz-range-thumb {
+  width:22px; height:22px; border-radius:50%; background:#fff; border:3px solid var(--peach); box-shadow:0 2px 8px var(--glow); cursor:pointer;
+}
+.ghost-hint { font-size:0.76rem; color: var(--text-2); text-align:center; margin-top:0.5rem; }
+
+@media (max-width: 900px){
+  .hero .wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ghost-demo { max-width: 400px; margin: 0 auto; }
+  .hero .lede { max-width: none; }
+}
+
+/* ---------- Section scaffolding ---------- */
+section.block { padding: 6rem 0; position: relative; }
+.section-head { max-width: 52ch; margin-bottom: 3.5rem; }
+.section-head.center { margin-left:auto; margin-right:auto; text-align:center; }
+.kicker { font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color: var(--peach-deep); margin-bottom: 1rem; }
+.section-head h2 { font-size: clamp(2rem, 3.8vw, 2.9rem); margin-bottom: 1rem; }
+.section-head p { font-size: 1.1rem; color: var(--text-2); }
+
+.reveal { opacity:0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.3,1); }
+.reveal.in { opacity:1; transform:none; }
+
+/* ---------- Journeys (real photos) ---------- */
+.journeys { background: var(--surface-2); }
+.journey { display:grid; grid-template-columns: 0.9fr 1.1fr; gap: 3rem; align-items:center; margin-bottom: 5rem; }
+.journey:last-child { margin-bottom:0; }
+.journey:nth-child(even) .journey-copy { order: 2; }
+.journey-copy .tag { font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color: var(--peach-deep); }
+.journey-copy h3 { font-size: 1.9rem; margin: 0.6rem 0 1rem; }
+.journey-copy p { color: var(--text-2); margin-bottom: 1.4rem; }
+.metric-strip { display:flex; gap: 0.7rem; flex-wrap:wrap; }
+.metric-chip {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.6rem 0.85rem;
+  display:flex; flex-direction:column; min-width: 92px;
+}
+.metric-chip .k { font-size:0.68rem; color: var(--text-2); text-transform:uppercase; letter-spacing:0.05em; }
+.metric-chip .v { font-size:1.05rem; font-weight:600; color: var(--ink); font-variant-numeric:tabular-nums; }
+.metric-chip .v .up { color: var(--peach-deep); font-size:0.8rem; }
+
+/* filmstrip */
+.filmstrip { display:grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem; }
+.filmstrip .frame {
+  aspect-ratio: 3/4; border-radius: 12px; overflow:hidden; background: var(--surface); border:1px solid var(--line);
+  position:relative; box-shadow: 0 8px 20px var(--shadow);
+}
+.filmstrip .frame img { width:100%; height:100%; object-fit:cover; }
+.filmstrip .frame .stamp {
+  position:absolute; bottom:0; left:0; right:0; font-size:0.6rem; font-weight:600; color:#fff;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6)); padding: 0.9rem 0.4rem 0.35rem; text-align:center;
+}
+.filmstrip .frame:first-child { grid-column: span 2; grid-row: span 2; }
+@media (max-width: 820px){
+  .journey { grid-template-columns: 1fr; gap: 1.6rem; }
+  .journey:nth-child(even) .journey-copy { order: 0; }
+  .filmstrip { grid-template-columns: repeat(3, 1fr); }
+  .filmstrip .frame:first-child { grid-column: span 3; grid-row:auto; }
+}
+
+/* ---------- Features ---------- */
+.feature-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.fcard {
+  background: var(--surface); border:1px solid var(--line); border-radius: 20px; padding: 1.9rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+}
+.fcard:hover { transform: translateY(-6px); box-shadow: 0 20px 40px var(--shadow); border-color: var(--peach-soft); }
+.fcard .ico {
+  width: 52px; height: 52px; border-radius: 14px; display:grid; place-items:center; margin-bottom: 1.2rem;
+  background: linear-gradient(135deg, var(--peach-soft), var(--peach)); color:#fff;
+}
+.fcard .ico svg { width:26px; height:26px; }
+.fcard h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
+.fcard p { font-size:0.95rem; color: var(--text-2); }
+.fcard.wide { grid-column: span 2; }
+@media (max-width: 820px){ .feature-grid { grid-template-columns:1fr; } .fcard.wide{ grid-column:auto; } }
+
+/* ---------- Compare slider ---------- */
+.compare-wrap { display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center; }
+.compare {
+  position:relative; aspect-ratio: 3/4; max-width: 360px; margin:0 auto; border-radius:20px; overflow:hidden;
+  box-shadow: 0 24px 50px var(--shadow); border:1px solid var(--line); user-select:none; cursor: ew-resize;
+}
+.compare img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.compare .top { z-index:2; clip-path: inset(0 50% 0 0); }
+.compare .divider {
+  position:absolute; top:0; bottom:0; left:50%; width:3px; background:#fff; z-index:3; transform:translateX(-50%);
+  box-shadow: 0 0 0 1px var(--glow);
+}
+.compare .handle {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4;
+  width:44px; height:44px; border-radius:50%; background:#fff; display:grid; place-items:center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25); color: var(--peach-deep);
+}
+.compare .lbl { position:absolute; bottom:0.8rem; z-index:3; font-size:0.7rem; font-weight:700; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5); letter-spacing:0.06em; }
+.compare .lbl.a { left:0.8rem; } .compare .lbl.b { right:0.8rem; }
+@media (max-width:820px){ .compare-wrap{ grid-template-columns:1fr; gap:2rem; } }
+
+/* ---------- Privacy ---------- */
+.privacy { background: var(--ink); color: var(--bg); border-radius: 32px; padding: 4rem; margin: 2rem 0; position:relative; overflow:hidden; }
+.privacy::after {
+  content:""; position:absolute; right:-120px; bottom:-120px; width:420px; height:420px; border-radius:50%;
+  background: radial-gradient(circle, var(--glow), transparent 65%);
+}
+.privacy h2 { color: var(--bg); font-size: clamp(1.9rem,3.5vw,2.6rem); max-width: 20ch; margin-bottom:1rem; }
+.privacy .kicker { color: var(--peach-soft); }
+.privacy > .inner { position:relative; z-index:1; display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center; }
+.privacy p { color: rgba(255,255,255,0.7); }
+.privacy-list { display:grid; gap:1rem; }
+.privacy-item { display:flex; gap:0.9rem; align-items:flex-start; }
+.privacy-item .check { flex:none; width:26px; height:26px; border-radius:8px; background: rgba(237,140,133,0.2); display:grid; place-items:center; color: var(--peach-soft); }
+.privacy-item .check svg { width:15px; height:15px; }
+.privacy-item strong { color: var(--bg); font-weight:600; display:block; font-size:0.98rem; }
+.privacy-item span { color: rgba(255,255,255,0.6); font-size:0.88rem; }
+@media (max-width:820px){ .privacy{ padding:2.5rem; } .privacy > .inner{ grid-template-columns:1fr; gap:2rem; } }
+
+/* ---------- Themes showcase ---------- */
+.themes-split { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
+.theme-card { border-radius:24px; overflow:hidden; border:1px solid var(--line); box-shadow:0 20px 40px var(--shadow); }
+.theme-card .head { padding:1.4rem 1.6rem; font-weight:600; display:flex; align-items:center; justify-content:space-between; }
+.theme-card.light { background:#FDF5F0; color:#333; }
+.theme-card.dark { background:#1C1C1E; color:#F2F2F2; }
+.theme-card .head .pill { font-size:0.72rem; padding:0.3rem 0.7rem; border-radius:999px; background:#ED8C85; color:#fff; }
+.theme-card .body { padding: 0 1.6rem 1.6rem; }
+.mini-photo { aspect-ratio: 16/10; border-radius:14px; overflow:hidden; margin-bottom:1rem; }
+.mini-photo img { width:100%; height:100%; object-fit:cover; }
+.mini-row { display:flex; gap:0.6rem; }
+.mini-metric { flex:1; border-radius:10px; padding:0.6rem 0.7rem; font-size:0.7rem; }
+.theme-card.light .mini-metric { background:#fff; border:1px solid #EADFD7; }
+.theme-card.dark .mini-metric { background:#2C2C2E; border:1px solid #3A3A3D; }
+.mini-metric b { display:block; font-size:0.95rem; }
+@media (max-width:820px){ .themes-split{ grid-template-columns:1fr; } }
+
+/* ---------- Final CTA ---------- */
+.finalcta { text-align:center; padding: 6rem 0; }
+.finalcta h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); max-width:16ch; margin: 0 auto 1.2rem; }
+.finalcta h2 em { font-style:italic; color:var(--peach-deep); }
+.finalcta p { color:var(--text-2); font-size:1.15rem; margin-bottom:2rem; }
+
+/* ---------- Footer ---------- */
+footer { background: var(--surface-2); border-top:1px solid var(--line); padding: 4rem 0 2rem; }
+.foot-grid { display:grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap:2rem; margin-bottom:3rem; }
+.foot-brand .brand { margin-bottom:1rem; }
+.foot-brand p { color:var(--text-2); font-size:0.9rem; max-width:32ch; }
+.foot-col h4 { font-family:'Inter'; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-2); margin-bottom:1rem; font-weight:600; }
+.foot-col a { display:block; font-size:0.92rem; color:var(--text); margin-bottom:0.6rem; transition:color 0.2s; }
+.foot-col a:hover { color:var(--peach-deep); }
+.foot-bottom { display:flex; align-items:center; justify-content:space-between; padding-top:2rem; border-top:1px solid var(--line); flex-wrap:wrap; gap:1rem; }
+.foot-bottom p { font-size:0.85rem; color:var(--text-2); }
+.foot-made { font-size:0.85rem; color:var(--text-2); display:flex; align-items:center; gap:0.4rem; }
+.foot-made svg { width:15px; height:15px; color:var(--peach); }
+@media (max-width:820px){ .foot-grid{ grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="wrap">
+    <a href="#" class="brand">
+      <svg class="aperture" viewBox="0 0 24 24" fill="none" stroke="var(--peach)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3 8.5 9M21 12l-6.5-.2M15.5 20.5 12 14M3 12l6.5.2M8.5 3.5 12 10M20.5 15.5 14 15"/></svg>
+      Witness
+    </a>
+    <div class="navlinks">
+      <a href="#journeys">Journeys</a>
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#design">Design</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="#download" class="btn btn-primary">Get Witness</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span> iOS · Photo journaling</span>
+      <h1>Witness your <em>transformation</em>, one frame at a time.</h1>
+      <p class="lede">Some changes happen slowly. That's exactly why they're worth capturing.</p>
+      <div class="hero-cta">
+        <a href="#download" class="appstore" aria-label="Download on the App Store">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+          <div><small>Download on the</small><span>App Store</span></div>
+        </a>
+        <a href="#journeys" class="btn btn-ghost">See it in action</a>
+      </div>
+      <div class="hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
+        No account needed. Everything stays on your device.
+      </div>
+    </div>
+
+    <!-- Signature: interactive ghost overlay -->
+    <div class="ghost-demo reveal">
+      <div class="ghost-stage" id="ghostStage">
+        <img class="after" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="Later photo in a skin-tracking record">
+        <img class="before" id="beforeImg" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample1.png?v=1783356542" alt="Earlier photo shown as a ghost overlay" style="opacity:0.55">
+        <div class="ghost-grid" id="ghostGrid"></div>
+        <div class="ghost-badge"><span class="rec"></span> Ghost overlay · Day 1</div>
+      </div>
+      <div class="ghost-controls">
+        <div class="row">
+          <label for="opacity">Overlay opacity</label>
+          <span class="val" id="opacityVal">55%</span>
+        </div>
+        <input type="range" id="opacity" min="0" max="100" value="55" style="--fill:55%" aria-label="Ghost overlay opacity">
+        <p class="ghost-hint">Drag to line up today's shot with your last one — perfect alignment, every time.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== JOURNEYS (real in-app photos) ===== -->
+<section class="block journeys" id="journeys">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="kicker">Real records, captured in Witness</div>
+      <h2>If it changes, you can witness it.</h2>
+      <p>Every photo below was taken in the app and aligned with ghost overlay. Same frame, set intervals — for as long as the change takes.</p>
+    </div>
+
+    <!-- Skin -->
+    <div class="journey reveal">
+      <div class="journey-copy">
+        <span class="tag">Skin · 84 days</span>
+        <h3>Watch skin clarity turn a corner.</h3>
+        <p>Track a breakout back to calm with a consistent, well-lit frame — then log clarity, mood, and what you changed alongside each shot so you can see what actually worked.</p>
+        <div class="metric-strip">
+          <div class="metric-chip"><span class="k">Clarity</span><span class="v">4.6 <span class="up">▲ 2.8</span></span></div>
+          <div class="metric-chip"><span class="k">Mood</span><span class="v">😊 4/5</span></div>
+          <div class="metric-chip"><span class="k">Routine</span><span class="v">Retinoid</span></div>
+        </div>
+      </div>
+      <div class="filmstrip">
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample1.png?v=1783356542" alt="Skin tracking, day 1"><span class="stamp">Day 1</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample2.png?v=1783356542" alt="Skin tracking, day 21"><span class="stamp">Day 21</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample3.png?v=1783356542" alt="Skin tracking, day 42"><span class="stamp">Day 42</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample4.png?v=1783356542" alt="Skin tracking, day 63"><span class="stamp">Day 63</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="Skin tracking, day 84"><span class="stamp">Day 84</span></div>
+      </div>
+    </div>
+
+    <!-- Cactus -->
+    <div class="journey reveal">
+      <div class="journey-copy">
+        <span class="tag">Plant · 1 year</span>
+        <h3>A cactus grows too slowly to notice — until now.</h3>
+        <p>Snap the same frame once a month and the year compresses into a few seconds. Log height and waterings so growth spurts line up with what you did.</p>
+        <div class="metric-strip">
+          <div class="metric-chip"><span class="k">Height</span><span class="v">18 cm <span class="up">▲ 11</span></span></div>
+          <div class="metric-chip"><span class="k">Waterings</span><span class="v">14</span></div>
+          <div class="metric-chip"><span class="k">Interval</span><span class="v">Monthly</span></div>
+        </div>
+      </div>
+      <div class="filmstrip">
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample1.png?v=1783356546" alt="Cactus, month 1"><span class="stamp">Month 1</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample2.png?v=1783356546" alt="Cactus, month 4"><span class="stamp">Month 4</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample3.png?v=1783356546" alt="Cactus, month 7"><span class="stamp">Month 7</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample4.png?v=1783356546" alt="Cactus, month 10"><span class="stamp">Month 10</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample5.png?v=1783356546" alt="Cactus, month 12"><span class="stamp">Month 12</span></div>
+      </div>
+    </div>
+
+    <!-- Kitchen -->
+    <div class="journey reveal">
+      <div class="journey-copy">
+        <span class="tag">Renovation · 6 weeks</span>
+        <h3>From demo day to the finished kitchen.</h3>
+        <p>Document a renovation from the same corner and keep budget, contractor notes, and satisfaction next to every stage — so the before/after tells the whole story, cost included.</p>
+        <div class="metric-strip">
+          <div class="metric-chip"><span class="k">Spent</span><span class="v">£11.4k</span></div>
+          <div class="metric-chip"><span class="k">Satisfaction</span><span class="v">⭐ 5/5</span></div>
+          <div class="metric-chip"><span class="k">Stage</span><span class="v">Complete</span></div>
+        </div>
+      </div>
+      <div class="filmstrip">
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample1.png?v=1783356551" alt="Kitchen renovation, week 1"><span class="stamp">Week 1</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample2.png?v=1783356551" alt="Kitchen renovation, week 2"><span class="stamp">Week 2</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample3.png?v=1783356551" alt="Kitchen renovation, week 4"><span class="stamp">Week 4</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample4.png?v=1783356550" alt="Kitchen renovation, week 5"><span class="stamp">Week 5</span></div>
+        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample5.png?v=1783356551" alt="Kitchen renovation, week 6"><span class="stamp">Week 6</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="block" id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">Built for the long game</div>
+      <h2>Everything you need to document change honestly.</h2>
+      <p>The photo is only half the story. Witness keeps the numbers, the feelings, and the context right beside it.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="fcard wide reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>
+        <h3>Ghost overlay technology</h3>
+        <p>Line up your shot with a semi-transparent overlay of your last photo — opacity from 0–100%, with an optional grid for composition. No more guessing, no more crooked comparisons. It's what makes every before/after land.</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m19 9-5 5-3-3-4 4"/></svg></div>
+        <h3>Custom metrics</h3>
+        <p>Weight, cost, size, mood, sleep — 30+ presets or your own. Photos tell part of the story; metrics capture how you felt and what it took.</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="6 4 20 12 6 20 6 4"/></svg></div>
+        <h3>Time-lapse playback</h3>
+        <p>Your sequence becomes a video automatically. Adjust speed from 0.5× to 4×, then export and share the whole journey.</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2"/></svg></div>
+        <h3>Notes on every photo</h3>
+        <p>Leave a note beside any frame — what you changed, what it cost, what threw the numbers off. Context you'll be grateful for later.</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>Smart reminders</h3>
+        <p>Daily, weekly, or custom intervals with morning, afternoon, or evening preferences. Consistency, without the nagging.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPARE (drag) ===== -->
+<section class="block" style="background:var(--surface-2);">
+  <div class="wrap compare-wrap">
+    <div class="reveal">
+      <div class="kicker">Before &amp; after</div>
+      <h2 style="font-size:clamp(2rem,3.8vw,2.9rem);margin-bottom:1rem;">Drag to see how far it's come.</h2>
+      <p style="color:var(--text-2);font-size:1.1rem;">Because every frame is aligned, the comparison slider tells the truth — the frame stays put while the change moves. This is the same skin record from the top of the page, start to finish.</p>
+    </div>
+    <div class="compare" id="compare" role="slider" aria-label="Drag to compare before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+      <img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="After — skin at day 84">
+      <img class="top" id="compareTop" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample1.png?v=1783356542" alt="Before — skin at day 1">
+      <div class="lbl a">BEFORE</div>
+      <div class="lbl b">AFTER</div>
+      <div class="divider" id="compareDiv"></div>
+      <div class="handle" id="compareHandle"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRIVACY ===== -->
+<section class="block" id="privacy">
+  <div class="wrap">
+    <div class="privacy reveal">
+      <div class="inner">
+        <div>
+          <div class="kicker">Privacy-first, by design</div>
+          <h2>Your transformation is personal. It stays that way.</h2>
+          <p>Everything lives on your device, protected by Face ID. No account, no cloud sync required, no third-party sharing.</p>
+        </div>
+        <div class="privacy-list">
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Face ID / Touch ID lock</strong><span>Auto-lock from immediate to 5 minutes.</span></div></div>
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Local photo storage</strong><span>No cloud required. Optional Camera Roll backup.</span></div></div>
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>No account needed</strong><span>Open the app and start. Nothing to sign up for.</span></div></div>
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Never shared</strong><span>Your data is yours. We don't sell or sync it.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THEMES ===== -->
+<section class="block" id="design">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="kicker">Light or dark, your choice</div>
+      <h2>A luxury feel in every mode.</h2>
+      <p>Warm cream by day, rich charcoal by night — with the same peach accent and the same care throughout.</p>
+    </div>
+    <div class="themes-split reveal">
+      <div class="theme-card light">
+        <div class="head">Light <span class="pill">Warm cream</span></div>
+        <div class="body">
+          <div class="mini-photo"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample3.png?v=1783356546" alt="Witness in light mode"></div>
+          <div class="mini-row">
+            <div class="mini-metric" style="color:#808080">Height<b style="color:#333">18 cm</b></div>
+            <div class="mini-metric" style="color:#808080">Mood<b style="color:#333">😊 5/5</b></div>
+            <div class="mini-metric" style="color:#808080">Day<b style="color:#ED8C85">210</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="theme-card dark">
+        <div class="head">Dark <span class="pill">Rich charcoal</span></div>
+        <div class="body">
+          <div class="mini-photo"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample5.png?v=1783356551" alt="Witness in dark mode"></div>
+          <div class="mini-row">
+            <div class="mini-metric" style="color:#B3B3B3">Spent<b style="color:#F2F2F2">£11.4k</b></div>
+            <div class="mini-metric" style="color:#B3B3B3">Rating<b style="color:#F2F2F2">⭐ 5/5</b></div>
+            <div class="mini-metric" style="color:#B3B3B3">Week<b style="color:#ED8C85">6</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="finalcta" id="download">
+  <div class="wrap reveal">
+    <h2>Start the record you'll be glad you <em>kept</em>.</h2>
+    <p>Free to download. Everything stays on your iPhone.</p>
+    <a href="#" class="appstore" style="margin:0 auto;" aria-label="Download Witness on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="brand">
+          <svg class="aperture" viewBox="0 0 24 24" fill="none" stroke="var(--peach)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3 8.5 9M21 12l-6.5-.2M15.5 20.5 12 14M3 12l6.5.2M8.5 3.5 12 10M20.5 15.5 14 15"/></svg>
+          Witness
+        </a>
+        <p>The beautiful, private way to track change over time. Made for iPhone.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#journeys">Use cases</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#download">Download</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="#" data-placeholder>Privacy Policy</a>
+        <a href="#" data-placeholder>Terms of Service</a>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <a href="mailto:support@example.com" data-placeholder>support@example.com</a>
+        <a href="#" data-placeholder>Instagram</a>
+        <a href="#" data-placeholder>X / Twitter</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 Witness. All rights reserved.</p>
+      <span class="foot-made"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5c2 0 3.2 1.3 3.7 2.2.5-.9 1.7-2.2 3.7-2.2C16.5 5.5 18 9 16 12.5 13.5 16.5 12 21 12 21z"/></svg> Made with care in the UK</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- Theme toggle ----
+const root = document.documentElement;
+const tBtn = document.getElementById('themeToggle');
+const tIcon = document.getElementById('themeIcon');
+const sunPath = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+const moonPath = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+tBtn.addEventListener('click', () => {
+  const dark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', dark ? 'light' : 'dark');
+  tIcon.innerHTML = dark ? sunPath : moonPath;
+});
+
+// ---- Ghost overlay opacity ----
+const op = document.getElementById('opacity');
+const beforeImg = document.getElementById('beforeImg');
+const opVal = document.getElementById('opacityVal');
+op.addEventListener('input', () => {
+  beforeImg.style.opacity = op.value / 100;
+  opVal.textContent = op.value + '%';
+  op.style.setProperty('--fill', op.value + '%');
+});
+
+// ---- Compare slider ----
+const cmp = document.getElementById('compare');
+const top = document.getElementById('compareTop');
+const div = document.getElementById('compareDiv');
+const handle = document.getElementById('compareHandle');
+let dragging = false;
+function setCompare(pct){
+  pct = Math.max(0, Math.min(100, pct));
+  top.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+  div.style.left = pct + '%';
+  handle.style.left = pct + '%';
+  cmp.setAttribute('aria-valuenow', Math.round(pct));
+}
+function moveFromEvent(e){
+  const rect = cmp.getBoundingClientRect();
+  const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+  setCompare((x / rect.width) * 100);
+}
+cmp.addEventListener('mousedown', e => { dragging = true; moveFromEvent(e); });
+window.addEventListener('mousemove', e => { if(dragging) moveFromEvent(e); });
+window.addEventListener('mouseup', () => dragging = false);
+cmp.addEventListener('touchstart', e => { dragging = true; moveFromEvent(e); }, {passive:true});
+cmp.addEventListener('touchmove', e => { if(dragging) moveFromEvent(e); }, {passive:true});
+cmp.addEventListener('touchend', () => dragging = false);
+cmp.addEventListener('keydown', e => {
+  const now = parseInt(cmp.getAttribute('aria-valuenow'));
+  if(e.key === 'ArrowLeft') setCompare(now - 4);
+  if(e.key === 'ArrowRight') setCompare(now + 4);
+});
+setCompare(50);
+
+// ---- Scroll reveal ----
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -98,6 +98,7 @@ nav {
 nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
 .brand { display: flex; align-items: center; gap: 0.6rem; font-family: 'Newsreader'; font-size: 1.4rem; color: var(--ink); font-weight: 500; letter-spacing: -0.02em; }
 .brand .aperture { width: 26px; height: 26px; flex: none; }
+.brand .brand-logo { width: 30px; height: 30px; flex: none; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 8px var(--shadow); }
 .navlinks { display: flex; align-items: center; gap: 2rem; }
 .navlinks a { font-size: 0.9rem; color: var(--text-2); transition: color 0.2s; }
 .navlinks a:hover { color: var(--peach-deep); }
@@ -119,6 +120,7 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
   pointer-events:none; z-index:0;
 }
 .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; align-items: center; }
+.hero-appicon { width: 72px; height: 72px; border-radius: 17px; box-shadow: 0 12px 30px var(--glow); margin-bottom: 1.4rem; object-fit: contain; display: block; flex: none; }
 .eyebrow {
   display:inline-flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
   color: var(--peach-deep); background: var(--surface-2); padding: 0.4rem 0.85rem; border-radius: 999px; margin-bottom: 1.6rem;
@@ -483,7 +485,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
 <nav>
   <div class="wrap">
     <a href="#" class="brand">
-      <svg class="aperture" viewBox="0 0 24 24" fill="none" stroke="var(--peach)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3 8.5 9M21 12l-6.5-.2M15.5 20.5 12 14M3 12l6.5.2M8.5 3.5 12 10M20.5 15.5 14 15"/></svg>
+      <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="Witness logo" width="30" height="30">
       Witness
     </a>
     <div class="navlinks">
@@ -505,6 +507,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
 <header class="hero">
   <div class="wrap">
     <div class="hero-copy">
+      <img class="hero-appicon" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/icon1light.png?v=1783427870" alt="Witness app icon" width="72" height="72">
       <span class="eyebrow"><span class="dot"></span> iOS · Photo journaling</span>
       <h1>Witness: the iOS app for <em>photographing change</em>.</h1>
       <p class="lede">Track anything that transforms over time, one perfectly aligned photo at a time. Some changes happen slowly; that's exactly why they're worth capturing.</p>
@@ -546,9 +549,9 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
 <section class="block journeys" id="journeys">
   <div class="wrap">
     <div class="section-head center reveal">
-      <div class="kicker">Real records, captured in Witness</div>
+      <div class="kicker">A few of the journeys worth keeping</div>
       <h2>If it changes,<br class="brk">you can witness it.</h2>
-      <p>Witness can document <em>anything</em> that changes visually. Every photo below was taken in the app and aligned with ghost overlay, at set intervals, for as long as the change takes. A few cool ideas: a scar healing, a city skyline being built, a bonsai you're shaping, your hair growing out, a leather bag wearing in.</p>
+      <p>Witness can document <em>anything</em> that changes visually. With ghost overlay keeping every shot aligned, at whatever interval suits you, for as long as the change takes, here's the kind of transformation you could capture. A few more ideas: a scar healing, a city skyline being built, a bonsai you're shaping, your hair growing out, a leather bag wearing in.</p>
     </div>
 
     <div class="journey reveal">
@@ -818,7 +821,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
           <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Face ID / Touch ID lock</strong><span>Auto-lock from immediate to 5 minutes.</span></div></div>
           <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Local photo storage</strong><span>No cloud required. Optional Camera Roll backup.</span></div></div>
           <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>No account needed</strong><span>Open the app and start. Nothing to sign up for.</span></div></div>
-          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Never shared</strong><span>Your data is yours. We don't sell or sync it.</span></div></div>
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Private, lockable records</strong><span>Hide individual records behind Face ID, so previews never show on the home screen.</span></div></div>
         </div>
       </div>
     </div>
@@ -887,7 +890,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     <div class="foot-grid">
       <div class="foot-brand">
         <a href="#" class="brand">
-          <svg class="aperture" viewBox="0 0 24 24" fill="none" stroke="var(--peach)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3 8.5 9M21 12l-6.5-.2M15.5 20.5 12 14M3 12l6.5.2M8.5 3.5 12 10M20.5 15.5 14 15"/></svg>
+          <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="Witness logo" width="30" height="30">
           Witness
         </a>
         <p>The beautiful, private way to track change over time. Made for iPhone.</p>
@@ -906,7 +909,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       </div>
       <div class="foot-col">
         <h4>Support</h4>
-        <a href="mailto:support@example.com">support@example.com</a>
+        <a href="mailto:Hello@DriveVault.io">Hello@DriveVault.io</a>
         <a href="#">Instagram</a>
         <a href="#">X / Twitter</a>
       </div>

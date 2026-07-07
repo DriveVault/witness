@@ -183,8 +183,12 @@ section.block { padding: 6rem 0; position: relative; }
 .section-head { max-width: 52ch; margin-bottom: 3.5rem; }
 .section-head.center { margin-left:auto; margin-right:auto; text-align:center; }
 .kicker { font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color: var(--peach-deep); margin-bottom: 1rem; }
-.section-head h2 { font-size: clamp(2rem, 3.8vw, 2.9rem); margin-bottom: 1rem; }
-.section-head p { font-size: 1.1rem; color: var(--text-2); }
+.section-head h2 { font-size: clamp(2rem, 3.8vw, 2.9rem); margin-bottom: 1rem; text-wrap: balance; }
+.section-head p { font-size: 1.1rem; color: var(--text-2); text-wrap: pretty; }
+.section-head.center p { max-width: 56ch; margin-left:auto; margin-right:auto; }
+/* Deliberate line break in headings; disable balance when a manual break is used */
+.brk { display: none; }
+@media (min-width: 560px){ .brk { display: inline; } h2:has(.brk){ text-wrap: initial; } }
 
 /* Progressive enhancement: only hide for animation once JS confirms it can reveal them */
 .js-anim .reveal { opacity:0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.3,1); }
@@ -224,9 +228,18 @@ section.block { padding: 6rem 0; position: relative; }
   .journey-copy { grid-template-columns: 1fr; gap:1rem; }
   .metric-strip { grid-column:1; }
   .journey-copy h3 { font-size: 1.6rem; }
-  /* Keep all five in one row on mobile too, just smaller */
-  .filmstrip { gap: 0.4rem; }
-  .filmstrip .frame .stamp { font-size: 0.5rem; padding: 0.6rem 0.2rem 0.25rem; }
+  /* Mobile: swipeable horizontal filmstrip so each photo stays large */
+  .filmstrip {
+    display: flex; gap: 0.75rem; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem; margin: 0 -6vw; padding-left: 6vw; padding-right: 6vw;
+    scrollbar-width: none;
+  }
+  .filmstrip::-webkit-scrollbar { display: none; }
+  .filmstrip .frame {
+    flex: 0 0 62%; scroll-snap-align: center; aspect-ratio: 4/5;
+  }
+  .filmstrip .frame:hover { transform: none; }
+  .filmstrip .frame .stamp { font-size: 0.8rem; padding: 1.2rem 0.6rem 0.6rem; }
 }
 
 /* ---------- Metrics graph ---------- */
@@ -349,21 +362,29 @@ section.block { padding: 6rem 0; position: relative; }
 .compare .lbl.a { left:0.8rem; } .compare .lbl.b { right:0.8rem; }
 @media (max-width:820px){ .compare-wrap{ grid-template-columns:1fr; gap:2rem; } }
 
-.privacy { background: var(--ink); color: var(--bg); border-radius: 32px; padding: 4rem; margin: 2rem 0; position:relative; overflow:hidden; }
+.privacy {
+  background: #241A1C; color: #F5EDEA; border-radius: 32px; padding: 4rem; margin: 2rem 0;
+  position:relative; overflow:hidden; border: 1px solid rgba(237,140,133,0.18);
+}
+[data-theme="dark"] .privacy {
+  /* Elevated surface with a peach edge so it reads as a distinct card, not a flip */
+  background: linear-gradient(160deg, #2E2224 0%, #241D1F 100%);
+  border-color: rgba(237,140,133,0.28);
+}
 .privacy::after {
   content:""; position:absolute; right:-120px; bottom:-120px; width:420px; height:420px; border-radius:50%;
   background: radial-gradient(circle, var(--glow), transparent 65%);
 }
-.privacy h2 { color: var(--bg); font-size: clamp(1.9rem,3.5vw,2.6rem); max-width: 20ch; margin-bottom:1rem; }
+.privacy h2 { color: #FFFFFF; font-size: clamp(1.9rem,3.5vw,2.6rem); max-width: 20ch; margin-bottom:1rem; }
 .privacy .kicker { color: var(--peach-soft); }
 .privacy > .inner { position:relative; z-index:1; display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center; }
-.privacy p { color: rgba(255,255,255,0.7); }
+.privacy p { color: rgba(245,237,234,0.72); }
 .privacy-list { display:grid; gap:1rem; }
 .privacy-item { display:flex; gap:0.9rem; align-items:flex-start; }
-.privacy-item .check { flex:none; width:26px; height:26px; border-radius:8px; background: rgba(237,140,133,0.2); display:grid; place-items:center; color: var(--peach-soft); }
+.privacy-item .check { flex:none; width:26px; height:26px; border-radius:8px; background: rgba(237,140,133,0.22); display:grid; place-items:center; color: var(--peach-soft); }
 .privacy-item .check svg { width:15px; height:15px; }
-.privacy-item strong { color: var(--bg); font-weight:600; display:block; font-size:0.98rem; }
-.privacy-item span { color: rgba(255,255,255,0.6); font-size:0.88rem; }
+.privacy-item strong { color: #FFFFFF; font-weight:600; display:block; font-size:0.98rem; }
+.privacy-item span { color: rgba(245,237,234,0.6); font-size:0.88rem; }
 @media (max-width:820px){ .privacy{ padding:2.5rem; } .privacy > .inner{ grid-template-columns:1fr; gap:2rem; } }
 
 .themes-split { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
@@ -398,7 +419,63 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
 .foot-bottom p { font-size:0.85rem; color:var(--text-2); }
 .foot-made { font-size:0.85rem; color:var(--text-2); display:flex; align-items:center; gap:0.4rem; }
 .foot-made svg { width:15px; height:15px; color:var(--peach); }
+
+/* Mid-page download band */
+.cta-band { text-align:center; padding: 1rem 0 0; }
+.cta-band .appstore { margin: 0 auto; }
+.cta-band .cta-band-note { margin-top: 0.9rem; font-size: 0.85rem; color: var(--text-2); }
 @media (max-width:820px){ .foot-grid{ grid-template-columns:1fr 1fr; } }
+
+/* ===== Consolidated mobile optimisation ===== */
+@media (max-width: 640px){
+  .wrap { width: 88vw; }
+  section.block { padding: 3.75rem 0; }
+  .section-head { margin-bottom: 2.25rem; }
+  .section-head.center p { max-width: 100%; }
+
+  /* Hero */
+  .hero { padding: 3rem 0 2.5rem; }
+  .hero h1 { font-size: clamp(2.1rem, 8.5vw, 2.6rem); }
+  .hero .lede { font-size: 1.05rem; }
+  .hero-cta { gap: 0.75rem; }
+  .hero-cta .appstore, .hero-cta .btn { width: 100%; justify-content: center; }
+  .ghost-demo { max-width: 100%; }
+
+  /* Nav: tighten, keep brand + toggle + CTA */
+  nav .wrap { height: 60px; }
+  .brand { font-size: 1.25rem; }
+  .nav-actions .btn-primary { padding: 0.7rem 1.1rem; font-size: 0.9rem; }
+
+  /* Metrics graph: allow horizontal breathing room, stack legend under title */
+  .metric-card { padding: 1.25rem 1rem 1rem; border-radius: 20px; }
+  .metric-head { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .metric-legend { gap: 1rem; }
+  .metric-svg { min-width: 0; }
+  .metric-foot { font-size: 0.88rem; }
+  .metric-tags { gap: 0.5rem; margin-top: 1.5rem; }
+  .mtag { font-size: 0.8rem; padding: 0.45rem 0.85rem; }
+
+  /* Features / privacy / themes already stack via existing 820px rules; tighten spacing */
+  .fcard { padding: 1.5rem; }
+  .privacy { padding: 2rem 1.5rem; border-radius: 24px; }
+  .privacy h2 { font-size: 1.7rem; }
+  .compare { max-width: 100%; }
+
+  /* Section-wide download band full width */
+  .cta-band .appstore { width: 100%; justify-content: center; }
+  .finalcta { padding: 4rem 0; }
+  .finalcta h2 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+
+  /* Footer: single column reads better than cramped 2-col */
+  .foot-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; }
+  .foot-brand { grid-column: 1 / -1; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+}
+
+@media (max-width: 400px){
+  .filmstrip .frame { flex-basis: 72%; }
+  .metric-legend { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
@@ -470,7 +547,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
   <div class="wrap">
     <div class="section-head center reveal">
       <div class="kicker">Real records, captured in Witness</div>
-      <h2>If it changes, you can witness it.</h2>
+      <h2>If it changes,<br class="brk">you can witness it.</h2>
       <p>Witness can document <em>anything</em> that changes visually. Every photo below was taken in the app and aligned with ghost overlay, at set intervals, for as long as the change takes. A few cool ideas: a scar healing, a city skyline being built, a bonsai you're shaping, your hair growing out, a leather bag wearing in.</p>
     </div>
 
@@ -595,6 +672,15 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       <span class="mtag">Satisfaction</span>
       <span class="mtag mtag-custom">+ your own metric</span>
     </div>
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <a href="#" class="appstore" aria-label="Download Witness on the App Store">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+        <div><small>Download on the</small><span>App Store</span></div>
+      </a>
+      <p class="cta-band-note">Start tracking any metric, free on the App Store.</p>
+    </div>
+  </div>
   </div>
 </section>
 
@@ -735,6 +821,18 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
           <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Never shared</strong><span>Your data is yours. We don't sell or sync it.</span></div></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0;">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <a href="#" class="appstore" aria-label="Download Witness on the App Store">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+        <div><small>Download on the</small><span>App Store</span></div>
+      </a>
+      <p class="cta-band-note">No account. No cloud. Just your iPhone.</p>
     </div>
   </div>
 </section>

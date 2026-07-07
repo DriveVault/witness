@@ -1,1 +1,314 @@
 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Witness</title>
+<meta name="description" content="Witness Terms of Service. The terms governing your use of the Witness photo journaling app by Full Access Media Ltd.">
+<meta name="robots" content="index, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --peach: #ED8C85;
+  --peach-deep: #E0736B;
+  --peach-soft: #F6B4AE;
+  --bg: #FDF5F0;
+  --surface: #FFFFFF;
+  --surface-2: #FBEFE8;
+  --ink: #2A2226;
+  --text: #333333;
+  --text-2: #808080;
+  --line: #EADFD7;
+  --glow: rgba(237,140,133,0.22);
+  --shadow: rgba(103, 74, 68, 0.12);
+  --frost: rgba(255,255,255,0.62);
+}
+[data-theme="dark"] {
+  --bg: #1C1C1E;
+  --surface: #2C2C2E;
+  --surface-2: #262628;
+  --ink: #F2F2F2;
+  --text: #E7E4E2;
+  --text-2: #B3B3B3;
+  --line: #3A3A3D;
+  --glow: rgba(237,140,133,0.20);
+  --shadow: rgba(0,0,0,0.45);
+  --frost: rgba(44,44,46,0.55);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+h1,h2,h3 { font-family: 'Newsreader', Georgia, serif; color: var(--ink); font-weight: 400; letter-spacing: -0.01em; line-height: 1.15; }
+a { color: var(--peach-deep); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { width: min(760px, 90vw); margin: 0 auto; }
+:focus-visible { outline: 3px solid var(--peach); outline-offset: 3px; border-radius: 6px; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  background: var(--frost); border-bottom: 1px solid var(--line);
+}
+nav .navwrap { width: min(1160px, 92vw); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.brand { display: flex; align-items: center; gap: 0.6rem; font-family: 'Newsreader'; font-size: 1.4rem; color: var(--ink); font-weight: 500; letter-spacing: -0.02em; }
+.brand .aperture { width: 26px; height: 26px; flex: none; }
+.brand .brand-logo { width: 30px; height: 30px; flex: none; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 8px var(--shadow); }
+.nav-actions { display: flex; align-items: center; gap: 0.9rem; }
+.theme-toggle {
+  width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--ink);
+  transition: border-color 0.2s, transform 0.3s;
+}
+.theme-toggle:hover { border-color: var(--peach); transform: rotate(15deg); }
+.theme-toggle svg { width: 20px; height: 20px; }
+.back-link { font-size: 0.9rem; color: var(--text-2); }
+.back-link:hover { color: var(--peach-deep); text-decoration: none; }
+
+.legal-hero { padding: 4rem 0 2.5rem; }
+.legal-hero .eyebrow { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color: var(--peach-deep); margin-bottom: 1.2rem; }
+.legal-hero h1 { font-size: clamp(2.2rem, 5vw, 3rem); margin-bottom: 0.8rem; }
+.legal-hero .updated { font-size: 0.9rem; color: var(--text-2); }
+
+.legal-body { padding-bottom: 5rem; }
+.legal-body .intro { font-size: 1.1rem; color: var(--text); margin-bottom: 2.5rem; }
+.legal-body h2 {
+  font-size: 1.5rem; margin: 2.5rem 0 0.9rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+}
+.legal-body h2:first-of-type { border-top: none; padding-top: 0; }
+.legal-body h3 { font-size: 1.15rem; font-family: 'Inter'; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.5rem; }
+.legal-body p { color: var(--text-2); margin-bottom: 1rem; }
+.legal-body strong { color: var(--ink); font-weight: 600; }
+.legal-body ul { list-style: none; margin: 0 0 1.3rem; padding: 0; }
+.legal-body li { color: var(--text-2); padding-left: 1.6rem; position: relative; margin-bottom: 0.6rem; }
+.legal-body li::before {
+  content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 7px; border-radius: 2px;
+  background: var(--peach); transform: rotate(45deg);
+}
+
+.callout {
+  background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--peach);
+  border-radius: 14px; padding: 1.3rem 1.5rem; margin: 1.5rem 0 2rem;
+}
+.callout p { color: var(--text); margin: 0; }
+
+.toc { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem 1.75rem; margin-bottom: 3rem; }
+.toc h2 { font-family:'Inter'; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-2); border: none; padding: 0; margin: 0 0 1rem; font-weight: 600; }
+.toc ol { list-style: none; counter-reset: toc; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.toc li { counter-increment: toc; padding-left: 2rem; position: relative; }
+.toc li::before { content: counter(toc); position: absolute; left: 0; top: 0; color: var(--peach-deep); font-weight: 600; font-variant-numeric: tabular-nums; background: none; width: auto; height: auto; transform: none; border-radius: 0; }
+.toc a { color: var(--text); }
+.toc a:hover { color: var(--peach-deep); text-decoration: none; }
+
+footer { background: var(--surface-2); border-top:1px solid var(--line); padding: 3rem 0 2rem; }
+.footwrap { width: min(1160px, 92vw); margin: 0 auto; }
+.foot-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2rem; }
+.foot-links { display:flex; gap:1.5rem; flex-wrap:wrap; }
+.foot-links a { font-size:0.9rem; color:var(--text); }
+.foot-links a:hover { color:var(--peach-deep); text-decoration:none; }
+.foot-bottom { padding-top:1.5rem; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.foot-bottom p { font-size:0.85rem; color:var(--text-2); }
+.foot-made { font-size:0.85rem; color:var(--text-2); display:flex; align-items:center; gap:0.4rem; }
+.foot-made svg { width:15px; height:15px; color:var(--peach); }
+
+@media (max-width: 600px){
+  .legal-hero { padding: 2.5rem 0 2rem; }
+  .legal-body h2 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navwrap">
+    <a href="index.html" class="brand">
+      <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="Witness logo" width="30" height="30">
+      Witness
+    </a>
+    <div class="nav-actions">
+      <a href="index.html" class="back-link">← Back to site</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="legal-hero">
+  <div class="wrap">
+    <span class="eyebrow">Legal</span>
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: 7 July 2026</p>
+  </div>
+</header>
+
+<main class="legal-body">
+  <div class="wrap">
+
+    <p class="intro">These terms are an agreement between you and Full Access Media Ltd about your use of the Witness app. We've kept them as clear as we can. By downloading or using Witness, you agree to what follows.</p>
+
+    <div class="callout">
+      <p><strong>In short:</strong> Witness is yours to use for documenting your own journeys. You own every photo and record you create. Use the app lawfully and responsibly, and understand that it's provided as-is, with subscriptions billed through Apple.</p>
+    </div>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#acceptance">Acceptance of these terms</a></li>
+        <li><a href="#eligibility">Who can use Witness</a></li>
+        <li><a href="#licence">Your licence to use the app</a></li>
+        <li><a href="#content">Your content and ownership</a></li>
+        <li><a href="#responsibilities">Your responsibilities</a></li>
+        <li><a href="#acceptable">Acceptable use</a></li>
+        <li><a href="#subscriptions">Subscriptions and payments</a></li>
+        <li><a href="#appstore">App Store terms</a></li>
+        <li><a href="#ip">Our intellectual property</a></li>
+        <li><a href="#warranty">Disclaimer of warranties</a></li>
+        <li><a href="#liability">Limitation of liability</a></li>
+        <li><a href="#termination">Termination</a></li>
+        <li><a href="#changes">Changes to these terms</a></li>
+        <li><a href="#law">Governing law</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="acceptance">1. Acceptance of these terms</h2>
+    <p>By downloading, installing, or using Witness (the "app"), you confirm that you have read, understood, and agree to be bound by these Terms of Service (the "Terms") and our <a href="privacy.html">Privacy Policy</a>. If you do not agree, please do not use the app.</p>
+
+    <h2 id="eligibility">2. Who can use Witness</h2>
+    <p>You must be at least 13 years old to use Witness. If you are under the age of 18, you should review these Terms with a parent or guardian to make sure you both understand them. By using the app, you confirm that you meet these requirements and that any information you provide is accurate.</p>
+
+    <h2 id="licence">3. Your licence to use the app</h2>
+    <p>Subject to these Terms, Full Access Media Ltd grants you a personal, limited, non-exclusive, non-transferable, revocable licence to download and use one copy of Witness on Apple devices that you own or control, for your own personal, non-commercial use.</p>
+    <p>This licence does not allow you to resell, redistribute, sublicense, or make the app available to others.</p>
+
+    <h2 id="content">4. Your content and ownership</h2>
+    <p><strong>You own everything you create in Witness.</strong> The photos you take, the records you build, the notes you write, and the metrics you track are entirely yours. We claim no ownership over your content.</p>
+    <p>Because your content is stored locally on your device and is not uploaded to us, we do not access, use, or process it. You are solely responsible for your content, including keeping your own backups. As explained in our Privacy Policy, we cannot recover your content if it is lost, for example if you delete the app or lose your device.</p>
+
+    <h2 id="responsibilities">5. Your responsibilities</h2>
+    <p>When you use Witness, you agree to:</p>
+    <ul>
+      <li>Use the app only for lawful purposes and in line with these Terms</li>
+      <li>Ensure you have the right to photograph any person or property you capture, and obtain any consent required by law</li>
+      <li>Respect the privacy and rights of others in the content you create</li>
+      <li>Keep your device and any biometric or passcode security up to date, as your content's security depends on your device</li>
+      <li>Maintain your own backups of any content that matters to you</li>
+    </ul>
+
+    <h2 id="acceptable">6. Acceptable use</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Use the app to create, store, or share content that is unlawful, abusive, or infringes anyone's rights</li>
+      <li>Photograph people without appropriate consent where consent is required</li>
+      <li>Reverse-engineer, decompile, or attempt to extract the source code of the app, except where this restriction is prohibited by law</li>
+      <li>Interfere with, disrupt, or attempt to gain unauthorised access to the app or its related systems</li>
+      <li>Use the app in any way that could damage, disable, or impair it, or circumvent any security or authentication feature</li>
+      <li>Use the app for any commercial purpose without our written permission</li>
+    </ul>
+
+    <h2 id="subscriptions">7. Subscriptions and payments</h2>
+    <p>Witness is free to download and includes an optional auto-renewing subscription that unlocks additional features.</p>
+    <h3>Billing</h3>
+    <p>All payments are processed by Apple through your Apple Account, not by us. Payment is charged to your Apple Account at confirmation of purchase.</p>
+    <h3>Auto-renewal</h3>
+    <p>Subscriptions renew automatically unless auto-renew is turned off at least 24 hours before the end of the current period. Your Apple Account is charged for renewal within 24 hours prior to the end of the current period, at the rate of your selected plan.</p>
+    <h3>Managing and cancelling</h3>
+    <p>You can manage or cancel your subscription at any time in your Apple Account settings on your device (Settings → your name → Subscriptions). Cancellation takes effect at the end of the current billing period.</p>
+    <h3>Refunds</h3>
+    <p>Purchases are handled by Apple, and refunds are subject to <a href="https://www.apple.com/legal/internet-services/itunes/" target="_blank" rel="noopener">Apple's terms and policies</a>. We generally cannot issue refunds directly; refund requests should be made to Apple. Any free trial period, if offered, will convert to a paid subscription unless cancelled before the trial ends.</p>
+    <h3>Price changes</h3>
+    <p>We may change subscription prices from time to time. Where required, Apple will notify you and, where the law requires, seek your consent before a changed price applies to you.</p>
+
+    <h2 id="appstore">8. App Store terms</h2>
+    <p>You obtained Witness through the Apple App Store, and your use is also subject to Apple's Media Services terms and the Licensed Application End User License Agreement ("Apple's terms"). In the event of a conflict between these Terms and Apple's terms as they apply to your use of the app through the App Store, Apple's terms will govern to the extent of that conflict.</p>
+    <p>You acknowledge that these Terms are between you and Full Access Media Ltd, not with Apple, and that Apple is not responsible for the app or its content. Apple and its subsidiaries are third-party beneficiaries of these Terms and may enforce them against you. Any maintenance, support, or warranty for the app is our responsibility, not Apple's, to the extent any is provided.</p>
+
+    <h2 id="ip">9. Our intellectual property</h2>
+    <p>The Witness app itself, including its name, logo, design, software, text, graphics, and all related intellectual property, is owned by Full Access Media Ltd and protected by law. These Terms do not transfer any of our intellectual property rights to you. You may not use our name, logo, or branding without our prior written permission.</p>
+
+    <h2 id="warranty">10. Disclaimer of warranties</h2>
+    <p>Witness is provided <strong>"as is" and "as available"</strong>, without warranties of any kind, whether express or implied, to the fullest extent permitted by law. We do not warrant that the app will be uninterrupted, error-free, secure, or that it will meet your requirements, and we do not guarantee the accuracy of any time-lapse, chart, or metric output.</p>
+    <p>Nothing in these Terms excludes or limits any rights you have as a consumer under the laws of your country that cannot lawfully be excluded, including, where applicable, your statutory rights under the Consumer Rights Act 2015.</p>
+
+    <h2 id="liability">11. Limitation of liability</h2>
+    <p>To the fullest extent permitted by law, Full Access Media Ltd will not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of data, photos, records, profits, or goodwill, arising out of or relating to your use of, or inability to use, the app.</p>
+    <p>Because your content is stored on your own device and not by us, we are not responsible for any loss of your photos or records, including loss caused by device failure, deletion of the app, or your own device settings. Please keep your own backups.</p>
+    <p>Nothing in these Terms limits our liability for death or personal injury caused by our negligence, for fraud, or for any other liability that cannot be limited or excluded under applicable law.</p>
+
+    <h2 id="termination">12. Termination</h2>
+    <p>You may stop using Witness at any time by deleting the app from your device. We may suspend or end your right to use the app if you materially breach these Terms. On termination, the licence granted to you ends, though the sections of these Terms that by their nature should survive (such as ownership, disclaimers, and limitation of liability) will continue to apply.</p>
+
+    <h2 id="changes">13. Changes to these terms</h2>
+    <p>We may update these Terms from time to time, for example to reflect new features or changes in the law. When we do, we will revise the "Last updated" date at the top of this page, and significant changes may be highlighted within the app. Your continued use of Witness after changes take effect means you accept the updated Terms.</p>
+
+    <h2 id="law">14. Governing law</h2>
+    <p>These Terms are governed by the laws of England and Wales. Any disputes relating to these Terms or the app will be subject to the exclusive jurisdiction of the courts of England and Wales, except that if you are a consumer resident elsewhere, you may benefit from any mandatory protections and the right to bring proceedings in the courts of your country of residence.</p>
+
+    <h2 id="contact">15. Contact us</h2>
+    <p>If you have any questions about these Terms, please contact us:</p>
+    <ul>
+      <li><strong>Full Access Media Ltd</strong></li>
+      <li>Email: <a href="mailto:Hello@DriveVault.io">Hello@DriveVault.io</a></li>
+    </ul>
+    <p style="margin-top:1.5rem; font-size:0.9rem; color:var(--text-2);">Full Access Media Ltd is a company registered in England &amp; Wales.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footwrap">
+    <div class="foot-top">
+      <a href="index.html" class="brand">
+        <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="Witness logo" width="30" height="30">
+        Witness
+      </a>
+      <div class="foot-links">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:Hello@DriveVault.io">Support</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 Full Access Media Ltd. All rights reserved.</p>
+      <span class="foot-made"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5c2 0 3.2 1.3 3.7 2.2.5-.9 1.7-2.2 3.7-2.2C16.5 5.5 18 9 16 12.5 13.5 16.5 12 21 12 21z"/></svg> Made with care in the UK</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var tBtn = document.getElementById('themeToggle');
+  var tIcon = document.getElementById('themeIcon');
+  var sunPath = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  var moonPath = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+  if (tBtn) {
+    tBtn.addEventListener('click', function () {
+      var dark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', dark ? 'light' : 'dark');
+      if (tIcon) tIcon.innerHTML = dark ? sunPath : moonPath;
+    });
+  }
+})();
+</script>
+</body>
+</html>
+

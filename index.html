@@ -120,7 +120,13 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
   pointer-events:none; z-index:0;
 }
 .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; align-items: center; }
-.hero-appicon { width: 72px; height: 72px; border-radius: 17px; box-shadow: 0 12px 30px var(--glow); margin-bottom: 1.4rem; object-fit: cover; display: block; flex: none; }
+.hero-appicon-frame {
+  width: 92px; height: 92px; border-radius: 21px; margin-bottom: 1.4rem;
+  box-shadow: 0 14px 34px var(--glow); background: var(--surface-2);
+  border: 1px solid var(--line);
+  display: grid; place-items: center; flex: none; padding: 15px;
+}
+.hero-appicon { width: 100%; height: 100%; display: block; object-fit: contain; }
 .eyebrow {
   display:inline-flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
   color: var(--peach-deep); background: var(--surface-2); padding: 0.4rem 0.85rem; border-radius: 999px; margin-bottom: 1.6rem;
@@ -157,6 +163,29 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
 }
 .ghost-badge .rec { width:7px; height:7px; border-radius:50%; background: var(--peach); animation: pulse 1.8s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* Overlay metric chart on the hero cactus slider */
+.ghost-chart {
+  position:absolute; left:0.9rem; right:0.9rem; bottom:0.9rem; z-index:4;
+  background: rgba(20,20,22,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,0.12); border-radius:14px; padding:0.7rem 0.85rem 0.55rem;
+}
+.ghost-chart .gc-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:0.3rem; }
+.ghost-chart .gc-label { font-size:0.66rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.7); }
+.ghost-chart .gc-value { font-size:1rem; font-weight:700; color:#fff; font-variant-numeric:tabular-nums; }
+.ghost-chart .gc-value span { color:var(--peach-soft); }
+.ghost-chart .gc-plot { position:relative; width:100%; height:44px; }
+.ghost-chart svg { display:block; width:100%; height:44px; overflow:visible; }
+.gc-line { fill:none; stroke:var(--peach); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+.gc-area { fill:url(#gcFill); }
+#gcClip { transition: width 0.45s cubic-bezier(.34,1.4,.5,1); }
+.gc-grid { stroke:rgba(255,255,255,0.12); stroke-width:1; }
+.gc-dot {
+  position:absolute; width:11px; height:11px; border-radius:50%;
+  background:#fff; border:2.5px solid var(--peach); box-shadow:0 1px 4px rgba(0,0,0,0.35);
+  transform:translate(-50%,-50%); left:2%; top:88%;
+  transition:left 0.45s cubic-bezier(.34,1.4,.5,1), top 0.45s cubic-bezier(.34,1.4,.5,1);
+}
 .ghost-controls { padding: 1rem 0.6rem 0.4rem; }
 .ghost-controls .row { display:flex; align-items:center; justify-content:space-between; margin-bottom: 0.5rem; }
 .ghost-controls label { font-size:0.82rem; font-weight:600; color: var(--ink); }
@@ -507,7 +536,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
 <header class="hero">
   <div class="wrap">
     <div class="hero-copy">
-      <img class="hero-appicon" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/icon1light.png?v=1783427870" alt="WTNS app icon" width="72" height="72">
+      <div class="hero-appicon-frame"><img class="hero-appicon" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="WTNS logo" width="58" height="58"></div>
       <span class="eyebrow"><span class="dot"></span> iOS · Photo journaling</span>
       <h1>WTNS: the iOS app for <em>capturing &amp; tracking change</em>.</h1>
       <p class="lede">Track anything that transforms over time, one perfectly aligned photo at a time. Some changes happen slowly; that's exactly why they're worth capturing.</p>
@@ -533,6 +562,28 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
         <img class="stage-img" data-stage="4" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample5.png?v=1783356546" alt="Cactus at month 12" style="opacity:0">
         <div class="ghost-grid"></div>
         <div class="ghost-badge"><span class="rec"></span> Ghost overlay · <span id="stageLabel">Month 1</span></div>
+        <div class="ghost-chart">
+          <div class="gc-head">
+            <span class="gc-label">Height tracked</span>
+            <span class="gc-value" id="gcValue">2<span> cm</span></span>
+          </div>
+          <div class="gc-plot">
+            <svg viewBox="0 0 300 44" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="gcFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--peach)" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="var(--peach)" stop-opacity="0"/>
+                </linearGradient>
+                <clipPath id="gcReveal"><rect id="gcClip" x="0" y="0" width="6" height="44"/></clipPath>
+              </defs>
+              <g clip-path="url(#gcReveal)">
+                <path class="gc-area" d="M 6,40 L 6,38.8 L 78,31.6 L 150,23.2 L 222,14.8 L 294,6.4 L 294,40 Z"/>
+                <path class="gc-line" d="M 6,38.8 L 78,31.6 L 150,23.2 L 222,14.8 L 294,6.4"/>
+              </g>
+            </svg>
+            <div class="gc-dot" id="gcDot"></div>
+          </div>
+        </div>
       </div>
       <div class="ghost-controls">
         <div class="row">
@@ -943,6 +994,13 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
   var growthVal = document.getElementById('growthVal');
   var stageLabel = document.getElementById('stageLabel');
   var labels = ['Month 1', 'Month 4', 'Month 7', 'Month 10', 'Month 12'];
+  // Overlay chart data
+  var gcClip = document.getElementById('gcClip');
+  var gcDot = document.getElementById('gcDot');
+  var gcValue = document.getElementById('gcValue');
+  var PTS_X = [6, 78, 150, 222, 294];
+  var PTS_Y = [38.8, 31.6, 23.2, 14.8, 6.4];
+  var HEIGHTS = [2, 14, 28, 42, 56];
   if (growth && stageImgs.length) {
     var n = stageImgs.length;               // 5 frames
     var segs = n - 1;                        // 4 transitions
@@ -964,6 +1022,16 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       if (growthVal) growthVal.textContent = labels[nearest];
       if (stageLabel) stageLabel.textContent = labels[nearest];
       growth.style.setProperty('--fill', growth.value + '%');
+
+      // Build the overlay chart, snapping to whichever data point is active
+      if (gcClip && gcDot && gcValue) {
+        // 'nearest' is the active stage index (0..4), same one the photo snaps to
+        gcClip.setAttribute('width', Math.max(6, PTS_X[nearest]));
+        // Position the CSS dot by percentage of the 300x44 viewBox (stays a true circle)
+        gcDot.style.left = (PTS_X[nearest] / 300 * 100) + '%';
+        gcDot.style.top = (PTS_Y[nearest] / 44 * 100) + '%';
+        gcValue.innerHTML = HEIGHTS[nearest] + '<span> cm</span>';
+      }
     });
   }
 

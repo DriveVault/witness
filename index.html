@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -114,7 +115,8 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
 }
 .theme-toggle:hover { border-color: var(--peach); transform: rotate(15deg); }
 .theme-toggle svg { width: 20px; height: 20px; }
-@media (max-width: 780px){ .navlinks{ display:none; } }
+@media (max-width: 1060px){ .navlinks{ gap: 1.15rem; } .navlinks a{ font-size: 0.85rem; } }
+@media (max-width: 900px){ .navlinks{ display:none; } }
 
 .hero { position: relative; padding: 5.5rem 0 4rem; overflow: hidden; }
 .hero::before {
@@ -495,6 +497,93 @@ section.block { padding: 6rem 0; position: relative; }
 .mini-metric b { display:block; font-size:0.95rem; }
 @media (max-width:820px){ .themes-split{ grid-template-columns:1fr; } }
 
+/* ---------- PDF export ---------- */
+.pdfx { background: var(--surface-2); }
+.pdfx-split { display: grid; grid-template-columns: 1fr 0.85fr; gap: 4rem; align-items: center; }
+.pdfx-copy h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); margin-bottom: 1rem; }
+.pdfx-copy h2 em { font-style: italic; color: var(--peach-deep); }
+.pdfx-copy > p { color: var(--text-2); max-width: 52ch; }
+.pdfx-list { list-style: none; display: grid; gap: 0.75rem; margin: 1.7rem 0 0; }
+.pdfx-list li { display: flex; gap: 0.65rem; align-items: flex-start; font-size: 0.95rem; color: var(--text); }
+.pdfx-list svg { width: 18px; height: 18px; flex: none; margin-top: 0.16rem; color: var(--peach-deep); }
+.pdfx-foot { margin-top: 1.7rem; font-size: 0.88rem; color: var(--text-2); display: flex; align-items: center; gap: 0.5rem; }
+.pdfx-foot svg { width: 16px; height: 16px; flex: none; color: var(--peach-deep); }
+
+.pdfx-figure { position: relative; }
+.pdfx-figure::before {
+  content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 130%; height: 90%; border-radius: 50%;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 65%);
+  pointer-events: none;
+}
+.pdfx-page {
+  position: relative; border-radius: 8px; overflow: hidden; background: #fff;
+  box-shadow: 0 30px 66px var(--shadow), 0 0 0 1px var(--line);
+}
+.pdfx-page img { width: 100%; height: auto; display: block; }
+.pdfx-chip {
+  position: absolute; top: -0.8rem; right: -0.6rem; z-index: 2;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #fff;
+  padding: 0.4rem 0.75rem; border-radius: 10px;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); box-shadow: 0 8px 20px var(--glow);
+}
+
+@media (max-width: 900px){
+  .pdfx-split { grid-template-columns: 1fr; gap: 2.6rem; }
+  .pdfx-figure { max-width: 380px; margin: 0 auto; width: 100%; }
+}
+
+/* ---------- Pricing ---------- */
+.pricing { background: var(--surface-2); }
+.bill-toggle {
+  display: inline-flex; gap: 0.3rem; padding: 0.3rem; margin: 0 auto 2.6rem; border-radius: 16px;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.pricing .bill-wrap { text-align: center; }
+.bill-opt {
+  display: inline-flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer;
+  font-family: inherit; font-size: 0.92rem; font-weight: 600; color: var(--text-2);
+  background: transparent; border-radius: 13px; padding: 0.7rem 1.2rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.bill-opt:hover { color: var(--ink); }
+.bill-opt.active { background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); color: #fff; box-shadow: 0 6px 18px var(--glow); }
+.bill-opt .save {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; padding: 0.18rem 0.45rem; border-radius: 7px;
+  background: var(--peach-soft); color: #7A3B36;
+}
+.bill-opt.active .save { background: rgba(255,255,255,0.9); color: var(--peach-deep); }
+
+.plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; align-items: stretch; max-width: 880px; margin: 0 auto; }
+.plan {
+  position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+  padding: 2.2rem 2rem; box-shadow: 0 14px 34px var(--shadow); display: flex; flex-direction: column;
+}
+.plan.featured { border-color: var(--peach); box-shadow: 0 18px 44px var(--glow); }
+.plan-flag {
+  position: absolute; top: -0.85rem; left: 2rem; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.09em; text-transform: uppercase; color: #fff; padding: 0.35rem 0.7rem; border-radius: 9px;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); box-shadow: 0 6px 16px var(--glow);
+}
+.plan h3 { font-size: 1.5rem; margin-bottom: 0.9rem; }
+.plan-price { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+.plan-price .amt { font-family: 'Newsreader', Georgia, serif; font-size: 2.9rem; color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums; }
+.plan-price .per { font-size: 0.95rem; color: var(--text-2); }
+.plan-note { color: var(--text-2); font-size: 0.9rem; margin-top: 0.6rem; min-height: 2.6em; }
+.plan-list { list-style: none; margin: 1.4rem 0 1.8rem; display: grid; gap: 0.7rem; }
+.plan-list li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.95rem; color: var(--text); }
+.plan-list svg { width: 18px; height: 18px; flex: none; margin-top: 0.15rem; color: var(--peach-deep); }
+.plan-cta { width: 100%; justify-content: center; margin-top: auto; }
+.plan-fine { text-align: center; color: var(--text-2); font-size: 0.84rem; max-width: 60ch; margin: 2rem auto 0; }
+
+@media (max-width: 820px){
+  .plans { grid-template-columns: 1fr; max-width: 520px; }
+  .plan { padding: 1.9rem 1.5rem; }
+  .plan-note { min-height: 0; }
+  .bill-toggle { margin-bottom: 2rem; }
+  .bill-opt { padding: 0.65rem 0.9rem; font-size: 0.86rem; }
+}
+
 .finalcta { text-align:center; padding: 6rem 0; }
 .finalcta h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); max-width:16ch; margin: 0 auto 1.2rem; }
 .finalcta h2 em { font-style:italic; color:var(--peach-deep); }
@@ -584,6 +673,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       <a href="#features">Features</a>
       <a href="#usecases">Use cases</a>
       <a href="#privacy">Privacy</a>
+      <a href="#pricing">Pricing</a>
     </div>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
@@ -652,7 +742,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
           <span class="val" id="growthVal">Month 1</span>
         </div>
         <input type="range" id="growth" min="0" max="100" value="0" step="1" style="--fill:0%" aria-label="Cactus growth timeline">
-        <p class="ghost-hint">Drag to watch the cactus grow, each frame perfectly aligned by ghost overlay.</p>
+        <p class="ghost-hint" id="ghostHint">Playing. Drag the slider any time to take over.</p>
       </div>
     </div>
   </div>
@@ -663,7 +753,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     <div class="section-head center reveal">
       <div class="kicker">A few of the journeys worth keeping</div>
       <h2>If it changes,<br class="brk">you can witness it.</h2>
-      <p>WTNS can document <em>anything</em> that changes visually. With ghost overlay keeping every shot aligned, at whatever interval suits you, for as long as the change takes, here's the kind of transformation you could capture. A few more ideas: a scar healing, a city skyline being built, a bonsai you're shaping, your hair growing out, a leather bag wearing in.</p>
+      <p><em>Anything</em> that changes visually counts: the results of your new whitening toothpaste, a hair loss and regrowth journey, a baby bump, or simply the view from your window turning through the seasons. WTNS can witness it all.</p>
     </div>
 
     <div class="jx reveal" id="jx">
@@ -775,7 +865,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     <div class="section-head center reveal">
       <div class="kicker">The metric that photos can't show</div>
       <h2>Track how you <em>feel</em>, not just how you look.</h2>
-      <p>Use a cream for six months and someone asks if it worked, and you honestly can't remember how bad it was at the start. A graph shows you. Track any metric you like, from hundreds of templates or one you invent yourself, and watch it move.</p>
+      <p>Change happens so slowly that it's hard to notice. So stop guessing: add data points alongside your photos and see whether that cream really did work, whether your teeth are whiter, your hair is thicker, your plant is taller. Say goodbye to placebos.</p>
     </div>
 
     <div class="metric-card reveal">
@@ -832,6 +922,31 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       <p class="cta-band-note">Start tracking any metric, free on the App Store.</p>
     </div>
   </div>
+  </div>
+</section>
+
+<section class="block pdfx" id="export">
+  <div class="wrap">
+    <div class="pdfx-split">
+      <div class="pdfx-copy reveal">
+        <div class="kicker">Hand it to someone who can help</div>
+        <h2>Turn a record into a PDF <em>worth sharing</em>.</h2>
+        <p>Everything you captured, laid out as a clean document: the photos in order, the date on each one, the metrics you logged and the note you wrote at the time. Send it to a dentist, a dermatologist, a contractor, or the friend who keeps asking how it's going.</p>
+        <ul class="pdfx-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Choose how many photos to include</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Keep your notes in, or leave them out</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Show the metrics, or just the images</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Share it however you like, once it exists</span></li>
+        </ul>
+        <p class="pdfx-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Nothing leaves your iPhone until you choose to send it.</p>
+      </div>
+      <div class="pdfx-figure reveal">
+        <span class="pdfx-chip">A4 PDF</span>
+        <div class="pdfx-page">
+          <img src="WTNS%20PDF%20Export.jpg" alt="An exported WTNS record shown as an A4 PDF page, with three dated photos of a whitening toothpaste journey, each with its metric reading and a written note." loading="lazy" width="2138" height="2768">
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1022,6 +1137,57 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
   </div>
 </section>
 
+<section class="block pricing" id="pricing">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="kicker">Pricing</div>
+      <h2>Start free. Stay free if that suits you.</h2>
+      <p>Your first record and your first five photos are free forever. Don't like it, don't pay. Only ever need five photos? It's yours.</p>
+    </div>
+
+    <div class="bill-wrap reveal">
+      <div class="bill-toggle" role="group" aria-label="Billing period">
+        <button type="button" class="bill-opt active" data-bill="year" aria-pressed="true">Yearly <span class="save">Save 58%</span></button>
+        <button type="button" class="bill-opt" data-bill="month" aria-pressed="false">Monthly</button>
+      </div>
+    </div>
+
+    <div class="plans reveal">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="plan-price"><span class="amt">$0</span><span class="per">free forever</span></div>
+        <p class="plan-note">No trial countdown and no card required. Keep it as long as you like.</p>
+        <ul class="plan-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Your first record</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Up to five photos</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Ghost overlay alignment</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Custom metrics and charts</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Face ID locking</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>No account, ever</span></li>
+        </ul>
+        <a href="#download" class="btn btn-ghost plan-cta">Download WTNS</a>
+      </div>
+
+      <div class="plan featured">
+        <span class="plan-flag">Unlimited</span>
+        <h3>Premium</h3>
+        <div class="plan-price"><span class="amt" id="planAmt">$19.99</span><span class="per" id="planPer">per year</span></div>
+        <p class="plan-note" id="planNote">That's $1.67 a month, a 58% saving against paying monthly.</p>
+        <ul class="plan-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited records</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited photos in every record</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>The full app: ghost overlay, metrics, time-lapse and reminders</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Everything still stays on your device</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Cancel any time</span></li>
+        </ul>
+        <a href="#download" class="btn btn-primary plan-cta">Get Premium</a>
+      </div>
+    </div>
+
+    <p class="plan-fine">Prices shown in USD; your local App Store price may differ. Subscriptions are billed through your Apple Account and renew automatically until cancelled, which you can do at any time in your iPhone settings. See the <a href="terms.html">Terms of Service</a> for full details.</p>
+  </div>
+</section>
+
 <section class="finalcta" id="download">
   <div class="wrap reveal">
     <h2>Start the record you'll be glad you <em>kept</em>.</h2>
@@ -1047,7 +1213,9 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
         <h4>Product</h4>
         <a href="#features">Features</a>
         <a href="#usecases">Use cases</a>
+        <a href="#export">PDF export</a>
         <a href="#privacy">Privacy</a>
+        <a href="#pricing">Pricing</a>
         <a href="#download">Download</a>
       </div>
       <div class="foot-col">
@@ -1099,8 +1267,10 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
   if (growth && stageImgs.length) {
     var n = stageImgs.length;               // 5 frames
     var segs = n - 1;                        // 4 transitions
-    growth.addEventListener('input', function () {
-      var t = growth.value / 100;           // 0..1 across the whole timeline
+
+    // Paint the whole demo for a slider value of 0..100
+    var renderGrowth = function (value) {
+      var t = value / 100;                   // 0..1 across the whole timeline
       var pos = t * segs;                    // 0..4 continuous position
       var lower = Math.floor(pos);
       if (lower >= segs) lower = segs - 1;   // clamp at the end
@@ -1116,18 +1286,90 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       var nearest = frac < 0.5 ? lower : lower + 1;
       if (growthVal) growthVal.textContent = labels[nearest];
       if (stageLabel) stageLabel.textContent = labels[nearest];
-      growth.style.setProperty('--fill', growth.value + '%');
+      growth.style.setProperty('--fill', value + '%');
 
       // Build the overlay chart, snapping to whichever data point is active
       if (gcClip && gcDot && gcValue) {
-        // 'nearest' is the active stage index (0..4), same one the photo snaps to
         gcClip.setAttribute('width', Math.max(6, PTS_X[nearest]));
         // Position the CSS dot by percentage of the 300x44 viewBox (stays a true circle)
         gcDot.style.left = (PTS_X[nearest] / 300 * 100) + '%';
         gcDot.style.top = (PTS_Y[nearest] / 44 * 100) + '%';
         gcValue.innerHTML = HEIGHTS[nearest] + '<span> cm</span>';
       }
-    });
+    };
+
+    growth.addEventListener('input', function () { renderGrowth(+growth.value); });
+    renderGrowth(+growth.value);
+
+    // Autoplay: step through the timeline so the drag affordance is obvious.
+    // Any interaction hands control to the person permanently.
+    var ghostHint = document.getElementById('ghostHint');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var autoOn = !reduceMotion;
+    var autoVisible = true;
+    var rafId = null;
+    var phaseIdx = 0;
+    var phaseStart = null;
+
+    // from/to are stage positions (0..4); a phase with from === to is a hold
+    var phases = [{ from: 0, to: 0, dur: 900 }];
+    for (var s = 0; s < segs; s++) {
+      phases.push({ from: s, to: s + 1, dur: 950 });
+      phases.push({ from: s + 1, to: s + 1, dur: s === segs - 1 ? 1800 : 700 });
+    }
+    phases.push({ from: segs, to: 0, dur: 900 });  // rewind
+
+    var easeInOut = function (x) {
+      return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    };
+
+    var stopAuto = function () {
+      if (!autoOn) return;
+      autoOn = false;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      if (ghostHint) ghostHint.textContent = 'Each frame perfectly aligned by ghost overlay.';
+    };
+
+    var tick = function (now) {
+      if (!autoOn) return;
+      if (phaseStart === null) phaseStart = now;
+      if (document.hidden || !autoVisible) { phaseStart = now; rafId = requestAnimationFrame(tick); return; }
+      var ph = phases[phaseIdx];
+      var k = Math.min(1, (now - phaseStart) / ph.dur);
+      var pos = ph.from + (ph.to - ph.from) * easeInOut(k);
+      growth.value = Math.round(pos / segs * 100);
+      renderGrowth(+growth.value);
+      if (k >= 1) {
+        phaseIdx = (phaseIdx + 1) % phases.length;
+        phaseStart = now;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    var startAuto = function () {
+      if (!autoOn || rafId) return;
+      phaseStart = null;
+      rafId = requestAnimationFrame(tick);
+    };
+
+    var handOver = ['pointerdown', 'mousedown', 'touchstart', 'keydown', 'input', 'focus'];
+    for (var h = 0; h < handOver.length; h++) {
+      growth.addEventListener(handOver[h], stopAuto, { passive: true });
+    }
+
+    // Only burn frames while the demo is actually on screen
+    if ('IntersectionObserver' in window) {
+      var ghostIo = new IntersectionObserver(function (entries) {
+        autoVisible = entries[0].isIntersecting;
+      }, { threshold: 0.15 });
+      ghostIo.observe(growth.closest('.ghost-demo') || growth);
+    }
+    if (reduceMotion) {
+      // Honour reduced-motion: no autoplay, so the hint shouldn't claim it's playing
+      if (ghostHint) ghostHint.textContent = 'Drag the slider to watch the cactus grow, each frame perfectly aligned by ghost overlay.';
+    } else {
+      startAuto();
+    }
   }
 
   // Compare slider
@@ -1226,6 +1468,35 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     };
     for (var t2 = 0; t2 < jxTabs.length; t2++) {
       jxTabs[t2].addEventListener('click', jxHandler);
+    }
+  }
+
+  // Pricing: yearly / monthly billing toggle
+  var billOpts = document.querySelectorAll('.bill-opt');
+  var planAmt = document.getElementById('planAmt');
+  var planPer = document.getElementById('planPer');
+  var planNote = document.getElementById('planNote');
+  if (billOpts.length && planAmt) {
+    var billing = {
+      year: { amt: '$19.99', per: 'per year', note: "That's $1.67 a month, a 58% saving against paying monthly." },
+      month: { amt: '$3.99', per: 'per month', note: 'Billed monthly. Switch to yearly whenever you like and save 58%.' }
+    };
+    var setBilling = function (key) {
+      var b = billing[key];
+      if (!b) return;
+      planAmt.textContent = b.amt;
+      planPer.textContent = b.per;
+      planNote.textContent = b.note;
+      for (var m = 0; m < billOpts.length; m++) {
+        var on = billOpts[m].getAttribute('data-bill') === key;
+        billOpts[m].classList.toggle('active', on);
+        billOpts[m].setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+    };
+    for (var b2 = 0; b2 < billOpts.length; b2++) {
+      billOpts[b2].addEventListener('click', function () {
+        setBilling(this.getAttribute('data-bill'));
+      });
     }
   }
 

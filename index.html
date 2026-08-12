@@ -436,26 +436,6 @@ section.block { padding: 6rem 0; position: relative; }
 }
 @media (max-width:820px){ .usecase{ width:160px; padding:1.2rem 1rem; } }
 
-.compare-wrap { display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center; }
-.compare {
-  position:relative; aspect-ratio: 3/4; max-width: 360px; margin:0 auto; border-radius:20px; overflow:hidden;
-  box-shadow: 0 24px 50px var(--shadow); border:1px solid var(--line); user-select:none; cursor: ew-resize;
-}
-.compare img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-.compare .top { z-index:2; clip-path: inset(0 50% 0 0); }
-.compare .divider {
-  position:absolute; top:0; bottom:0; left:50%; width:3px; background:#fff; z-index:3; transform:translateX(-50%);
-  box-shadow: 0 0 0 1px var(--glow);
-}
-.compare .handle {
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:4;
-  width:44px; height:44px; border-radius:50%; background:#fff; display:grid; place-items:center;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25); color: var(--peach-deep);
-}
-.compare .lbl { position:absolute; bottom:0.8rem; z-index:3; font-size:0.7rem; font-weight:700; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,0.5); letter-spacing:0.06em; }
-.compare .lbl.a { left:0.8rem; } .compare .lbl.b { right:0.8rem; }
-@media (max-width:820px){ .compare-wrap{ grid-template-columns:1fr; gap:2rem; } }
-
 .privacy {
   background: #241A1C; color: #F5EDEA; border-radius: 32px; padding: 4rem; margin: 2rem 0;
   position:relative; overflow:hidden; border: 1px solid rgba(237,140,133,0.18);
@@ -480,22 +460,6 @@ section.block { padding: 6rem 0; position: relative; }
 .privacy-item strong { color: #FFFFFF; font-weight:600; display:block; font-size:0.98rem; }
 .privacy-item span { color: rgba(245,237,234,0.6); font-size:0.88rem; }
 @media (max-width:820px){ .privacy{ padding:2.5rem; } .privacy > .inner{ grid-template-columns:1fr; gap:2rem; } }
-
-.themes-split { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
-.theme-card { border-radius:24px; overflow:hidden; border:1px solid var(--line); box-shadow:0 20px 40px var(--shadow); }
-.theme-card .head { padding:1.4rem 1.6rem; font-weight:600; display:flex; align-items:center; justify-content:space-between; }
-.theme-card.light { background:#FDF5F0; color:#333; }
-.theme-card.dark { background:#1C1C1E; color:#F2F2F2; }
-.theme-card .head .pill { font-size:0.72rem; padding:0.3rem 0.7rem; border-radius:999px; background:#ED8C85; color:#fff; }
-.theme-card .body { padding: 0 1.6rem 1.6rem; }
-.mini-photo { aspect-ratio: 16/10; border-radius:14px; overflow:hidden; margin-bottom:1rem; background:#00000010; }
-.mini-photo img { width:100%; height:100%; object-fit:cover; }
-.mini-row { display:flex; gap:0.6rem; }
-.mini-metric { flex:1; border-radius:10px; padding:0.6rem 0.7rem; font-size:0.7rem; }
-.theme-card.light .mini-metric { background:#fff; border:1px solid #EADFD7; }
-.theme-card.dark .mini-metric { background:#2C2C2E; border:1px solid #3A3A3D; }
-.mini-metric b { display:block; font-size:0.95rem; }
-@media (max-width:820px){ .themes-split{ grid-template-columns:1fr; } }
 
 /* ---------- PDF export ---------- */
 .pdfx { background: var(--surface-2); }
@@ -636,11 +600,10 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
   .metric-tags { gap: 0.5rem; margin-top: 1.5rem; }
   .mtag { font-size: 0.8rem; padding: 0.45rem 0.85rem; }
 
-  /* Features / privacy / themes already stack via existing 820px rules; tighten spacing */
+  /* Features and privacy already stack via existing 820px rules; tighten spacing */
   .fcard { padding: 1.5rem; }
   .privacy { padding: 2rem 1.5rem; border-radius: 24px; }
   .privacy h2 { font-size: 1.7rem; }
-  .compare { max-width: 100%; }
 
   /* Section-wide download band full width */
   .cta-band .appstore { width: 100%; justify-content: center; }
@@ -1053,24 +1016,6 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
   </div>
 </section>
 
-<section class="block">
-  <div class="wrap compare-wrap">
-    <div class="reveal">
-      <div class="kicker">Before &amp; after</div>
-      <h2 style="font-size:clamp(2rem,3.8vw,2.9rem);margin-bottom:1rem;">Drag to see how far it's come.</h2>
-      <p style="color:var(--text-2);font-size:1.1rem;">Because every frame is aligned, the comparison slider tells the truth; the frame stays put while the change moves. This is the same skin record from the top of the page, start to finish.</p>
-    </div>
-    <div class="compare" id="compare" role="slider" aria-label="Drag to compare before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
-      <img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="After: skin at day 84">
-      <img class="top" id="compareTop" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample1.png?v=1783356542" alt="Before: skin at day 1">
-      <div class="lbl a">BEFORE</div>
-      <div class="lbl b">AFTER</div>
-      <div class="divider" id="compareDiv"></div>
-      <div class="handle" id="compareHandle"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/></svg></div>
-    </div>
-  </div>
-</section>
-
 <section class="block" id="privacy">
   <div class="wrap">
     <div class="privacy reveal">
@@ -1099,40 +1044,6 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
         <div><small>Download on the</small><span>App Store</span></div>
       </a>
       <p class="cta-band-note">No account. No cloud. Just your iPhone.</p>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="design">
-  <div class="wrap">
-    <div class="section-head center reveal">
-      <div class="kicker">Light or dark, your choice</div>
-      <h2>A luxury feel in every mode.</h2>
-      <p>Warm cream by day, rich charcoal by night, with the same peach accent and the same care throughout.</p>
-    </div>
-    <div class="themes-split reveal">
-      <div class="theme-card light">
-        <div class="head">Light <span class="pill">Warm cream</span></div>
-        <div class="body">
-          <div class="mini-photo"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample3.png?v=1783356546" alt="WTNS in light mode"></div>
-          <div class="mini-row">
-            <div class="mini-metric" style="color:#808080">Height<b style="color:#333">18 cm</b></div>
-            <div class="mini-metric" style="color:#808080">Mood<b style="color:#333">😊 5/5</b></div>
-            <div class="mini-metric" style="color:#808080">Day<b style="color:#ED8C85">210</b></div>
-          </div>
-        </div>
-      </div>
-      <div class="theme-card dark">
-        <div class="head">Dark <span class="pill">Rich charcoal</span></div>
-        <div class="body">
-          <div class="mini-photo"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample5.png?v=1783356551" alt="WTNS in dark mode"></div>
-          <div class="mini-row">
-            <div class="mini-metric" style="color:#B3B3B3">Spent<b style="color:#F2F2F2">£11.4k</b></div>
-            <div class="mini-metric" style="color:#B3B3B3">Rating<b style="color:#F2F2F2">⭐ 5/5</b></div>
-            <div class="mini-metric" style="color:#B3B3B3">Week<b style="color:#ED8C85">6</b></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -1370,39 +1281,6 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     } else {
       startAuto();
     }
-  }
-
-  // Compare slider
-  var cmp = document.getElementById('compare');
-  var top = document.getElementById('compareTop');
-  var div = document.getElementById('compareDiv');
-  var handle = document.getElementById('compareHandle');
-  if (cmp && top && div && handle) {
-    var dragging = false;
-    function setCompare(pct) {
-      pct = Math.max(0, Math.min(100, pct));
-      top.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
-      div.style.left = pct + '%';
-      handle.style.left = pct + '%';
-      cmp.setAttribute('aria-valuenow', Math.round(pct));
-    }
-    function moveFromEvent(e) {
-      var rect = cmp.getBoundingClientRect();
-      var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      setCompare(((clientX - rect.left) / rect.width) * 100);
-    }
-    cmp.addEventListener('mousedown', function (e) { dragging = true; moveFromEvent(e); });
-    window.addEventListener('mousemove', function (e) { if (dragging) moveFromEvent(e); });
-    window.addEventListener('mouseup', function () { dragging = false; });
-    cmp.addEventListener('touchstart', function (e) { dragging = true; moveFromEvent(e); }, { passive: true });
-    cmp.addEventListener('touchmove', function (e) { if (dragging) moveFromEvent(e); }, { passive: true });
-    cmp.addEventListener('touchend', function () { dragging = false; });
-    cmp.addEventListener('keydown', function (e) {
-      var now = parseInt(cmp.getAttribute('aria-valuenow'), 10) || 50;
-      if (e.key === 'ArrowLeft') setCompare(now - 4);
-      if (e.key === 'ArrowRight') setCompare(now + 4);
-    });
-    setCompare(50);
   }
 
   // Metric graph: set exact path lengths, draw when scrolled into view

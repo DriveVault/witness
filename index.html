@@ -11,6 +11,11 @@
 <meta property="og:description" content="The beautiful, private way to document transformation. Perfectly aligned photos, custom metrics, and your data stays on your device.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://drivevault.github.io/witness/">
+<meta property="og:image" content="https://drivevault.github.io/witness/Favicon.png">
+
+<link rel="icon" type="image/png" href="Favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1C1C1E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -271,6 +276,63 @@ section.block { padding: 6rem 0; position: relative; }
   }
   .filmstrip .frame:hover { transform: none; }
   .filmstrip .frame .stamp { font-size: 0.8rem; padding: 1.2rem 0.6rem 0.6rem; }
+}
+
+/* ---------- Expandable journey examples ---------- */
+.jx { display:grid; grid-template-columns: repeat(3, 1fr); column-gap: 1.1rem; row-gap: 0; }
+.jx-item { display: contents; }
+
+.jx-tab {
+  grid-row: 1; position: relative; display: block; width: 100%; padding: 0; margin: 0;
+  aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); box-shadow: 0 12px 30px var(--shadow);
+  font-family: inherit; text-align: left; color: #fff;
+  transition: transform 0.35s cubic-bezier(.2,.7,.3,1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.jx-item:nth-child(1) .jx-tab { grid-column: 1; }
+.jx-item:nth-child(2) .jx-tab { grid-column: 2; }
+.jx-item:nth-child(3) .jx-tab { grid-column: 3; }
+.jx-tab img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(.2,.7,.3,1); }
+.jx-tab::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.34) 40%, rgba(0,0,0,0) 70%);
+}
+.jx-tab:hover { transform: translateY(-6px); box-shadow: 0 20px 46px var(--shadow); }
+.jx-tab:hover img { transform: scale(1.05); }
+.jx-tab.active { border-color: var(--peach); box-shadow: 0 18px 42px var(--glow); }
+.jx-tab.active img { transform: scale(1.05); }
+
+.jx-cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 1.3rem 1.15rem 1.1rem; }
+.jx-tag { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--peach); margin-bottom: 0.45rem; }
+.jx-title { display: block; font-family: 'Newsreader', Georgia, serif; font-size: 1.3rem; line-height: 1.15; color: #fff; margin-bottom: 0.7rem; }
+.jx-cue { display: inline-flex; align-items: center; gap: 0.42rem; font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.88); }
+.jx-cue svg { width: 15px; height: 15px; transition: transform 0.4s cubic-bezier(.2,.7,.3,1); }
+.jx-tab.active .jx-cue svg { transform: rotate(180deg); }
+
+/* Panels default to open so the examples are still readable without JS.
+   Script adds .jx-on, which collapses them into the click-to-expand behaviour. */
+.jx-panel {
+  grid-column: 1 / -1; display: grid; grid-template-rows: 1fr;
+  transition: grid-template-rows 0.55s cubic-bezier(.2,.7,.3,1);
+}
+.jx-item:nth-child(1) .jx-panel { grid-row: 2; }
+.jx-item:nth-child(2) .jx-panel { grid-row: 3; }
+.jx-item:nth-child(3) .jx-panel { grid-row: 4; }
+.jx.jx-on .jx-panel { grid-template-rows: 0fr; }
+.jx.jx-on .jx-panel.open { grid-template-rows: 1fr; }
+.jx-panel.instant, .jx.jx-init .jx-panel { transition: none; }
+.jx-panel-inner { overflow: hidden; min-height: 0; }
+.jx-panel-pad { padding-top: 2.6rem; }
+.jx-panel .journey-copy { margin-bottom: 1.6rem; }
+
+@media (max-width: 820px){
+  .jx { display: flex; flex-direction: column; gap: 0; }
+  .jx-tab { aspect-ratio: 4/3; margin-bottom: 0.9rem; border-radius: 18px; }
+  .jx-tab:hover { transform: none; }
+  .jx-tab:hover img { transform: none; }
+  .jx-title { font-size: 1.18rem; }
+  .jx-panel-inner { margin: 0 -6vw; padding-left: 6vw; padding-right: 6vw; }
+  .jx-panel-pad { padding-top: 0.2rem; padding-bottom: 1.6rem; }
 }
 
 /* ---------- Metrics graph ---------- */
@@ -605,69 +667,105 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       <p>WTNS can document <em>anything</em> that changes visually. With ghost overlay keeping every shot aligned, at whatever interval suits you, for as long as the change takes, here's the kind of transformation you could capture. A few more ideas: a scar healing, a city skyline being built, a bonsai you're shaping, your hair growing out, a leather bag wearing in.</p>
     </div>
 
-    <div class="journey reveal">
-      <div class="journey-copy">
-        <div class="copy-text">
-        <span class="tag">Skin · 84 days</span>
-        <h3>Watch skin clarity turn a corner.</h3>
-        <p>Track a breakout back to calm with a consistent, well-lit frame, then log clarity, mood, and what you changed alongside each shot so you can see what actually worked.</p>
+    <div class="jx reveal" id="jx">
+      <div class="jx-item">
+        <button class="jx-tab" type="button" id="jx-tab-skin" aria-expanded="false" aria-controls="jx-panel-skin">
+          <img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="" loading="lazy">
+          <span class="jx-cap">
+            <span class="jx-tag">Skin · 84 days</span>
+            <span class="jx-title">Watch skin clarity turn a corner.</span>
+            <span class="jx-cue">See the sequence <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </span>
+        </button>
+        <div class="jx-panel" id="jx-panel-skin" role="region" aria-labelledby="jx-tab-skin">
+          <div class="jx-panel-inner">
+            <div class="jx-panel-pad">
+        <div class="journey-copy">
+          <div class="copy-text">
+          <p>Track a breakout back to calm with a consistent, well-lit frame, then log clarity, mood, and what you changed alongside each shot so you can see what actually worked.</p>
+          </div>
+          <div class="metric-strip">
+            <div class="metric-chip"><span class="k">Clarity</span><span class="v">4.6 <span class="up">▲ 2.8</span></span></div>
+            <div class="metric-chip"><span class="k">Mood</span><span class="v">😊 4/5</span></div>
+            <div class="metric-chip"><span class="k">Routine</span><span class="v">Retinoid</span></div>
+          </div>
         </div>
-        <div class="metric-strip">
-          <div class="metric-chip"><span class="k">Clarity</span><span class="v">4.6 <span class="up">▲ 2.8</span></span></div>
-          <div class="metric-chip"><span class="k">Mood</span><span class="v">😊 4/5</span></div>
-          <div class="metric-chip"><span class="k">Routine</span><span class="v">Retinoid</span></div>
+        <div class="filmstrip">
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample1.png?v=1783356542" alt="Skin tracking, day 1" loading="lazy"><span class="stamp">Day 1</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample2.png?v=1783356542" alt="Skin tracking, day 21" loading="lazy"><span class="stamp">Day 21</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample3.png?v=1783356542" alt="Skin tracking, day 42" loading="lazy"><span class="stamp">Day 42</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample4.png?v=1783356542" alt="Skin tracking, day 63" loading="lazy"><span class="stamp">Day 63</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="Skin tracking, day 84" loading="lazy"><span class="stamp">Day 84</span></div>
         </div>
-      </div>
-      <div class="filmstrip">
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample1.png?v=1783356542" alt="Skin tracking, day 1"><span class="stamp">Day 1</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample2.png?v=1783356542" alt="Skin tracking, day 21"><span class="stamp">Day 21</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample3.png?v=1783356542" alt="Skin tracking, day 42"><span class="stamp">Day 42</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample4.png?v=1783356542" alt="Skin tracking, day 63"><span class="stamp">Day 63</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="Skin tracking, day 84"><span class="stamp">Day 84</span></div>
-      </div>
-    </div>
-
-    <div class="journey reveal">
-      <div class="journey-copy">
-        <div class="copy-text">
-        <span class="tag">Plant · 1 year</span>
-        <h3>A cactus grows too slowly to notice, until now.</h3>
-        <p>Snap the same frame once a month and the year compresses into a few seconds. Log height and waterings so growth spurts line up with what you did.</p>
-        </div>
-        <div class="metric-strip">
-          <div class="metric-chip"><span class="k">Height</span><span class="v">18 cm <span class="up">▲ 11</span></span></div>
-          <div class="metric-chip"><span class="k">Waterings</span><span class="v">14</span></div>
-          <div class="metric-chip"><span class="k">Interval</span><span class="v">Monthly</span></div>
-        </div>
-      </div>
-      <div class="filmstrip">
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample1.png?v=1783356546" alt="Cactus, month 1"><span class="stamp">Month 1</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample2.png?v=1783356546" alt="Cactus, month 4"><span class="stamp">Month 4</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample3.png?v=1783356546" alt="Cactus, month 7"><span class="stamp">Month 7</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample4.png?v=1783356546" alt="Cactus, month 10"><span class="stamp">Month 10</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample5.png?v=1783356546" alt="Cactus, month 12"><span class="stamp">Month 12</span></div>
-      </div>
-    </div>
-
-    <div class="journey reveal">
-      <div class="journey-copy">
-        <div class="copy-text">
-        <span class="tag">Renovation · 6 weeks</span>
-        <h3>From demo day to the finished kitchen.</h3>
-        <p>Document a renovation from the same corner and keep budget, contractor notes, and satisfaction next to every stage, so the before/after tells the whole story, cost included.</p>
-        </div>
-        <div class="metric-strip">
-          <div class="metric-chip"><span class="k">Spent</span><span class="v">£11.4k</span></div>
-          <div class="metric-chip"><span class="k">Satisfaction</span><span class="v">⭐ 5/5</span></div>
-          <div class="metric-chip"><span class="k">Stage</span><span class="v">Complete</span></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="filmstrip">
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample1.png?v=1783356551" alt="Kitchen renovation, week 1"><span class="stamp">Week 1</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample2.png?v=1783356551" alt="Kitchen renovation, week 2"><span class="stamp">Week 2</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample3.png?v=1783356551" alt="Kitchen renovation, week 4"><span class="stamp">Week 4</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample4.png?v=1783356550" alt="Kitchen renovation, week 5"><span class="stamp">Week 5</span></div>
-        <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample5.png?v=1783356551" alt="Kitchen renovation, week 6"><span class="stamp">Week 6</span></div>
+      <div class="jx-item">
+        <button class="jx-tab" type="button" id="jx-tab-plant" aria-expanded="false" aria-controls="jx-panel-plant">
+          <img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample5.png?v=1783356546" alt="" loading="lazy">
+          <span class="jx-cap">
+            <span class="jx-tag">Plant · 1 year</span>
+            <span class="jx-title">See a cactus actually grow.</span>
+            <span class="jx-cue">See the sequence <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </span>
+        </button>
+        <div class="jx-panel" id="jx-panel-plant" role="region" aria-labelledby="jx-tab-plant">
+          <div class="jx-panel-inner">
+            <div class="jx-panel-pad">
+        <div class="journey-copy">
+          <div class="copy-text">
+          <p>Snap the same frame once a month and the year compresses into a few seconds. Log height and waterings so growth spurts line up with what you did.</p>
+          </div>
+          <div class="metric-strip">
+            <div class="metric-chip"><span class="k">Height</span><span class="v">18 cm <span class="up">▲ 11</span></span></div>
+            <div class="metric-chip"><span class="k">Waterings</span><span class="v">14</span></div>
+            <div class="metric-chip"><span class="k">Interval</span><span class="v">Monthly</span></div>
+          </div>
+        </div>
+        <div class="filmstrip">
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample1.png?v=1783356546" alt="Cactus, month 1" loading="lazy"><span class="stamp">Month 1</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample2.png?v=1783356546" alt="Cactus, month 4" loading="lazy"><span class="stamp">Month 4</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample3.png?v=1783356546" alt="Cactus, month 7" loading="lazy"><span class="stamp">Month 7</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample4.png?v=1783356546" alt="Cactus, month 10" loading="lazy"><span class="stamp">Month 10</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample5.png?v=1783356546" alt="Cactus, month 12" loading="lazy"><span class="stamp">Month 12</span></div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="jx-item">
+        <button class="jx-tab" type="button" id="jx-tab-reno" aria-expanded="false" aria-controls="jx-panel-reno">
+          <img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample5.png?v=1783356551" alt="" loading="lazy">
+          <span class="jx-cap">
+            <span class="jx-tag">Renovation · 6 weeks</span>
+            <span class="jx-title">From demo day to finished kitchen.</span>
+            <span class="jx-cue">See the sequence <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </span>
+        </button>
+        <div class="jx-panel" id="jx-panel-reno" role="region" aria-labelledby="jx-tab-reno">
+          <div class="jx-panel-inner">
+            <div class="jx-panel-pad">
+        <div class="journey-copy">
+          <div class="copy-text">
+          <p>Document a renovation from the same corner and keep budget, contractor notes, and satisfaction next to every stage, so the before/after tells the whole story, cost included.</p>
+          </div>
+          <div class="metric-strip">
+            <div class="metric-chip"><span class="k">Spent</span><span class="v">£11.4k</span></div>
+            <div class="metric-chip"><span class="k">Satisfaction</span><span class="v">⭐ 5/5</span></div>
+            <div class="metric-chip"><span class="k">Stage</span><span class="v">Complete</span></div>
+          </div>
+        </div>
+        <div class="filmstrip">
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample1.png?v=1783356551" alt="Kitchen renovation, week 1" loading="lazy"><span class="stamp">Week 1</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample2.png?v=1783356551" alt="Kitchen renovation, week 2" loading="lazy"><span class="stamp">Week 2</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample3.png?v=1783356551" alt="Kitchen renovation, week 4" loading="lazy"><span class="stamp">Week 4</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample4.png?v=1783356550" alt="Kitchen renovation, week 5" loading="lazy"><span class="stamp">Week 5</span></div>
+            <div class="frame"><img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessKitchenExample5.png?v=1783356551" alt="Kitchen renovation, week 6" loading="lazy"><span class="stamp">Week 6</span></div>
+        </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -961,8 +1059,6 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       <div class="foot-col">
         <h4>Support</h4>
         <a href="mailto:Hello@DriveVault.io">Hello@DriveVault.io</a>
-        <a href="#">Instagram</a>
-        <a href="#">X / Twitter</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -1090,6 +1186,47 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
       drawObserver.observe(metricSvg);
     } else {
       metricSvg.classList.add('drawn');
+    }
+  }
+
+  // Expandable journey examples: tiles that open a full sequence below
+  var jx = document.getElementById('jx');
+  if (jx) {
+    jx.classList.add('jx-init');
+    jx.classList.add('jx-on');
+    var jxUnlock = function () { jx.classList.remove('jx-init'); };
+    if (window.requestAnimationFrame) { window.requestAnimationFrame(jxUnlock); } else { setTimeout(jxUnlock, 30); }
+    var jxTabs = jx.querySelectorAll('.jx-tab');
+    var jxPanelOf = function (tab) {
+      return document.getElementById(tab.getAttribute('aria-controls'));
+    };
+    var jxClose = function (tab, instant) {
+      var panel = jxPanelOf(tab);
+      tab.classList.remove('active');
+      tab.setAttribute('aria-expanded', 'false');
+      if (!panel) return;
+      if (instant) {
+        panel.classList.add('instant');
+        panel.classList.remove('open');
+        void panel.offsetHeight;
+        panel.classList.remove('instant');
+      } else {
+        panel.classList.remove('open');
+      }
+    };
+    var jxHandler = function () {
+      var wasOpen = this.classList.contains('active');
+      for (var k = 0; k < jxTabs.length; k++) {
+        if (jxTabs[k] !== this) jxClose(jxTabs[k], true);
+      }
+      if (wasOpen) { jxClose(this, false); return; }
+      var panel = jxPanelOf(this);
+      this.classList.add('active');
+      this.setAttribute('aria-expanded', 'true');
+      if (panel) panel.classList.add('open');
+    };
+    for (var t2 = 0; t2 < jxTabs.length; t2++) {
+      jxTabs[t2].addEventListener('click', jxHandler);
     }
   }
 

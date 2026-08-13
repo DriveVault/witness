@@ -279,6 +279,33 @@ section.block { padding: 6rem 0; position: relative; }
   .filmstrip .frame .stamp { font-size: 0.8rem; padding: 1.2rem 0.6rem 0.6rem; }
 }
 
+/* ---------- App demo video ---------- */
+.demo { background: var(--surface-2); }
+.demo .section-head { margin-bottom: 2.2rem; }
+.demo-figure { position: relative; max-width: 420px; margin: 0 auto; }
+.demo-figure::before {
+  content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 122%; height: 108%; border-radius: 50%;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 66%); pointer-events: none;
+}
+.demo-frame {
+  position: relative; aspect-ratio: 1 / 1; border-radius: 26px; overflow: hidden;
+  background: #252528; border: 1px solid var(--line); box-shadow: 0 28px 60px var(--shadow);
+}
+.demo-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.demo-toggle {
+  position: absolute; right: 0.8rem; bottom: 0.8rem; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(20,20,22,0.55); color: #fff; cursor: pointer;
+  display: grid; place-items: center; opacity: 0; transition: opacity 0.3s ease, background 0.2s ease;
+}
+.demo-toggle svg { width: 16px; height: 16px; }
+.demo-figure:hover .demo-toggle, .demo-toggle:focus-visible { opacity: 1; }
+.demo-toggle:hover { background: rgba(20,20,22,0.8); }
+.demo-note { text-align: center; font-size: 0.86rem; color: var(--text-2); margin-top: 1.4rem; }
+@media (hover: none){ .demo-toggle { opacity: 1; } }
+@media (max-width: 600px){ .demo-figure { max-width: 320px; } .demo-frame { border-radius: 22px; } }
+
 /* ---------- Expandable journey examples ---------- */
 .jx { display:grid; grid-template-columns: repeat(3, 1fr); column-gap: 1.1rem; row-gap: 0; }
 .jx-item { display: contents; }
@@ -376,12 +403,20 @@ section.block { padding: 6rem 0; position: relative; }
   .metric-svg .area, .metric-svg .pt { opacity:1; transform:none; }
 }
 
-.metric-tags { display:flex; flex-wrap:wrap; gap:0.6rem; justify-content:center; margin-top:2rem; }
+.metric-tags { margin-top:2rem; }
+.metric-tags-hint { text-align:center; font-size:0.82rem; color:var(--text-2); margin-bottom:0.9rem; }
+.metric-tag-row { display:flex; flex-wrap:wrap; gap:0.6rem; justify-content:center; }
 .mtag {
   background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:0.5rem 1rem;
-  font-size:0.85rem; color:var(--text-2); transition: border-color 0.2s, color 0.2s;
+  font-size:0.85rem; color:var(--text-2); font-family:inherit; line-height:1.3;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
 }
+button.mtag { cursor:pointer; }
 .mtag:hover { border-color:var(--peach-soft); color:var(--peach-deep); }
+.mtag.active {
+  border-color:var(--peach); background:var(--peach-soft); color:#7A3B36;
+  font-weight:600; box-shadow:0 4px 14px var(--glow);
+}
 .mtag-custom { background: linear-gradient(135deg, var(--peach), var(--peach-deep)); color:#fff; border-color:transparent; font-weight:600; }
 @media (max-width:600px){ .metric-card{ padding:1.4rem 1rem 1rem; } .metric-legend{ gap:0.8rem; } }
 
@@ -659,7 +694,7 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
           <div><small>Download on the</small><span>App Store</span></div>
         </a>
-        <a href="#journeys" class="btn btn-ghost">See it in action</a>
+        <a href="#demo" class="btn btn-ghost">See it in action</a>
       </div>
       <div class="hero-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
@@ -710,6 +745,26 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     </div>
   </div>
 </header>
+
+<section class="block demo" id="demo">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="kicker">See it running</div>
+      <h2>This is what it looks like in your hand.</h2>
+      <p>Capturing a photo through the ghost overlay, logging a metric, and scrubbing back through the record. No narration, no edit tricks, just the app running.</p>
+    </div>
+    <div class="demo-figure reveal">
+      <div class="demo-frame">
+        <video id="demoVideo" muted loop playsinline preload="metadata"
+               aria-label="Screen recording of the WTNS app: taking an aligned photo, logging a metric, and scrolling through a record">
+          <source src="WTNS-Example.mp4" type="video/mp4">
+        </video>
+        <button type="button" class="demo-toggle" id="demoToggle" aria-label="Pause the demo video"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+      </div>
+      <p class="demo-note">A real screen recording of WTNS running on iOS.</p>
+    </div>
+  </div>
+</section>
 
 <section class="block journeys" id="journeys">
   <div class="wrap">
@@ -834,12 +889,12 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     <div class="metric-card reveal">
       <div class="metric-head">
         <div>
-          <span class="metric-title">Skin confidence journey</span>
-          <span class="metric-sub">New retinoid routine · 9 months</span>
+          <span class="metric-title" id="metricTitle">Skin confidence journey</span>
+          <span class="metric-sub" id="metricSub">New retinoid routine · 9 months</span>
         </div>
         <div class="metric-legend">
-          <span class="leg leg-sc"><i></i> Self-consciousness</span>
-          <span class="leg leg-hp"><i></i> Happiness</span>
+          <span class="leg leg-sc" id="legSc"><i></i> Self-consciousness</span>
+          <span class="leg leg-hp" id="legHp"><i></i> Happiness</span>
         </div>
       </div>
       <div class="metric-plot">
@@ -862,19 +917,20 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
   <g class="pts-group"><circle class="pt pt-hp" cx="70.0" cy="264.0" r="5" style="--i:0"/><circle class="pt pt-hp" cx="146.7" cy="251.2" r="5" style="--i:1"/><circle class="pt pt-hp" cx="223.3" cy="228.8" r="5" style="--i:2"/><circle class="pt pt-hp" cx="300.0" cy="238.4" r="5" style="--i:3"/><circle class="pt pt-hp" cx="376.7" cy="200.0" r="5" style="--i:4"/><circle class="pt pt-hp" cx="453.3" cy="177.6" r="5" style="--i:5"/><circle class="pt pt-hp" cx="530.0" cy="184.0" r="5" style="--i:6"/><circle class="pt pt-hp" cx="606.7" cy="142.4" r="5" style="--i:7"/><circle class="pt pt-hp" cx="683.3" cy="123.2" r="5" style="--i:8"/><circle class="pt pt-hp" cx="760.0" cy="100.8" r="5" style="--i:9"/><circle class="pt pt-sc" cx="70.0" cy="88.0" r="5" style="--i:0"/><circle class="pt pt-sc" cx="146.7" cy="97.6" r="5" style="--i:1"/><circle class="pt pt-sc" cx="223.3" cy="123.2" r="5" style="--i:2"/><circle class="pt pt-sc" cx="300.0" cy="110.4" r="5" style="--i:3"/><circle class="pt pt-sc" cx="376.7" cy="148.8" r="5" style="--i:4"/><circle class="pt pt-sc" cx="453.3" cy="174.4" r="5" style="--i:5"/><circle class="pt pt-sc" cx="530.0" cy="164.8" r="5" style="--i:6"/><circle class="pt pt-sc" cx="606.7" cy="219.2" r="5" style="--i:7"/><circle class="pt pt-sc" cx="683.3" cy="254.4" r="5" style="--i:8"/><circle class="pt pt-sc" cx="760.0" cy="273.6" r="5" style="--i:9"/></g>
 </svg>
       </div>
-      <p class="metric-foot">Self-consciousness started high and happiness low. Nine months on, with the real dips and setbacks along the way, the lines have crossed. That's the story the photos alone can't tell you.</p>
+      <p class="metric-foot" id="metricFoot">Self-consciousness started high and happiness low. Nine months on, with the real dips and setbacks along the way, the lines have crossed. That's the story the photos alone can't tell you.</p>
     </div>
 
-    <div class="metric-tags reveal">
-      <span class="mtag">Weight</span>
-      <span class="mtag">Mood</span>
-      <span class="mtag">Skin clarity</span>
-      <span class="mtag">Sleep quality</span>
-      <span class="mtag">Measurements</span>
-      <span class="mtag">Stress level</span>
-      <span class="mtag">Plant height</span>
-      <span class="mtag">Satisfaction</span>
-      <span class="mtag mtag-custom">+ your own metric</span>
+    <div class="metric-tags reveal" id="metricTags">
+      <p class="metric-tags-hint">Tap a metric to plot a different journey</p>
+      <div class="metric-tag-row" role="group" aria-label="Choose a metric to plot">
+        <button type="button" class="mtag active" data-scn="skin" aria-pressed="true">Skin clarity</button>
+        <button type="button" class="mtag" data-scn="weight" aria-pressed="false">Weight</button>
+        <button type="button" class="mtag" data-scn="mood" aria-pressed="false">Mood</button>
+        <button type="button" class="mtag" data-scn="sleep" aria-pressed="false">Sleep quality</button>
+        <button type="button" class="mtag" data-scn="plant" aria-pressed="false">Plant height</button>
+        <button type="button" class="mtag" data-scn="reno" aria-pressed="false">Satisfaction</button>
+        <span class="mtag mtag-custom">+ your own metric</span>
+      </div>
     </div>
   <div class="wrap">
     <div class="cta-band reveal">
@@ -1283,15 +1339,277 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     }
   }
 
-  // Metric graph: set exact path lengths, draw when scrolled into view
+  // Demo video: plays itself when on screen, always pausable, never on reduced motion
+  var demoVideo = document.getElementById('demoVideo');
+  var demoToggle = document.getElementById('demoToggle');
+  if (demoVideo) {
+    var ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>';
+    var vReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var vWanted = !vReduce;   // whether the person wants it running
+    var vInView = false;
+
+    var syncToggle = function () {
+      if (!demoToggle) return;
+      var playing = !demoVideo.paused;
+      demoToggle.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+      demoToggle.setAttribute('aria-label', playing ? 'Pause the demo video' : 'Play the demo video');
+    };
+    var tryPlay = function () {
+      var pr = demoVideo.play();
+      if (pr && pr.catch) pr.catch(function () { syncToggle(); });
+    };
+
+    if (demoToggle) {
+      demoToggle.addEventListener('click', function () {
+        if (demoVideo.paused) { vWanted = true; tryPlay(); } else { vWanted = false; demoVideo.pause(); }
+        syncToggle();
+      });
+    }
+    demoVideo.addEventListener('play', syncToggle);
+    demoVideo.addEventListener('pause', syncToggle);
+
+    // Only stream while it's actually on screen; a 1:1 recording is not cheap
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        vInView = entries[0].isIntersecting;
+        if (vInView && vWanted) { tryPlay(); } else if (!vInView) { demoVideo.pause(); }
+      }, { threshold: 0.4 }).observe(demoVideo);
+    } else if (vWanted) {
+      tryPlay();
+    }
+    if (vReduce && demoToggle) demoToggle.style.opacity = '1';
+    syncToggle();
+  }
+
+  // Metric graph: switchable scenarios, drawn on scroll and redrawn on demand
   var metricSvg = document.getElementById('metricSvg');
   if (metricSvg) {
-    var lines = metricSvg.querySelectorAll('.line');
-    for (var li = 0; li < lines.length; li++) {
-      var len = 1200;
-      try { len = Math.ceil(lines[li].getTotalLength()); } catch (e) {}
-      lines[li].style.setProperty('--len', len);
+    var PLOT = { x0: 70, x1: 760, yTop: 40, yBot: 360, labelY: 392 };
+
+    // Each scenario shares one y-axis, so both series are chosen to sit on the same scale
+    var SCENARIOS = {
+      skin: {
+        title: 'Skin confidence journey',
+        sub: 'New retinoid routine · 9 months',
+        min: 0, max: 100,
+        x: ['Start','M1','M2','M3','M4','M5','M6','M7','M8','M9'],
+        a: { name: 'Self-consciousness', v: [85,82,74,78,66,58,61,44,33,27] },
+        b: { name: 'Happiness',          v: [30,34,41,38,50,57,55,68,74,81] },
+        foot: "Self-consciousness started high and happiness low. Nine months on, with the real dips and setbacks along the way, the lines have crossed. That's the story the photos alone can't tell you."
+      },
+      weight: {
+        title: 'Body recomposition',
+        sub: 'Strength training and walking · 12 weeks',
+        min: 85, max: 105,
+        x: ['Start','W2','W4','W6','W8','W10','W12'],
+        a: { name: 'Waist (cm)',  v: [104,102,100,99,97,95,93.5] },
+        b: { name: 'Weight (kg)', v: [92.4,91.1,89.6,89.8,88.2,86.9,85.4] },
+        foot: 'Weight barely moved for a fortnight in the middle, and plenty of people quit at exactly that point. The waist measurement kept falling the whole time. Two metrics beside the same photo show you the plateau was never a plateau.'
+      },
+      mood: {
+        title: 'Mood and stress',
+        sub: 'Daily check-in · 8 weeks',
+        min: 0, max: 10,
+        x: ['Start','W1','W2','W3','W4','W5','W6','W7'],
+        a: { name: 'Stress', v: [7.8,8.1,6.9,7.2,5.9,5.2,5.6,4.1] },
+        b: { name: 'Mood',   v: [4.2,4.0,5.1,4.6,5.8,6.4,6.2,7.3] },
+        foot: 'Neither line moves in a straight path, and week three looked like a step backwards at the time. Logged next to a photo each day, the direction of travel shows up long before you would feel it.'
+      },
+      sleep: {
+        title: 'Sleep quality',
+        sub: 'New evening routine · 8 weeks',
+        min: 0, max: 10,
+        x: ['Start','W1','W2','W3','W4','W5','W6','W7'],
+        a: { name: 'Hours slept',   v: [5.4,5.9,5.6,6.4,6.8,6.6,7.2,7.5] },
+        b: { name: 'Felt rested',   v: [3.5,4.2,4.0,5.4,6.1,5.8,7.0,7.8] },
+        foot: 'Hours in bed and how rested you actually felt are two different numbers. Tracking both tells you which one your new routine is really moving, and whether the extra hour is doing anything at all.'
+      },
+      plant: {
+        title: 'Cactus growth',
+        sub: 'Measured monthly · 12 months',
+        min: 0, max: 20,
+        x: ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'],
+        a: { name: 'Height (cm)', v: [2,2.6,3.4,4.8,6.2,7.5,8.0,8.2,9.4,12.1,15.0,18] },
+        b: { name: 'Waterings',   v: [1,2,4,5,6,7,8,10,11,12,13,14] },
+        foot: 'Growth flattened over the winter months while the watering carried on as usual. The photos show you that nothing happened; the metrics show you why, and what to do differently next year.'
+      },
+      reno: {
+        title: 'Kitchen renovation',
+        sub: 'Six-week rebuild · logged weekly',
+        min: 0, max: 100,
+        x: ['Start','W1','W2','W3','W4','W5','W6'],
+        a: { name: 'Progress',     v: [0,15,32,44,58,80,100] },
+        b: { name: 'Satisfaction', v: [30,22,18,35,54,76,95] },
+        foot: 'Satisfaction fell through demolition and only caught up with progress right at the end. Worth having on record for the next project, when week two feels like an expensive mistake.'
+      }
+    };
+
+    var fmt = function (n) {
+      return (Math.round(n * 10) / 10).toString();
+    };
+    var yOf = function (v, s) {
+      var r = (v - s.min) / (s.max - s.min);
+      return PLOT.yBot - r * (PLOT.yBot - PLOT.yTop);
+    };
+    var xOf = function (i, n) {
+      return n < 2 ? PLOT.x0 : PLOT.x0 + (PLOT.x1 - PLOT.x0) * (i / (n - 1));
+    };
+
+    // Catmull-Rom through every point, converted to cubic beziers
+    var pathOf = function (vals, s) {
+      var n = vals.length, pts = [], i;
+      for (i = 0; i < n; i++) pts.push([xOf(i, n), yOf(vals[i], s)]);
+      var d = 'M ' + pts[0][0].toFixed(1) + ',' + pts[0][1].toFixed(1);
+      for (i = 0; i < n - 1; i++) {
+        var p0 = pts[i > 0 ? i - 1 : 0], p1 = pts[i], p2 = pts[i + 1];
+        var p3 = pts[i + 2 < n ? i + 2 : n - 1];
+        var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+        var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+        d += ' C ' + c1x.toFixed(1) + ',' + c1y.toFixed(1) + ' ' + c2x.toFixed(1) + ',' + c2y.toFixed(1) +
+             ' ' + p2[0].toFixed(1) + ',' + p2[1].toFixed(1);
+      }
+      return d;
+    };
+
+    var buildSvg = function (s) {
+      var n = s.x.length, i, out = '';
+      out += '<defs>' +
+        '<linearGradient id="scFill" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="var(--sc-color)" stop-opacity="0.18"/>' +
+        '<stop offset="100%" stop-color="var(--sc-color)" stop-opacity="0"/></linearGradient>' +
+        '<linearGradient id="hpFill" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0%" stop-color="var(--hp-color)" stop-opacity="0.22"/>' +
+        '<stop offset="100%" stop-color="var(--hp-color)" stop-opacity="0"/></linearGradient></defs>';
+
+      // grid + axis labels
+      out += '<g class="grid-group">';
+      for (i = 0; i < 5; i++) {
+        var gy = PLOT.yBot - (PLOT.yBot - PLOT.yTop) * (i / 4);
+        var gv = s.min + (s.max - s.min) * (i / 4);
+        out += '<line class="grid" x1="' + PLOT.x0 + '" y1="' + gy.toFixed(1) + '" x2="' + PLOT.x1 + '" y2="' + gy.toFixed(1) + '"/>';
+        out += '<text class="axis-lbl" x="58" y="' + (gy + 4).toFixed(1) + '" text-anchor="end">' + fmt(gv) + '</text>';
+      }
+      for (i = 0; i < n; i++) {
+        out += '<text class="axis-lbl" x="' + xOf(i, n).toFixed(1) + '" y="' + PLOT.labelY + '" text-anchor="middle">' + s.x[i] + '</text>';
+      }
+      out += '</g>';
+
+      var dA = pathOf(s.a.v, s), dB = pathOf(s.b.v, s);
+      var close = ' L ' + PLOT.x1.toFixed(1) + ',' + PLOT.yBot + ' L ' + PLOT.x0.toFixed(1) + ',' + PLOT.yBot + ' Z';
+      out += '<path class="area area-sc" d="' + dA + close + '" fill="url(#scFill)"/>';
+      out += '<path class="area area-hp" d="' + dB + close + '" fill="url(#hpFill)"/>';
+      out += '<path class="line line-sc" d="' + dA + '" fill="none"/>';
+      out += '<path class="line line-hp" d="' + dB + '" fill="none"/>';
+
+      out += '<g class="pts-group">';
+      for (i = 0; i < n; i++) {
+        out += '<circle class="pt pt-hp" cx="' + xOf(i, n).toFixed(1) + '" cy="' + yOf(s.b.v[i], s).toFixed(1) + '" r="5" style="--i:' + i + '"/>';
+      }
+      for (i = 0; i < n; i++) {
+        out += '<circle class="pt pt-sc" cx="' + xOf(i, n).toFixed(1) + '" cy="' + yOf(s.a.v[i], s).toFixed(1) + '" r="5" style="--i:' + i + '"/>';
+      }
+      out += '</g>';
+      return out;
+    };
+
+    var setLengths = function () {
+      var lines = metricSvg.querySelectorAll('.line');
+      for (var li = 0; li < lines.length; li++) {
+        var len = 1200;
+        try { len = Math.ceil(lines[li].getTotalLength()); } catch (e) {}
+        lines[li].style.setProperty('--len', len);
+      }
+    };
+
+    var mTitle = document.getElementById('metricTitle');
+    var mSub = document.getElementById('metricSub');
+    var mFoot = document.getElementById('metricFoot');
+    var legSc = document.getElementById('legSc');
+    var legHp = document.getElementById('legHp');
+    var tagBtns = document.querySelectorAll('#metricTags button.mtag');
+
+    var showScenario = function (key) {
+      var s = SCENARIOS[key];
+      if (!s) return;
+      if (mTitle) mTitle.textContent = s.title;
+      if (mSub) mSub.textContent = s.sub;
+      if (mFoot) mFoot.textContent = s.foot;
+      if (legSc) legSc.innerHTML = '<i></i> ' + s.a.name;
+      if (legHp) legHp.innerHTML = '<i></i> ' + s.b.name;
+      metricSvg.setAttribute('aria-label',
+        'Line graph of ' + s.a.name + ' and ' + s.b.name + ' over ' + s.x.length + ' points: ' + s.title);
+      // Rebuilding the nodes resets the draw animation cleanly, with no reverse tween
+      metricSvg.classList.remove('drawn');
+      metricSvg.innerHTML = buildSvg(s);
+      setLengths();
+      var play = function () { metricSvg.classList.add('drawn'); };
+      if (window.requestAnimationFrame) { window.requestAnimationFrame(play); } else { setTimeout(play, 30); }
+      for (var b = 0; b < tagBtns.length; b++) {
+        var on = tagBtns[b].getAttribute('data-scn') === key;
+        tagBtns[b].classList.toggle('active', on);
+        tagBtns[b].setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+    };
+
+    // Auto-cycle the scenarios so the pills are visibly interactive.
+    // A click jumps to that scenario and buys the reader a long pause before cycling resumes.
+    var ORDER = ['skin', 'weight', 'mood', 'sleep', 'plant', 'reno'];
+    var AUTO_MS = 7000;      // time on each scenario
+    var RESUME_MS = 45000;   // quiet period after someone picks one themselves
+    var mReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var curIdx = 0, autoTimer = null, resumeTimer = null;
+    var userPaused = false, hovering = false, mInView = false;
+
+    var clearAuto = function () {
+      if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+    };
+    var scheduleAuto = function () {
+      clearAuto();
+      if (mReduce || userPaused || hovering || !mInView || document.hidden) return;
+      autoTimer = setTimeout(function () {
+        curIdx = (curIdx + 1) % ORDER.length;
+        showScenario(ORDER[curIdx]);
+        scheduleAuto();
+      }, AUTO_MS);
+    };
+
+    for (var b2 = 0; b2 < tagBtns.length; b2++) {
+      tagBtns[b2].addEventListener('click', function () {
+        var key = this.getAttribute('data-scn');
+        var at = ORDER.indexOf(key);
+        if (at > -1) curIdx = at;
+        userPaused = true;
+        clearAuto();
+        if (resumeTimer) clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(function () { userPaused = false; scheduleAuto(); }, RESUME_MS);
+        showScenario(key);
+      });
     }
+
+    // Don't cycle a chart nobody is looking at, and don't switch it mid-read
+    var metricCard = metricSvg.closest('.metric-card');
+    var hoverTargets = [metricCard, document.getElementById('metricTags')];
+    for (var hv = 0; hv < hoverTargets.length; hv++) {
+      if (!hoverTargets[hv]) continue;
+      hoverTargets[hv].addEventListener('mouseenter', function () { hovering = true; clearAuto(); });
+      hoverTargets[hv].addEventListener('mouseleave', function () { hovering = false; scheduleAuto(); });
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { clearAuto(); } else { scheduleAuto(); }
+    });
+    if ('IntersectionObserver' in window && metricCard) {
+      new IntersectionObserver(function (entries) {
+        mInView = entries[0].isIntersecting;
+        if (mInView) { scheduleAuto(); } else { clearAuto(); }
+      }, { threshold: 0.3 }).observe(metricCard);
+    } else {
+      mInView = true;
+      scheduleAuto();
+    }
+
+    // First draw uses the markup already in the page, so it works without JS too
+    setLengths();
     var drawObserver = null;
     if ('IntersectionObserver' in window) {
       drawObserver = new IntersectionObserver(function (entries) {

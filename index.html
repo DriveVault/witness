@@ -281,15 +281,17 @@ section.block { padding: 6rem 0; position: relative; }
 
 /* ---------- App demo video ---------- */
 /* Dark mode is set to the exact background baked into the video, so it sits with no visible edge */
-.demo { background: var(--surface-2); }
+/* Each backdrop matches the background baked into that theme's video, so it sits with no visible edge */
+.demo { background: #F9EDE6; }
 [data-theme="dark"] .demo { background: #262528; }
 .demo-split { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 3rem; align-items: center; }
 .demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; }
 .demo-title em { font-style: italic; color: var(--peach-deep); }
 .demo-figure { position: relative; width: 100%; max-width: 660px; margin-left: auto; }
 .demo-figure video {
-  width: 100%; aspect-ratio: 1 / 1; display: block; border-radius: 20px; background: #262528;
+  width: 100%; aspect-ratio: 1 / 1; display: block; border-radius: 20px; background: #F9EDE6;
 }
+[data-theme="dark"] .demo-figure video { background: #262528; }
 .demo-toggle {
   position: absolute; right: 0.9rem; bottom: 0.9rem; z-index: 2;
   width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
@@ -751,6 +753,8 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     <h2 class="demo-title reveal">An app built around the way that <em>you</em> change</h2>
     <div class="demo-figure reveal">
       <video id="demoVideo" muted loop playsinline preload="metadata" poster="wtns-demo-poster.jpg"
+             data-src-dark="wtns-demo.mp4" data-poster-dark="wtns-demo-poster.jpg"
+             data-src-light="wtns-demo-light.mp4" data-poster-light="wtns-demo-light-poster.jpg"
              aria-label="Screen recording of the WTNS app: taking an aligned photo, logging a metric, and scrolling through a record">
         <source src="wtns-demo.mp4" type="video/mp4">
       </video>
@@ -1378,6 +1382,40 @@ footer { background: var(--surface-2); border-top:1px solid var(--line); padding
     }
     if (vReduce && demoToggle) demoToggle.style.opacity = '1';
     syncToggle();
+
+    // There's a light and a dark cut of the recording, identical except for the backdrop.
+    // Only the one matching the current theme is ever downloaded, and because the two are
+    // frame-synced, swapping keeps the playhead where it was.
+    var demoTheme = null;
+    var swapDemoSource = function (theme) {
+      if (theme === demoTheme) return;
+      var src = demoVideo.getAttribute('data-src-' + theme);
+      var pos = demoVideo.getAttribute('data-poster-' + theme);
+      if (!src) return;
+      demoTheme = theme;
+      var at = demoVideo.currentTime || 0;
+      var wasPlaying = !demoVideo.paused;
+      if (pos) demoVideo.setAttribute('poster', pos);
+      demoVideo.setAttribute('src', src);   // an src on the element wins over <source>
+      demoVideo.load();
+      demoVideo.addEventListener('loadedmetadata', function once() {
+        demoVideo.removeEventListener('loadedmetadata', once);
+        try {
+          var d = demoVideo.duration;
+          demoVideo.currentTime = (d && at < d) ? at : 0;
+        } catch (e) {}
+        if (wasPlaying || (vWanted && vInView)) tryPlay();
+      });
+    };
+    var currentTheme = function () {
+      return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    };
+    swapDemoSource(currentTheme());
+    if (window.MutationObserver) {
+      new MutationObserver(function () {
+        swapDemoSource(currentTheme());
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
   }
 
   // Metric graph: switchable scenarios, drawn on scroll and redrawn on demand

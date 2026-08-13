@@ -282,13 +282,13 @@ section.block { padding: 6rem 0; position: relative; }
 /* ---------- App demo video ---------- */
 /* Dark mode is set to the exact background baked into the video, so it sits with no visible edge */
 .demo { background: var(--surface-2); }
-[data-theme="dark"] .demo { background: #262626; }
-.demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+[data-theme="dark"] .demo { background: #262528; }
+.demo-split { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 3rem; align-items: center; }
 .demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; }
 .demo-title em { font-style: italic; color: var(--peach-deep); }
-.demo-figure { position: relative; width: 100%; max-width: 520px; margin-left: auto; }
+.demo-figure { position: relative; width: 100%; max-width: 660px; margin-left: auto; }
 .demo-figure video {
-  width: 100%; aspect-ratio: 1 / 1; display: block; border-radius: 20px; background: #262626;
+  width: 100%; aspect-ratio: 1 / 1; display: block; border-radius: 20px; background: #262528;
 }
 .demo-toggle {
   position: absolute; right: 0.9rem; bottom: 0.9rem; z-index: 2;
@@ -303,7 +303,7 @@ section.block { padding: 6rem 0; position: relative; }
 @media (max-width: 900px){
   .demo-split { grid-template-columns: 1fr; gap: 2rem; }
   .demo-title { max-width: none; text-align: center; }
-  .demo-figure { max-width: 420px; margin: 0 auto; }
+  .demo-figure { max-width: 480px; margin: 0 auto; }
 }
 
 /* ---------- Expandable journey examples ---------- */

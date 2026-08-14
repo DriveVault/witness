@@ -458,8 +458,9 @@ button.mtag { cursor:pointer; }
 .facc-panel-inner { overflow: hidden; min-height: 0; }
 .facc-panel p { font-size: 0.95rem; color: var(--text-2); padding: 0 1.2rem 1.2rem 4.35rem; margin: 0; }
 
-/* Sized by height so a tall mockup can't stretch the section; runs to the viewport edge and the section floor */
-.features-figure { position: relative; margin-bottom: -6rem; margin-right: calc((min(1160px, 92vw) - 100vw) / 2);
+/* Sized by height so a tall mockup can't stretch the section. The bleed past the content
+   column is capped at 72px, otherwise on a wide monitor it strands the mockup at the window edge. */
+.features-figure { position: relative; margin-bottom: -6rem; margin-right: max((min(1160px, 92vw) - 100vw) / 2, -72px);
   display: flex; justify-content: flex-end; align-items: flex-end; }
 .features-figure img { display: block; width: auto; max-width: 100%; height: auto; max-height: 820px; }
 
@@ -515,7 +516,7 @@ button.mtag { cursor:pointer; }
               linear-gradient(160deg, #2E2224 0%, #241D1F 100%);
   border-color: rgba(237,140,133,0.28);
 }
-.privacy h2 { color: #FFFFFF; font-size: clamp(1.9rem,3.5vw,2.6rem); max-width: 20ch; margin-bottom:1rem; }
+.privacy h2 { color: #FFFFFF; font-size: clamp(1.9rem,3.5vw,2.6rem); max-width: 24ch; margin-bottom:1rem; }
 .privacy .kicker { color: var(--peach-soft); }
 .privacy > .inner { position:relative; z-index:1; display:grid; grid-template-columns: 1fr 1.08fr; gap:2rem; align-items:end; }
 .privacy-copy { align-self:center; display:grid; gap:2rem; }
@@ -530,7 +531,18 @@ button.mtag { cursor:pointer; }
 .privacy p { color: rgba(245,237,234,0.72); }
 .privacy-list { display:grid; gap:1rem; }
 .privacy-item { display:flex; gap:0.9rem; align-items:flex-start; }
-.privacy-item .check { flex:none; width:26px; height:26px; border-radius:8px; background: rgba(237,140,133,0.22); display:grid; place-items:center; color: var(--peach-soft); }
+.privacy-item .check { flex:none; width:26px; height:26px; border-radius:8px; background: rgba(237,140,133,0.22); display:grid; place-items:center; color: var(--peach-soft);
+  animation: checkPulse 4.8s ease-in-out infinite; }
+/* Each check glows green for about a second, then hands off to the one below */
+@keyframes checkPulse {
+  0%, 21%, 100% { background: rgba(237,140,133,0.22); color: var(--peach-soft); box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+  10%           { background: rgba(74,222,128,0.24);  color: #86EFAC;           box-shadow: 0 0 0 1px rgba(74,222,128,0.5), 0 0 18px 2px rgba(74,222,128,0.42); }
+}
+.privacy-item:nth-child(1) .check { animation-delay: 0s; }
+.privacy-item:nth-child(2) .check { animation-delay: 1.2s; }
+.privacy-item:nth-child(3) .check { animation-delay: 2.4s; }
+.privacy-item:nth-child(4) .check { animation-delay: 3.6s; }
+@media (prefers-reduced-motion: reduce){ .privacy-item .check { animation: none; } }
 .privacy-item .check svg { width:15px; height:15px; }
 .privacy-item strong { color: #FFFFFF; font-weight:600; display:block; font-size:0.98rem; }
 .privacy-item span { color: rgba(245,237,234,0.6); font-size:0.88rem; }
@@ -630,7 +642,7 @@ button.mtag { cursor:pointer; }
 .cta-copy { align-self:center; }
 .cta-copy .appstore { margin:0; }
 /* -6rem cancels the section padding so the wrist meets the section floor */
-.cta-figure { margin-bottom:-6rem; margin-right: calc((min(1160px, 92vw) - 100vw) / 2);
+.cta-figure { margin-bottom:-6rem; margin-right: max((min(1160px, 92vw) - 100vw) / 2, -72px);
   display:flex; justify-content:flex-end; align-items:flex-end; }
 .cta-figure img { display:block; width:auto; max-width:100%; height:auto; max-height:860px; }
 @media (max-width: 900px){
@@ -1157,7 +1169,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         <div class="privacy-copy">
           <div>
             <div class="kicker">Privacy-first, by design</div>
-            <h2>Your transformation is personal. It stays that way.</h2>
+            <h2>Your change is personal.<br class="brk">It stays that way.</h2>
             <p>Everything lives on your device, protected by Face ID. No account, no cloud sync required, no third-party sharing.</p>
           </div>
         <div class="privacy-list">

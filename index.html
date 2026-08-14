@@ -283,10 +283,20 @@ section.block { padding: 6rem 0; position: relative; }
   .filmstrip .frame .stamp { font-size: 0.8rem; padding: 1.2rem 0.6rem 0.6rem; }
 }
 
+/* Numbered steps: the first three sections read as a sequence without labouring the point */
+.step-num {
+  display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); color: #fff;
+  font-family: 'Newsreader', Georgia, serif; font-size: 1.4rem; line-height: 1;
+  margin-bottom: 1.1rem; box-shadow: 0 8px 20px var(--glow);
+}
+.section-head.center .step-num { margin-left: auto; margin-right: auto; }
+
 /* ---------- App demo: stacked screen sequence over a fixed hand ---------- */
 .demo { background: var(--surface-2); }
 .demo-split { display: grid; grid-template-columns: 1fr 0.95fr; gap: 3.5rem; align-items: center; }
-.demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; align-self: center; }
+.demo-copy { align-self: center; }
+.demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; }
 .demo-title em { font-style: italic; color: var(--peach-deep); }
 /* The sequence sits in the hero now, sized generously and running off the section floor */
 .demo-figure { position: relative; width: 100%; max-width: 760px; margin: 0 0 -4rem auto; }
@@ -305,7 +315,8 @@ section.block { padding: 6rem 0; position: relative; }
 .demo-screen.snap { transition: opacity 0.14s ease; }
 @media (max-width: 900px){
   .demo-split { grid-template-columns: 1fr; gap: 2rem; }
-  .demo-title { max-width: none; text-align: center; }
+  .demo-copy { text-align: center; }
+  .demo-title { max-width: none; }
 }
 
 /* ---------- Expandable journey examples ---------- */
@@ -728,11 +739,11 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       WTNS
     </a>
     <div class="navlinks">
-      <a href="#journeys">Journeys</a>
+      <a href="#demo">Overlay</a>
       <a href="#metrics">Metrics</a>
-      <a href="#features">Features</a>
-      <a href="#usecases">Use cases</a>
+      <a href="#export">Export</a>
       <a href="#privacy">Privacy</a>
+      <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
     </div>
     <div class="nav-actions">
@@ -783,7 +794,10 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block demo" id="demo">
   <div class="wrap demo-split">
-    <h2 class="demo-title reveal">Track change precisely, with <em>overlay photo technology</em></h2>
+    <div class="demo-copy reveal">
+      <span class="step-num">1</span>
+      <h2 class="demo-title">Track change precisely, with <em>overlay photo technology</em></h2>
+    </div>
     <div class="ghost-demo reveal">
       <div class="ghost-stage" id="ghostStage">
         <img class="stage-img" data-stage="0" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample1.png?v=1783356546" alt="Cactus at month 1" style="opacity:1">
@@ -823,6 +837,97 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         </div>
         <input type="range" id="growth" min="0" max="100" value="0" step="1" style="--fill:0%" aria-label="Cactus growth timeline">
         <p class="ghost-hint" id="ghostHint">Playing. Drag the slider any time to take over.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="metrics">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="step-num">2</span>
+      <h2>Add data points and notes beside every photo, so you know <em>why</em> something changed.</h2>
+      <p>A photo shows you that something changed. The number you logged and the note you wrote that week tell you what caused it: the new product, the higher dose, the fortnight you skipped. Say goodbye to placebos.</p>
+    </div>
+
+    <div class="metric-card reveal">
+      <div class="metric-head">
+        <div>
+          <span class="metric-title" id="metricTitle">Skin confidence journey</span>
+          <span class="metric-sub" id="metricSub">New retinoid routine · 9 months</span>
+        </div>
+        <div class="metric-legend">
+          <span class="leg leg-sc" id="legSc"><i></i> Self-consciousness</span>
+          <span class="leg leg-hp" id="legHp"><i></i> Happiness</span>
+        </div>
+      </div>
+      <div class="metric-plot">
+        <svg class="metric-svg" id="metricSvg" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line graph: self-consciousness falling from 85 to 27 while happiness rises from 30 to 81 over nine months">
+  <defs>
+    <linearGradient id="scFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--sc-color)" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="var(--sc-color)" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hpFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--hp-color)" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="var(--hp-color)" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g class="grid-group"><line class="grid" x1="70" y1="360.0" x2="760" y2="360.0"/><line class="grid" x1="70" y1="280.0" x2="760" y2="280.0"/><line class="grid" x1="70" y1="200.0" x2="760" y2="200.0"/><line class="grid" x1="70" y1="120.0" x2="760" y2="120.0"/><line class="grid" x1="70" y1="40.0" x2="760" y2="40.0"/><text class="axis-lbl" x="58" y="364.0" text-anchor="end">0</text><text class="axis-lbl" x="58" y="284.0" text-anchor="end">25</text><text class="axis-lbl" x="58" y="204.0" text-anchor="end">50</text><text class="axis-lbl" x="58" y="124.0" text-anchor="end">75</text><text class="axis-lbl" x="58" y="44.0" text-anchor="end">100</text><text class="axis-lbl" x="70.0" y="392" text-anchor="middle">Start</text><text class="axis-lbl" x="146.7" y="392" text-anchor="middle">M1</text><text class="axis-lbl" x="223.3" y="392" text-anchor="middle">M2</text><text class="axis-lbl" x="300.0" y="392" text-anchor="middle">M3</text><text class="axis-lbl" x="376.7" y="392" text-anchor="middle">M4</text><text class="axis-lbl" x="453.3" y="392" text-anchor="middle">M5</text><text class="axis-lbl" x="530.0" y="392" text-anchor="middle">M6</text><text class="axis-lbl" x="606.7" y="392" text-anchor="middle">M7</text><text class="axis-lbl" x="683.3" y="392" text-anchor="middle">M8</text><text class="axis-lbl" x="760.0" y="392" text-anchor="middle">M9</text></g>
+  <path class="area area-sc" d="M 70.0,88.0 C 82.8,89.6 121.1,91.7 146.7,97.6 C 172.2,103.5 197.8,121.1 223.3,123.2 C 248.9,125.3 274.4,106.1 300.0,110.4 C 325.6,114.7 351.1,138.1 376.7,148.8 C 402.2,159.5 427.8,171.7 453.3,174.4 C 478.9,177.1 504.4,157.3 530.0,164.8 C 555.6,172.3 581.2,204.3 606.7,219.2 C 632.2,234.1 657.8,245.3 683.3,254.4 C 708.8,263.5 747.2,270.4 760.0,273.6 L 760.0,360 L 70.0,360 Z" fill="url(#scFill)"/>
+  <path class="area area-hp" d="M 70.0,264.0 C 82.8,261.9 121.1,257.1 146.7,251.2 C 172.2,245.3 197.8,230.9 223.3,228.8 C 248.9,226.7 274.4,243.2 300.0,238.4 C 325.6,233.6 351.1,210.1 376.7,200.0 C 402.2,189.9 427.8,180.3 453.3,177.6 C 478.9,174.9 504.4,189.9 530.0,184.0 C 555.6,178.1 581.2,152.5 606.7,142.4 C 632.2,132.3 657.8,130.1 683.3,123.2 C 708.8,116.3 747.2,104.5 760.0,100.8 L 760.0,360 L 70.0,360 Z" fill="url(#hpFill)"/>
+  <path class="line line-sc" id="lineSc" d="M 70.0,88.0 C 82.8,89.6 121.1,91.7 146.7,97.6 C 172.2,103.5 197.8,121.1 223.3,123.2 C 248.9,125.3 274.4,106.1 300.0,110.4 C 325.6,114.7 351.1,138.1 376.7,148.8 C 402.2,159.5 427.8,171.7 453.3,174.4 C 478.9,177.1 504.4,157.3 530.0,164.8 C 555.6,172.3 581.2,204.3 606.7,219.2 C 632.2,234.1 657.8,245.3 683.3,254.4 C 708.8,263.5 747.2,270.4 760.0,273.6" fill="none"/>
+  <path class="line line-hp" id="lineHp" d="M 70.0,264.0 C 82.8,261.9 121.1,257.1 146.7,251.2 C 172.2,245.3 197.8,230.9 223.3,228.8 C 248.9,226.7 274.4,243.2 300.0,238.4 C 325.6,233.6 351.1,210.1 376.7,200.0 C 402.2,189.9 427.8,180.3 453.3,177.6 C 478.9,174.9 504.4,189.9 530.0,184.0 C 555.6,178.1 581.2,152.5 606.7,142.4 C 632.2,132.3 657.8,130.1 683.3,123.2 C 708.8,116.3 747.2,104.5 760.0,100.8" fill="none"/>
+  <g class="pts-group"><circle class="pt pt-hp" cx="70.0" cy="264.0" r="5" style="--i:0"/><circle class="pt pt-hp" cx="146.7" cy="251.2" r="5" style="--i:1"/><circle class="pt pt-hp" cx="223.3" cy="228.8" r="5" style="--i:2"/><circle class="pt pt-hp" cx="300.0" cy="238.4" r="5" style="--i:3"/><circle class="pt pt-hp" cx="376.7" cy="200.0" r="5" style="--i:4"/><circle class="pt pt-hp" cx="453.3" cy="177.6" r="5" style="--i:5"/><circle class="pt pt-hp" cx="530.0" cy="184.0" r="5" style="--i:6"/><circle class="pt pt-hp" cx="606.7" cy="142.4" r="5" style="--i:7"/><circle class="pt pt-hp" cx="683.3" cy="123.2" r="5" style="--i:8"/><circle class="pt pt-hp" cx="760.0" cy="100.8" r="5" style="--i:9"/><circle class="pt pt-sc" cx="70.0" cy="88.0" r="5" style="--i:0"/><circle class="pt pt-sc" cx="146.7" cy="97.6" r="5" style="--i:1"/><circle class="pt pt-sc" cx="223.3" cy="123.2" r="5" style="--i:2"/><circle class="pt pt-sc" cx="300.0" cy="110.4" r="5" style="--i:3"/><circle class="pt pt-sc" cx="376.7" cy="148.8" r="5" style="--i:4"/><circle class="pt pt-sc" cx="453.3" cy="174.4" r="5" style="--i:5"/><circle class="pt pt-sc" cx="530.0" cy="164.8" r="5" style="--i:6"/><circle class="pt pt-sc" cx="606.7" cy="219.2" r="5" style="--i:7"/><circle class="pt pt-sc" cx="683.3" cy="254.4" r="5" style="--i:8"/><circle class="pt pt-sc" cx="760.0" cy="273.6" r="5" style="--i:9"/></g>
+</svg>
+      </div>
+      <p class="metric-foot" id="metricFoot">Self-consciousness started high and happiness low. Nine months on, with the real dips and setbacks along the way, the lines have crossed. That's the story the photos alone can't tell you.</p>
+    </div>
+
+    <div class="metric-tags reveal" id="metricTags">
+      <p class="metric-tags-hint">Tap a metric to plot a different journey</p>
+      <div class="metric-tag-row" role="group" aria-label="Choose a metric to plot">
+        <button type="button" class="mtag active" data-scn="skin" aria-pressed="true">Skin clarity</button>
+        <button type="button" class="mtag" data-scn="weight" aria-pressed="false">Weight</button>
+        <button type="button" class="mtag" data-scn="mood" aria-pressed="false">Mood</button>
+        <button type="button" class="mtag" data-scn="sleep" aria-pressed="false">Sleep quality</button>
+        <button type="button" class="mtag" data-scn="plant" aria-pressed="false">Plant height</button>
+        <button type="button" class="mtag" data-scn="reno" aria-pressed="false">Satisfaction</button>
+        <span class="mtag mtag-custom">+ your own metric</span>
+      </div>
+    </div>
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <a href="#" class="appstore" aria-label="Download WTNS on the App Store">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+        <div><small>Download on the</small><span>App Store</span></div>
+      </a>
+      <p class="cta-band-note">Start tracking any metric, free on the App Store.</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="block pdfx tint" id="export">
+  <div class="wrap">
+    <div class="pdfx-split">
+      <div class="pdfx-copy reveal">
+        <span class="step-num">3</span>
+        <h2>Need a second opinion? Export your record as a <em>PDF</em>.</h2>
+        <p>Everything you captured, laid out as a clean document: the photos in order, the date on each one, the metrics you logged and the note you wrote at the time. Hand it to a dentist, a dermatologist, a contractor, or the friend who keeps asking how it's going.</p>
+        <ul class="pdfx-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Choose how many photos to include</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Keep your notes in, or leave them out</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Show the metrics, or just the images</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Share it however you like, once it exists</span></li>
+        </ul>
+        <p class="pdfx-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Nothing leaves your iPhone until you choose to send it.</p>
+      </div>
+      <div class="pdfx-figure reveal">
+        <span class="pdfx-chip">A4 PDF</span>
+        <div class="pdfx-page">
+          <img src="WTNS%20PDF%20Export.jpg" alt="An exported WTNS record shown as an A4 PDF page, with three dated photos of a whitening toothpaste journey, each with its metric reading and a written note." loading="lazy" width="2138" height="2768">
+        </div>
       </div>
     </div>
   </div>
@@ -940,98 +1045,45 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
   </div>
 </section>
 
-<section class="block tint" id="metrics">
+<section class="block tint" id="privacy">
   <div class="wrap">
-    <div class="section-head center reveal">
-      <div class="kicker">The metric that photos can't show</div>
-      <h2>Track how you <em>feel</em>, not just how you look.</h2>
-      <p>Change happens so slowly that it's hard to notice. So stop guessing: add data points alongside your photos and see whether that cream really did work, whether your teeth are whiter, your hair is thicker, your plant is taller. Say goodbye to placebos.</p>
-    </div>
-
-    <div class="metric-card reveal">
-      <div class="metric-head">
-        <div>
-          <span class="metric-title" id="metricTitle">Skin confidence journey</span>
-          <span class="metric-sub" id="metricSub">New retinoid routine · 9 months</span>
+    <div class="privacy reveal">
+      <div class="inner">
+        <div class="privacy-copy">
+          <div>
+            <div class="kicker">Privacy-first, by design</div>
+            <h2>Your change is personal.<br class="brk">It stays that way.</h2>
+            <p>Everything lives on your device, protected by Face ID. No account, no cloud sync required, no third-party sharing.</p>
+          </div>
+        <div class="privacy-list">
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Face ID / Touch ID lock</strong><span>Auto-lock from immediate to 5 minutes.</span></div></div>
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Local photo storage</strong><span>No cloud required. Optional Camera Roll backup.</span></div></div>
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>No account needed</strong><span>Open the app and start. Nothing to sign up for.</span></div></div>
+          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Private, lockable records</strong><span>Hide individual records behind Face ID, so previews never show on the home screen.</span></div></div>
         </div>
-        <div class="metric-legend">
-          <span class="leg leg-sc" id="legSc"><i></i> Self-consciousness</span>
-          <span class="leg leg-hp" id="legHp"><i></i> Happiness</span>
+        </div>
+        <div class="privacy-figure">
+          <img class="for-dark" src="WTNS%20Privacy.png" alt="An iPhone held in one hand showing the WTNS lock screen, with the app icon above a padlock" loading="lazy">
+          <img class="for-light" src="WTNS%20Privacy-light.png" alt="" aria-hidden="true" loading="lazy">
         </div>
       </div>
-      <div class="metric-plot">
-        <svg class="metric-svg" id="metricSvg" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line graph: self-consciousness falling from 85 to 27 while happiness rises from 30 to 81 over nine months">
-  <defs>
-    <linearGradient id="scFill" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="var(--sc-color)" stop-opacity="0.18"/>
-      <stop offset="100%" stop-color="var(--sc-color)" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="hpFill" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="var(--hp-color)" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="var(--hp-color)" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
-  <g class="grid-group"><line class="grid" x1="70" y1="360.0" x2="760" y2="360.0"/><line class="grid" x1="70" y1="280.0" x2="760" y2="280.0"/><line class="grid" x1="70" y1="200.0" x2="760" y2="200.0"/><line class="grid" x1="70" y1="120.0" x2="760" y2="120.0"/><line class="grid" x1="70" y1="40.0" x2="760" y2="40.0"/><text class="axis-lbl" x="58" y="364.0" text-anchor="end">0</text><text class="axis-lbl" x="58" y="284.0" text-anchor="end">25</text><text class="axis-lbl" x="58" y="204.0" text-anchor="end">50</text><text class="axis-lbl" x="58" y="124.0" text-anchor="end">75</text><text class="axis-lbl" x="58" y="44.0" text-anchor="end">100</text><text class="axis-lbl" x="70.0" y="392" text-anchor="middle">Start</text><text class="axis-lbl" x="146.7" y="392" text-anchor="middle">M1</text><text class="axis-lbl" x="223.3" y="392" text-anchor="middle">M2</text><text class="axis-lbl" x="300.0" y="392" text-anchor="middle">M3</text><text class="axis-lbl" x="376.7" y="392" text-anchor="middle">M4</text><text class="axis-lbl" x="453.3" y="392" text-anchor="middle">M5</text><text class="axis-lbl" x="530.0" y="392" text-anchor="middle">M6</text><text class="axis-lbl" x="606.7" y="392" text-anchor="middle">M7</text><text class="axis-lbl" x="683.3" y="392" text-anchor="middle">M8</text><text class="axis-lbl" x="760.0" y="392" text-anchor="middle">M9</text></g>
-  <path class="area area-sc" d="M 70.0,88.0 C 82.8,89.6 121.1,91.7 146.7,97.6 C 172.2,103.5 197.8,121.1 223.3,123.2 C 248.9,125.3 274.4,106.1 300.0,110.4 C 325.6,114.7 351.1,138.1 376.7,148.8 C 402.2,159.5 427.8,171.7 453.3,174.4 C 478.9,177.1 504.4,157.3 530.0,164.8 C 555.6,172.3 581.2,204.3 606.7,219.2 C 632.2,234.1 657.8,245.3 683.3,254.4 C 708.8,263.5 747.2,270.4 760.0,273.6 L 760.0,360 L 70.0,360 Z" fill="url(#scFill)"/>
-  <path class="area area-hp" d="M 70.0,264.0 C 82.8,261.9 121.1,257.1 146.7,251.2 C 172.2,245.3 197.8,230.9 223.3,228.8 C 248.9,226.7 274.4,243.2 300.0,238.4 C 325.6,233.6 351.1,210.1 376.7,200.0 C 402.2,189.9 427.8,180.3 453.3,177.6 C 478.9,174.9 504.4,189.9 530.0,184.0 C 555.6,178.1 581.2,152.5 606.7,142.4 C 632.2,132.3 657.8,130.1 683.3,123.2 C 708.8,116.3 747.2,104.5 760.0,100.8 L 760.0,360 L 70.0,360 Z" fill="url(#hpFill)"/>
-  <path class="line line-sc" id="lineSc" d="M 70.0,88.0 C 82.8,89.6 121.1,91.7 146.7,97.6 C 172.2,103.5 197.8,121.1 223.3,123.2 C 248.9,125.3 274.4,106.1 300.0,110.4 C 325.6,114.7 351.1,138.1 376.7,148.8 C 402.2,159.5 427.8,171.7 453.3,174.4 C 478.9,177.1 504.4,157.3 530.0,164.8 C 555.6,172.3 581.2,204.3 606.7,219.2 C 632.2,234.1 657.8,245.3 683.3,254.4 C 708.8,263.5 747.2,270.4 760.0,273.6" fill="none"/>
-  <path class="line line-hp" id="lineHp" d="M 70.0,264.0 C 82.8,261.9 121.1,257.1 146.7,251.2 C 172.2,245.3 197.8,230.9 223.3,228.8 C 248.9,226.7 274.4,243.2 300.0,238.4 C 325.6,233.6 351.1,210.1 376.7,200.0 C 402.2,189.9 427.8,180.3 453.3,177.6 C 478.9,174.9 504.4,189.9 530.0,184.0 C 555.6,178.1 581.2,152.5 606.7,142.4 C 632.2,132.3 657.8,130.1 683.3,123.2 C 708.8,116.3 747.2,104.5 760.0,100.8" fill="none"/>
-  <g class="pts-group"><circle class="pt pt-hp" cx="70.0" cy="264.0" r="5" style="--i:0"/><circle class="pt pt-hp" cx="146.7" cy="251.2" r="5" style="--i:1"/><circle class="pt pt-hp" cx="223.3" cy="228.8" r="5" style="--i:2"/><circle class="pt pt-hp" cx="300.0" cy="238.4" r="5" style="--i:3"/><circle class="pt pt-hp" cx="376.7" cy="200.0" r="5" style="--i:4"/><circle class="pt pt-hp" cx="453.3" cy="177.6" r="5" style="--i:5"/><circle class="pt pt-hp" cx="530.0" cy="184.0" r="5" style="--i:6"/><circle class="pt pt-hp" cx="606.7" cy="142.4" r="5" style="--i:7"/><circle class="pt pt-hp" cx="683.3" cy="123.2" r="5" style="--i:8"/><circle class="pt pt-hp" cx="760.0" cy="100.8" r="5" style="--i:9"/><circle class="pt pt-sc" cx="70.0" cy="88.0" r="5" style="--i:0"/><circle class="pt pt-sc" cx="146.7" cy="97.6" r="5" style="--i:1"/><circle class="pt pt-sc" cx="223.3" cy="123.2" r="5" style="--i:2"/><circle class="pt pt-sc" cx="300.0" cy="110.4" r="5" style="--i:3"/><circle class="pt pt-sc" cx="376.7" cy="148.8" r="5" style="--i:4"/><circle class="pt pt-sc" cx="453.3" cy="174.4" r="5" style="--i:5"/><circle class="pt pt-sc" cx="530.0" cy="164.8" r="5" style="--i:6"/><circle class="pt pt-sc" cx="606.7" cy="219.2" r="5" style="--i:7"/><circle class="pt pt-sc" cx="683.3" cy="254.4" r="5" style="--i:8"/><circle class="pt pt-sc" cx="760.0" cy="273.6" r="5" style="--i:9"/></g>
-</svg>
-      </div>
-      <p class="metric-foot" id="metricFoot">Self-consciousness started high and happiness low. Nine months on, with the real dips and setbacks along the way, the lines have crossed. That's the story the photos alone can't tell you.</p>
     </div>
+  </div>
+</section>
 
-    <div class="metric-tags reveal" id="metricTags">
-      <p class="metric-tags-hint">Tap a metric to plot a different journey</p>
-      <div class="metric-tag-row" role="group" aria-label="Choose a metric to plot">
-        <button type="button" class="mtag active" data-scn="skin" aria-pressed="true">Skin clarity</button>
-        <button type="button" class="mtag" data-scn="weight" aria-pressed="false">Weight</button>
-        <button type="button" class="mtag" data-scn="mood" aria-pressed="false">Mood</button>
-        <button type="button" class="mtag" data-scn="sleep" aria-pressed="false">Sleep quality</button>
-        <button type="button" class="mtag" data-scn="plant" aria-pressed="false">Plant height</button>
-        <button type="button" class="mtag" data-scn="reno" aria-pressed="false">Satisfaction</button>
-        <span class="mtag mtag-custom">+ your own metric</span>
-      </div>
-    </div>
+<section class="block tint" style="padding-top:0;">
   <div class="wrap">
     <div class="cta-band reveal">
       <a href="#" class="appstore" aria-label="Download WTNS on the App Store">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
         <div><small>Download on the</small><span>App Store</span></div>
       </a>
-      <p class="cta-band-note">Start tracking any metric, free on the App Store.</p>
-    </div>
-  </div>
-  </div>
-</section>
-
-<section class="block pdfx" id="export">
-  <div class="wrap">
-    <div class="pdfx-split">
-      <div class="pdfx-copy reveal">
-        <div class="kicker">Hand it to someone who can help</div>
-        <h2>Turn a record into a PDF <em>worth sharing</em>.</h2>
-        <p>Everything you captured, laid out as a clean document: the photos in order, the date on each one, the metrics you logged and the note you wrote at the time. Send it to a dentist, a dermatologist, a contractor, or the friend who keeps asking how it's going.</p>
-        <ul class="pdfx-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Choose how many photos to include</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Keep your notes in, or leave them out</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Show the metrics, or just the images</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Share it however you like, once it exists</span></li>
-        </ul>
-        <p class="pdfx-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Nothing leaves your iPhone until you choose to send it.</p>
-      </div>
-      <div class="pdfx-figure reveal">
-        <span class="pdfx-chip">A4 PDF</span>
-        <div class="pdfx-page">
-          <img src="WTNS%20PDF%20Export.jpg" alt="An exported WTNS record shown as an A4 PDF page, with three dated photos of a whitening toothpaste journey, each with its metric reading and a written note." loading="lazy" width="2138" height="2768">
-        </div>
-      </div>
+      <p class="cta-band-note">No account. No cloud. Just your iPhone.</p>
     </div>
   </div>
 </section>
 
-<section class="block tint features" id="features">
+<section class="block features" id="features">
   <div class="wrap">
     <div class="section-head reveal">
       <div class="kicker">Built for the long game</div>
@@ -1099,11 +1151,62 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
   </div>
 </section>
 
+<section class="block pricing tint" id="pricing">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="kicker">Pricing</div>
+      <h2>Start free. Stay free if that suits you.</h2>
+      <p>Your first record and your first five photos are free forever. Don't like it, don't pay. Only ever need five photos? It's yours.</p>
+    </div>
+
+    <div class="bill-wrap reveal">
+      <div class="bill-toggle" role="group" aria-label="Billing period">
+        <button type="button" class="bill-opt active" data-bill="year" aria-pressed="true">Yearly <span class="save">Save 58%</span></button>
+        <button type="button" class="bill-opt" data-bill="month" aria-pressed="false">Monthly</button>
+      </div>
+    </div>
+
+    <div class="plans reveal">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="plan-price"><span class="amt">$0</span><span class="per">free forever</span></div>
+        <p class="plan-note">No trial countdown and no card required. Keep it as long as you like.</p>
+        <ul class="plan-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Your first record</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Up to five photos</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Ghost overlay alignment</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Custom metrics and charts</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Face ID locking</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>No account, ever</span></li>
+        </ul>
+        <a href="#download" class="btn btn-ghost plan-cta">Download WTNS</a>
+      </div>
+
+      <div class="plan featured">
+        <span class="plan-flag">Unlimited</span>
+        <h3>Premium</h3>
+        <div class="plan-price"><span class="amt" id="planAmt">$19.99</span><span class="per" id="planPer">per year</span></div>
+        <p class="plan-note" id="planNote">That's $1.67 a month, a 58% saving against paying monthly.</p>
+        <ul class="plan-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited records</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited photos in every record</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>The full app: ghost overlay, metrics, time-lapse and reminders</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Everything still stays on your device</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Cancel any time</span></li>
+        </ul>
+        <a href="#download" class="btn btn-primary plan-cta">Get Premium</a>
+      </div>
+    </div>
+
+    <p class="plan-fine">Prices shown in USD; your local App Store price may differ. Subscriptions are billed through your Apple Account and renew automatically until cancelled, which you can do at any time in your iPhone settings. See the <a href="terms.html">Terms of Service</a> for full details.</p>
+  </div>
+</section>
+
 <section class="block" id="usecases">
   <div class="wrap">
     <div class="section-head center reveal">
       <div class="kicker">One app, countless journeys</div>
-      <h2>What will you witness?</h2>
+      <h2>What will you <em>WTNS</em>?</h2>
       <p>If it changes visually, WTNS can track it. A few of the ways people use it.</p>
     </div>
   </div>
@@ -1165,95 +1268,6 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
   </div>
 </section>
 
-<section class="block tint" id="privacy">
-  <div class="wrap">
-    <div class="privacy reveal">
-      <div class="inner">
-        <div class="privacy-copy">
-          <div>
-            <div class="kicker">Privacy-first, by design</div>
-            <h2>Your change is personal.<br class="brk">It stays that way.</h2>
-            <p>Everything lives on your device, protected by Face ID. No account, no cloud sync required, no third-party sharing.</p>
-          </div>
-        <div class="privacy-list">
-          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Face ID / Touch ID lock</strong><span>Auto-lock from immediate to 5 minutes.</span></div></div>
-          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Local photo storage</strong><span>No cloud required. Optional Camera Roll backup.</span></div></div>
-          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>No account needed</strong><span>Open the app and start. Nothing to sign up for.</span></div></div>
-          <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Private, lockable records</strong><span>Hide individual records behind Face ID, so previews never show on the home screen.</span></div></div>
-        </div>
-        </div>
-        <div class="privacy-figure">
-          <img class="for-dark" src="WTNS%20Privacy.png" alt="An iPhone held in one hand showing the WTNS lock screen, with the app icon above a padlock" loading="lazy">
-          <img class="for-light" src="WTNS%20Privacy-light.png" alt="" aria-hidden="true" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="block tint" style="padding-top:0;">
-  <div class="wrap">
-    <div class="cta-band reveal">
-      <a href="#" class="appstore" aria-label="Download WTNS on the App Store">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
-        <div><small>Download on the</small><span>App Store</span></div>
-      </a>
-      <p class="cta-band-note">No account. No cloud. Just your iPhone.</p>
-    </div>
-  </div>
-</section>
-
-<section class="block pricing" id="pricing">
-  <div class="wrap">
-    <div class="section-head center reveal">
-      <div class="kicker">Pricing</div>
-      <h2>Start free. Stay free if that suits you.</h2>
-      <p>Your first record and your first five photos are free forever. Don't like it, don't pay. Only ever need five photos? It's yours.</p>
-    </div>
-
-    <div class="bill-wrap reveal">
-      <div class="bill-toggle" role="group" aria-label="Billing period">
-        <button type="button" class="bill-opt active" data-bill="year" aria-pressed="true">Yearly <span class="save">Save 58%</span></button>
-        <button type="button" class="bill-opt" data-bill="month" aria-pressed="false">Monthly</button>
-      </div>
-    </div>
-
-    <div class="plans reveal">
-      <div class="plan">
-        <h3>Free</h3>
-        <div class="plan-price"><span class="amt">$0</span><span class="per">free forever</span></div>
-        <p class="plan-note">No trial countdown and no card required. Keep it as long as you like.</p>
-        <ul class="plan-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Your first record</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Up to five photos</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Ghost overlay alignment</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Custom metrics and charts</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Face ID locking</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>No account, ever</span></li>
-        </ul>
-        <a href="#download" class="btn btn-ghost plan-cta">Download WTNS</a>
-      </div>
-
-      <div class="plan featured">
-        <span class="plan-flag">Unlimited</span>
-        <h3>Premium</h3>
-        <div class="plan-price"><span class="amt" id="planAmt">$19.99</span><span class="per" id="planPer">per year</span></div>
-        <p class="plan-note" id="planNote">That's $1.67 a month, a 58% saving against paying monthly.</p>
-        <ul class="plan-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited records</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited photos in every record</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>The full app: ghost overlay, metrics, time-lapse and reminders</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Everything still stays on your device</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Cancel any time</span></li>
-        </ul>
-        <a href="#download" class="btn btn-primary plan-cta">Get Premium</a>
-      </div>
-    </div>
-
-    <p class="plan-fine">Prices shown in USD; your local App Store price may differ. Subscriptions are billed through your Apple Account and renew automatically until cancelled, which you can do at any time in your iPhone settings. See the <a href="terms.html">Terms of Service</a> for full details.</p>
-  </div>
-</section>
-
 <section class="finalcta tint" id="download">
   <div class="wrap cta-split">
     <div class="cta-copy reveal">
@@ -1283,11 +1297,14 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       </div>
       <div class="foot-col">
         <h4>Product</h4>
-        <a href="#features">Features</a>
-        <a href="#usecases">Use cases</a>
+        <a href="#demo">Ghost overlay</a>
+        <a href="#metrics">Metrics</a>
         <a href="#export">PDF export</a>
+        <a href="#journeys">Journeys</a>
         <a href="#privacy">Privacy</a>
+        <a href="#features">Features</a>
         <a href="#pricing">Pricing</a>
+        <a href="#usecases">Use cases</a>
         <a href="#download">Download</a>
       </div>
       <div class="foot-col">

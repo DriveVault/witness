@@ -291,9 +291,11 @@ section.block { padding: 6rem 0; position: relative; }
 /* The sequence sits in the hero now, sized generously and running off the section floor */
 .demo-figure { position: relative; width: 100%; max-width: 760px; margin: 0 0 -4rem auto; }
 .demo-base { display: block; width: 100%; height: auto; }
-.demo-base.for-light { display: none; }
-[data-theme="light"] .demo-base.for-dark { display: none; }
-[data-theme="light"] .demo-base.for-light { display: block; }
+/* Theme-paired mockups: both sit in the DOM, CSS picks one. No reload on toggle.
+   !important because the figure rules below set display on their img children. */
+.for-light { display: none !important; }
+[data-theme="light"] .for-dark { display: none !important; }
+[data-theme="light"] .for-light { display: block !important; }
 /* Placed off the shared bounding box the nine screens were exported with, so they register exactly */
 .demo-screen {
   position: absolute; left: 13.866%; top: 2.04%; width: 44.9485%; height: auto;
@@ -1090,7 +1092,8 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       </div>
       </div>
       <div class="features-figure reveal">
-        <img src="WTNSGraph.png" alt="An iPhone held in two hands, showing a WTNS record charting whitening progress over eight weeks" loading="lazy">
+        <img class="for-dark" src="WTNSGraph.png" alt="An iPhone held in two hands, showing a WTNS record charting whitening progress over eight weeks" loading="lazy">
+        <img class="for-light" src="WTNSGraph-light.png" alt="" aria-hidden="true" loading="lazy">
       </div>
     </div>
   </div>
@@ -1180,7 +1183,8 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         </div>
         </div>
         <div class="privacy-figure">
-          <img src="WTNS%20Privacy.png" alt="An iPhone held in one hand showing the WTNS lock screen, with the app icon above a padlock" loading="lazy">
+          <img class="for-dark" src="WTNS%20Privacy.png" alt="An iPhone held in one hand showing the WTNS lock screen, with the app icon above a padlock" loading="lazy">
+          <img class="for-light" src="WTNS%20Privacy-light.png" alt="" aria-hidden="true" loading="lazy">
         </div>
       </div>
     </div>
@@ -1261,7 +1265,8 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
     </a>
     </div>
     <div class="cta-figure reveal">
-      <img src="Record%20WTNS.png" alt="An iPhone held in one hand showing a WTNS record: four dated photos of a whitening journey, each tagged with its whiteness score" loading="lazy">
+      <img class="for-dark" src="Record%20WTNS.png" alt="An iPhone held in one hand showing a WTNS record: four dated photos of a whitening journey, each tagged with its whiteness score" loading="lazy">
+      <img class="for-light" src="Record%20WTNS-light.png" alt="" aria-hidden="true" loading="lazy">
     </div>
   </div>
 </section>

@@ -590,7 +590,7 @@ button.mtag { cursor:pointer; }
 }
 
 /* ---------- PDF export ---------- */
-.pdfx-split { display: grid; grid-template-columns: 1fr 0.85fr; gap: 4rem; align-items: center; }
+.pdfx-split { display: grid; grid-template-columns: 1fr 1.05fr; gap: 3rem; align-items: center; }
 .pdfx-copy h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); margin-bottom: 1rem; }
 .pdfx-copy h2 em { font-style: italic; color: var(--peach-deep); }
 .pdfx-copy > p { color: var(--text-2); max-width: 52ch; }
@@ -609,32 +609,31 @@ button.mtag { cursor:pointer; }
   background: radial-gradient(circle, var(--glow) 0%, transparent 65%);
   pointer-events: none;
 }
-/* Three pages fanned in 3D, driven by scroll position rather than a timer.
-   Page 1 sits at the front, page 3 at the back; the deeper pages drift further
-   as the section travels through the viewport, which reads as parallax. */
+/* Three pages laid out side by side and overlapping by about half, so each stays
+   readable. Scroll position spreads them apart and drifts them at different rates. */
 .pdfx-stack {
-  position: relative; perspective: 1400px; perspective-origin: 55% 45%;
-  aspect-ratio: 0.772 / 1; max-width: 480px; margin-left: auto;
+  position: relative; perspective: 1500px; perspective-origin: 50% 40%;
+  aspect-ratio: 1.32 / 1; max-width: 620px; margin-left: auto;
   transform-style: preserve-3d;
 }
 .pdfx-page {
-  position: absolute; inset: 0; width: 76%; margin: 0 auto;
-  border-radius: 8px; overflow: hidden; background: #fff;
-  box-shadow: 0 30px 66px var(--shadow), 0 0 0 1px var(--line);
-  transform-origin: 50% 100%;
+  position: absolute; top: 0; left: 0; right: 0; width: 50%; margin: 0 auto;
+  border-radius: 6px; overflow: hidden; background: #fff;
+  box-shadow: 0 24px 50px var(--shadow), 0 0 0 1px var(--line);
+  transform-origin: 50% 60%;
   transform:
-    translate3d(var(--fx), calc(var(--fy) + var(--py, 0px)), 0)
+    translate3d(calc(var(--tx) + var(--px, 0px)), calc(var(--ty) + var(--py, 0px)), 0)
     rotateY(var(--ry))
     rotateZ(calc(var(--rz) + var(--pr, 0deg)))
     scale(var(--sc));
 }
 .pdfx-page img { width: 100%; height: auto; display: block; }
-/* Front page, the one you read */
-.pdfx-page.p1 { z-index: 3; --fx:  14%; --fy:  3%; --rz:  3deg; --ry:  5deg; --sc: 1;    }
+/* Front page, furthest right */
+.pdfx-page.p1 { z-index: 3; --tx:  50%; --ty:  7%; --rz:  4deg; --ry: -6deg; --sc: 1;    }
 /* Middle */
-.pdfx-page.p2 { z-index: 2; --fx:   0%; --fy: -2%; --rz: -3deg; --ry: 10deg; --sc: 0.95; }
-/* Back */
-.pdfx-page.p3 { z-index: 1; --fx: -16%; --fy: -7%; --rz: -9deg; --ry: 15deg; --sc: 0.90; }
+.pdfx-page.p2 { z-index: 2; --tx:   0%; --ty:  0%; --rz:  0deg; --ry:  4deg; --sc: 0.96; }
+/* Back page, furthest left */
+.pdfx-page.p3 { z-index: 1; --tx: -50%; --ty: -6%; --rz: -5deg; --ry: 12deg; --sc: 0.92; }
 .pdfx-chip {
   position: absolute; top: -0.8rem; right: -0.6rem; z-index: 5;
   font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #fff;
@@ -1984,8 +1983,11 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         pdfStack.querySelector('.p2'),
         pdfStack.querySelector('.p3')
       ];
-      var DRIFT = [26, 62, 104];    // px of travel, front page moves least
-      var TILT  = [1.4, -2.6, -4.6]; // degrees, so the fan opens as it drifts
+      // front, middle, back. The outer pages slide apart horizontally as you scroll,
+      // and all three drift vertically at different rates.
+      var SPREAD = [46, 0, -46];     // px sideways
+      var DRIFT  = [30, -6, -34];    // px vertically
+      var TILT   = [2.2, -0.8, -3.4]; // degrees
       var queued = false, pInView = false;
 
       var applyParallax = function () {
@@ -1997,6 +1999,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         r = Math.max(-1, Math.min(1, r));
         for (var i = 0; i < pages.length; i++) {
           if (!pages[i]) continue;
+          pages[i].style.setProperty('--px', (r * SPREAD[i]).toFixed(1) + 'px');
           pages[i].style.setProperty('--py', (r * DRIFT[i]).toFixed(1) + 'px');
           pages[i].style.setProperty('--pr', (r * TILT[i]).toFixed(2) + 'deg');
         }

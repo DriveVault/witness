@@ -231,9 +231,8 @@ section.block { padding: 6rem 0; position: relative; }
 .js-anim .reveal { opacity:0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.3,1); }
 .js-anim .reveal.in { opacity:1; transform:none; }
 
-/* Alternating page bands. The demo section reads as a tint band because it has to match
-   the video, so every band after it flips, and the footer moves to --bg to keep the
-   final CTA from merging into it. */
+/* Alternating page bands. The demo section reads as a tint band, so every band after it
+   flips, and the footer moves to --bg to keep the final CTA from merging into it. */
 .tint { background: var(--surface-2); }
 .journey { margin-bottom: 5rem; }
 .journey:last-child { margin-bottom:0; }
@@ -282,33 +281,24 @@ section.block { padding: 6rem 0; position: relative; }
   .filmstrip .frame .stamp { font-size: 0.8rem; padding: 1.2rem 0.6rem 0.6rem; }
 }
 
-/* ---------- App demo video ---------- */
-/* Dark mode is set to the exact background baked into the video, so it sits with no visible edge */
-/* Each backdrop matches the background baked into that theme's video, so it sits with no visible edge */
-.demo { background: #FCF0E9; }
-[data-theme="dark"] .demo { background: #262528; }
-.demo-split { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 3rem; align-items: center; }
-.demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; }
+/* ---------- App demo: stacked screen sequence over a fixed hand ---------- */
+.demo { background: var(--surface-2); }
+.demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; }
+.demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; align-self: center; }
 .demo-title em { font-style: italic; color: var(--peach-deep); }
-.demo-figure { position: relative; width: 100%; max-width: 660px; margin-left: auto; }
-.demo-figure video {
-  width: 100%; aspect-ratio: 1 / 1; display: block; border-radius: 20px; background: #FCF0E9;
+.demo-figure { position: relative; width: 100%; max-width: 620px; margin-left: auto; margin-bottom: -6rem; }
+.demo-base { display: block; width: 100%; height: auto; }
+/* Placed off the shared bounding box the nine screens were exported with, so they register exactly */
+.demo-screen {
+  position: absolute; left: 13.866%; top: 2.04%; width: 44.9485%; height: auto;
+  opacity: 0; transition: opacity 0.4s ease;
 }
-[data-theme="dark"] .demo-figure video { background: #262528; }
-.demo-toggle {
-  position: absolute; right: 0.9rem; bottom: 0.9rem; z-index: 2;
-  width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(20,20,22,0.5); color: #fff; cursor: pointer;
-  display: grid; place-items: center; opacity: 0; transition: opacity 0.3s ease, background 0.2s ease;
-}
-.demo-toggle svg { width: 15px; height: 15px; }
-.demo-figure:hover .demo-toggle, .demo-toggle:focus-visible { opacity: 1; }
-.demo-toggle:hover { background: rgba(20,20,22,0.78); }
-@media (hover: none){ .demo-toggle { opacity: 1; } }
+.demo-screen.on { opacity: 1; }
+.demo-screen.snap { transition: opacity 0.14s ease; }
 @media (max-width: 900px){
   .demo-split { grid-template-columns: 1fr; gap: 2rem; }
   .demo-title { max-width: none; text-align: center; }
-  .demo-figure { max-width: 480px; margin: 0 auto; }
+  .demo-figure { max-width: 420px; margin: 0 auto -3.75rem; }
 }
 
 /* ---------- Expandable journey examples ---------- */
@@ -814,14 +804,18 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 <section class="block demo" id="demo">
   <div class="wrap demo-split">
     <h2 class="demo-title reveal">An app built around the way that <em>you</em> change</h2>
-    <div class="demo-figure reveal">
-      <video id="demoVideo" muted loop playsinline preload="metadata" poster="wtns-demo-poster.jpg"
-             data-src-dark="wtns-demo.mp4" data-poster-dark="wtns-demo-poster.jpg"
-             data-src-light="wtns-demo-light.mp4" data-poster-light="wtns-demo-light-poster.jpg"
-             aria-label="Screen recording of the WTNS app: taking an aligned photo, logging a metric, and scrolling through a record">
-        <source src="wtns-demo.mp4" type="video/mp4">
-      </video>
-      <button type="button" class="demo-toggle" id="demoToggle" aria-label="Pause the demo video"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+    <div class="demo-figure reveal" id="demoSeq">
+      <img class="demo-base" src="wtns-hand-base.webp" width="1400" height="1769"
+           alt="An iPhone held in one hand, cycling through WTNS: the records grid, a hair regrowth record, its progress chart, and a scrub through the time-lapse">
+        <img class="demo-screen" src="wtns-screen-1.webp" alt="" aria-hidden="true">
+        <img class="demo-screen" src="wtns-screen-2.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-3.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-4.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-5.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-6.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-7.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-8.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-9.webp" alt="" aria-hidden="true" fetchpriority="low">
     </div>
   </div>
 </section>
@@ -1439,85 +1433,71 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
     }
   }
 
-  // Demo video: plays itself when on screen, always pausable, never on reduced motion
-  var demoVideo = document.getElementById('demoVideo');
-  var demoToggle = document.getElementById('demoToggle');
-  if (demoVideo) {
-    var ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
-    var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>';
-    var vReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var vWanted = !vReduce;   // whether the person wants it running
-    var vInView = false;
+  // Demo sequence: nine screen captures stacked over one fixed hand.
+  // Each new frame fades in ON TOP of the last rather than crossfading with it;
+  // the captures are ~97% opaque, so a true crossfade would flash the empty screen beneath.
+  var demoSeq = document.getElementById('demoSeq');
+  if (demoSeq) {
+    var frames = demoSeq.querySelectorAll('.demo-screen');
+    // [frame index, ms on screen, quick fade?]  1-3 browse the app, 4-9 scrub a time-lapse and back
+    var STEPS = [
+      [0, 2600, false], [1, 2600, false], [2, 2600, false],
+      [3, 800, true], [4, 800, true], [5, 800, true], [6, 800, true], [7, 800, true], [8, 800, true],
+      [7, 800, true], [6, 800, true], [5, 800, true], [4, 800, true], [3, 800, true]
+    ];
+    var step = 0, seqTimer = null, zTop = 1;
+    var sReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var sInView = false;
 
-    var syncToggle = function () {
-      if (!demoToggle) return;
-      var playing = !demoVideo.paused;
-      demoToggle.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
-      demoToggle.setAttribute('aria-label', playing ? 'Pause the demo video' : 'Play the demo video');
+    var showFrame = function (i, quick) {
+      var f = frames[i];
+      if (!f) return;
+      f.classList.toggle('snap', !!quick);
+      f.style.zIndex = ++zTop;
+      f.classList.add('on');
+      // Older frames stay opaque underneath until the new one has covered them
+      setTimeout(function () {
+        for (var k = 0; k < frames.length; k++) {
+          if (frames[k] !== f) { frames[k].classList.remove('on'); frames[k].style.zIndex = ''; }
+        }
+        zTop = 1; f.style.zIndex = 1;
+      }, quick ? 220 : 480);
     };
-    var tryPlay = function () {
-      var pr = demoVideo.play();
-      if (pr && pr.catch) pr.catch(function () { syncToggle(); });
+
+    var allLoaded = function () {
+      for (var i = 0; i < frames.length; i++) {
+        if (!(frames[i].complete && frames[i].naturalWidth > 0)) return false;
+      }
+      return true;
     };
 
-    if (demoToggle) {
-      demoToggle.addEventListener('click', function () {
-        if (demoVideo.paused) { vWanted = true; tryPlay(); } else { vWanted = false; demoVideo.pause(); }
-        syncToggle();
-      });
-    }
-    demoVideo.addEventListener('play', syncToggle);
-    demoVideo.addEventListener('pause', syncToggle);
-    // If the file is missing or the codec isn't supported, don't leave a control
-    // sitting there claiming to play something that was never there
-    demoVideo.addEventListener('error', function () {
-      if (demoToggle) demoToggle.style.display = 'none';
-    }, true);
+    var stopSeq = function () { if (seqTimer) { clearTimeout(seqTimer); seqTimer = null; } };
+    var runSeq = function () {
+      stopSeq();
+      if (sReduce || !sInView || document.hidden) return;
+      // Don't start mid-sequence on half-loaded frames; a missing one would show an empty screen
+      if (!allLoaded()) { seqTimer = setTimeout(runSeq, 200); return; }
+      var cur = STEPS[step];
+      showFrame(cur[0], cur[2]);
+      seqTimer = setTimeout(function () {
+        step = (step + 1) % STEPS.length;
+        runSeq();
+      }, cur[1]);
+    };
 
-    // Only stream while it's actually on screen; a 1:1 recording is not cheap
+    showFrame(0, false);   // first frame is up before anything animates
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stopSeq(); } else { runSeq(); }
+    });
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
-        vInView = entries[0].isIntersecting;
-        if (vInView && vWanted) { tryPlay(); } else if (!vInView) { demoVideo.pause(); }
-      }, { threshold: 0.4 }).observe(demoVideo);
-    } else if (vWanted) {
-      tryPlay();
-    }
-    if (vReduce && demoToggle) demoToggle.style.opacity = '1';
-    syncToggle();
-
-    // There's a light and a dark cut of the recording, identical except for the backdrop.
-    // Only the one matching the current theme is ever downloaded, and because the two are
-    // frame-synced, swapping keeps the playhead where it was.
-    var demoTheme = null;
-    var swapDemoSource = function (theme) {
-      if (theme === demoTheme) return;
-      var src = demoVideo.getAttribute('data-src-' + theme);
-      var pos = demoVideo.getAttribute('data-poster-' + theme);
-      if (!src) return;
-      demoTheme = theme;
-      var at = demoVideo.currentTime || 0;
-      var wasPlaying = !demoVideo.paused;
-      if (pos) demoVideo.setAttribute('poster', pos);
-      demoVideo.setAttribute('src', src);   // an src on the element wins over <source>
-      demoVideo.load();
-      demoVideo.addEventListener('loadedmetadata', function once() {
-        demoVideo.removeEventListener('loadedmetadata', once);
-        try {
-          var d = demoVideo.duration;
-          demoVideo.currentTime = (d && at < d) ? at : 0;
-        } catch (e) {}
-        if (wasPlaying || (vWanted && vInView)) tryPlay();
-      });
-    };
-    var currentTheme = function () {
-      return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    };
-    swapDemoSource(currentTheme());
-    if (window.MutationObserver) {
-      new MutationObserver(function () {
-        swapDemoSource(currentTheme());
-      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        sInView = entries[0].isIntersecting;
+        if (sInView) { runSeq(); } else { stopSeq(); }
+      }, { threshold: 0.25 }).observe(demoSeq);
+    } else {
+      sInView = true;
+      runSeq();
     }
   }
 

@@ -1986,6 +1986,140 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
     }
   }
 
+  // Feature accordion: one row open at a time, cycling so the rows read as interactive
+  var facc = document.getElementById('facc');
+  if (facc) {
+    var faccHeads = facc.querySelectorAll('.facc-head');
+    facc.classList.add('facc-init');
+    facc.classList.add('facc-on');
+    var faccUnlock = function () { facc.classList.remove('facc-init'); };
+    if (window.requestAnimationFrame) { window.requestAnimationFrame(faccUnlock); } else { setTimeout(faccUnlock, 30); }
+
+    var F_AUTO_MS = 3800;     // time on each row
+    var F_RESUME_MS = 40000;  // quiet period after someone opens one themselves
+    var fReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var fIdx = 0, fTimer = null, fResume = null;
+    var fPaused = false, fHover = false, fInView = false;
+
+    var faccPanel = function (head) {
+      return document.getElementById(head.getAttribute('aria-controls'));
+    };
+    var faccSet = function (idx, instantClose) {
+      for (var i = 0; i < faccHeads.length; i++) {
+        var on = (i === idx);
+        var panel = faccPanel(faccHeads[i]);
+        faccHeads[i].setAttribute('aria-expanded', on ? 'true' : 'false');
+        faccHeads[i].parentNode.classList.toggle('open', on);
+        if (!panel) continue;
+        if (!on && instantClose) {
+          panel.classList.add('instant');
+          panel.classList.remove('open');
+          void panel.offsetHeight;
+          panel.classList.remove('instant');
+        } else {
+          panel.classList.toggle('open', on);
+        }
+      }
+      fIdx = idx;
+    };
+
+    var fClear = function () { if (fTimer) { clearTimeout(fTimer); fTimer = null; } };
+    var fSchedule = function () {
+      fClear();
+      if (fReduce || fPaused || fHover || !fInView || document.hidden) return;
+      fTimer = setTimeout(function () {
+        faccSet((fIdx + 1) % faccHeads.length, false);
+        fSchedule();
+      }, F_AUTO_MS);
+    };
+
+    for (var h = 0; h < faccHeads.length; h++) {
+      (function (idx) {
+        faccHeads[idx].addEventListener('click', function () {
+          fPaused = true;
+          fClear();
+          if (fResume) clearTimeout(fResume);
+          fResume = setTimeout(function () { fPaused = false; fSchedule(); }, F_RESUME_MS);
+          // clicking the open row closes it and leaves the list collapsed
+          faccSet(idx === fIdx && this.getAttribute('aria-expanded') === 'true' ? -1 : idx, false);
+        });
+      })(h);
+    }
+
+    // Don't cycle a list nobody is looking at, and don't switch it mid-read
+    var faccHover = [facc.closest('.features-split') || facc, facc];
+    for (var hv = 0; hv < faccHover.length; hv++) {
+      if (!faccHover[hv]) continue;
+      faccHover[hv].addEventListener('mouseenter', function () { fHover = true; fClear(); });
+      faccHover[hv].addEventListener('mouseleave', function () { fHover = false; fSchedule(); });
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { fClear(); } else { fSchedule(); }
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        fInView = entries[0].isIntersecting;
+        if (fInView) { fSchedule(); } else { fClear(); }
+      }, { threshold: 0.25 }).observe(facc);
+    } else {
+      fInView = true;
+      fSchedule();
+    }
+  }
+
+  // PDF stack parallax: the three pages drift at different rates as the section
+  // passes through the viewport, so the fan opens and closes with the scroll.
+  var pdfStack = document.getElementById('pdfStack');
+  if (pdfStack) {
+    var pReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!pReduce) {
+      var pages = [
+        pdfStack.querySelector('.p1'),
+        pdfStack.querySelector('.p2'),
+        pdfStack.querySelector('.p3')
+      ];
+      // front, middle, back. The outer pages slide apart horizontally as you scroll,
+      // and all three drift vertically at different rates.
+      var SPREAD = [46, 0, -46];      // px sideways
+      var DRIFT  = [30, -6, -34];     // px vertically
+      var TILT   = [2.2, -0.8, -3.4]; // degrees
+      var queued = false, pInView = false;
+
+      var applyParallax = function () {
+        queued = false;
+        var rect = pdfStack.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var r = ((rect.top + rect.height / 2) - vh / 2) / vh;
+        r = Math.max(-1, Math.min(1, r));
+        for (var i = 0; i < pages.length; i++) {
+          if (!pages[i]) continue;
+          pages[i].style.setProperty('--px', (r * SPREAD[i]).toFixed(1) + 'px');
+          pages[i].style.setProperty('--py', (r * DRIFT[i]).toFixed(1) + 'px');
+          pages[i].style.setProperty('--pr', (r * TILT[i]).toFixed(2) + 'deg');
+        }
+      };
+      var onPdfScroll = function () {
+        if (queued || !pInView) return;
+        queued = true;
+        if (window.requestAnimationFrame) { window.requestAnimationFrame(applyParallax); }
+        else { applyParallax(); }
+      };
+
+      window.addEventListener('scroll', onPdfScroll, { passive: true });
+      window.addEventListener('resize', applyParallax);
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          pInView = entries[0].isIntersecting;
+          if (pInView) applyParallax();
+        }, { rootMargin: '20% 0px 20% 0px' }).observe(pdfStack);
+      } else {
+        pInView = true;
+      }
+      applyParallax();
+    }
+  }
+
   // Scroll reveal. Elements settle as they cross into the lower part of the viewport,
   // so nothing is already in place by the time you scroll to it.
   if ('IntersectionObserver' in window) {

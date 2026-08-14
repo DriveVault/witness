@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ==============================================================
+     EVERYTHING THE BLOG INDEX NEEDS IS IN THIS BLOCK.
+     ============================================================== -->
+
+<title>How to track teeth straightening progress week by week | WTNS</title>
+<meta property="og:title"              content="How to track teeth straightening progress week by week">
+<meta property="og:description"        content="Teeth move about a quarter of a millimetre per aligner, which is why you cannot see it happening. Here is how to photograph, measure and prove it.">
+<meta property="article:section"       content="Teeth">
+<meta property="article:published_time" content="2026-08-14">
+<meta property="og:image"              content="https://images.unsplash.com/photo-1777793636393-a0fec488f3fb?q=80&amp;w=2880&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+<meta name="wtns:readtime"             content="9 min read">
+
+<meta property="og:type" content="article">
+<meta name="description" content="Teeth move about a quarter of a millimetre per aligner, which is why you cannot see it happening. Here is how to photograph, measure and prove it.">
+<link rel="icon" type="image/png" href="../Favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="theme-color" content="#1C1C1E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --peach: #ED8C85;
+  --peach-deep: #E0736B;
+  --peach-soft: #F6B4AE;
+  --bg: #FDF5F0;
+  --surface: #FFFFFF;
+  --surface-2: #FBEFE8;
+  --ink: #2A2226;
+  --text: #333333;
+  --text-2: #808080;
+  --line: #EADFD7;
+  --glow: rgba(237,140,133,0.22);
+  --shadow: rgba(103, 74, 68, 0.12);
+  --frost: rgba(255,255,255,0.62);
+}
+[data-theme="dark"] {
+  --bg: #1C1C1E;
+  --surface: #2C2C2E;
+  --surface-2: #262628;
+  --ink: #F2F2F2;
+  --text: #E7E4E2;
+  --text-2: #B3B3B3;
+  --line: #3A3A3D;
+  --glow: rgba(237,140,133,0.20);
+  --shadow: rgba(0,0,0,0.45);
+  --frost: rgba(44,44,46,0.55);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+h1,h2,h3,h4 { font-family: 'Newsreader', Georgia, serif; color: var(--ink); font-weight: 400; letter-spacing: -0.01em; line-height: 1.08; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.wrap { width: min(1160px, 92vw); margin: 0 auto; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.6rem; border-radius: 14px; font-weight: 600; font-size: 0.95rem;
+  cursor: pointer; border: none; transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%);
+  color: #fff; box-shadow: 0 8px 24px var(--glow);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 34px var(--glow); }
+.btn-primary:active { transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { border-color: var(--peach); color: var(--peach-deep); }
+:focus-visible { outline: 3px solid var(--peach); outline-offset: 3px; border-radius: 6px; }
+
+.appstore {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  background: var(--ink); color: var(--bg); padding: 0.8rem 1.5rem; border-radius: 14px;
+  box-shadow: 0 6px 18px var(--shadow);
+  transition: transform 0.32s cubic-bezier(.34,1.4,.64,1),
+              box-shadow 0.32s ease, letter-spacing 0.32s ease;
+}
+[data-theme="dark"] .appstore { background: #fff; color: #111; }
+.appstore::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 20%, var(--peach-soft) 50%, transparent 80%);
+  opacity: 0; transform: translateX(-120%);
+  transition: opacity 0.3s ease, transform 0.65s cubic-bezier(.3,.8,.3,1);
+}
+.appstore:hover, .appstore:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px var(--shadow), 0 0 0 1px var(--peach), 0 0 30px 2px var(--glow);
+}
+.appstore:hover::before, .appstore:focus-visible::before { opacity: 0.55; transform: translateX(120%); }
+.appstore:active { transform: translateY(-1px); transition-duration: 0.09s; }
+.appstore svg { width: 22px; height: 22px; flex: none; transition: transform 0.32s cubic-bezier(.34,1.4,.64,1); }
+.appstore:hover svg { transform: scale(1.12) rotate(-4deg); }
+@media (prefers-reduced-motion: reduce){
+  .appstore, .appstore svg, .appstore::before { transition: none; }
+  .appstore:hover { transform: none; }
+}
+.appstore small { display: block; font-size: 0.62rem; opacity: 0.8; line-height: 1; margin-bottom: 2px; }
+.appstore span { font-weight: 600; font-size: 1.05rem; line-height: 1; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  background: var(--frost); border-bottom: 1px solid var(--line);
+}
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.brand { display: flex; align-items: center; gap: 0.6rem; font-family: 'Newsreader'; font-size: 1.4rem; color: var(--ink); font-weight: 500; letter-spacing: -0.02em; }
+.brand .aperture { width: 26px; height: 26px; flex: none; }
+.brand .brand-logo { width: 30px; height: 30px; flex: none; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 8px var(--shadow); }
+.navlinks { display: flex; align-items: center; gap: 2rem; }
+.navlinks a { font-size: 0.9rem; color: var(--text-2); transition: color 0.2s; }
+.navlinks a:hover { color: var(--peach-deep); }
+.nav-actions { display: flex; align-items: center; gap: 0.9rem; }
+.theme-toggle {
+  width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--ink);
+  transition: border-color 0.2s, transform 0.3s;
+}
+.theme-toggle:hover { border-color: var(--peach); transform: rotate(15deg); }
+.theme-toggle svg { width: 20px; height: 20px; }
+@media (max-width: 1060px){ .navlinks{ gap: 1.15rem; } .navlinks a{ font-size: 0.85rem; } }
+@media (max-width: 900px){ .navlinks{ display:none; } }
+
+.section-head { max-width: 52ch; margin-bottom: 3.5rem; }
+.section-head.center { margin-left:auto; margin-right:auto; text-align:center; }
+.kicker { font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color: var(--peach-deep); margin-bottom: 1rem; }
+.section-head h2 { font-size: clamp(2rem, 3.8vw, 2.9rem); margin-bottom: 1rem; text-wrap: balance; }
+.section-head p { font-size: 1.1rem; color: var(--text-2); text-wrap: pretty; }
+.section-head.center p { max-width: 56ch; margin-left:auto; margin-right:auto; }
+
+.js-anim .reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.75s cubic-bezier(.2,.7,.3,1);
+  transition-delay: var(--rd, 0ms);
+}
+.js-anim .reveal:not(.in) { will-change: opacity, transform; }
+.js-anim .reveal.in { opacity: 1; transform: none; }
+.js-anim .reveal.rv-l { transform: translate3d(-36px, 0, 0); }
+.js-anim .reveal.rv-r { transform: translate3d(36px, 0, 0); }
+.js-anim .reveal.rv-up { transform: translateY(46px); }
+.js-anim .reveal.rv-pop { transform: translateY(20px) scale(0.965); }
+.js-anim .reveal.in { transform: none; }
+.rd1 { --rd: 90ms; } .rd2 { --rd: 180ms; } .rd3 { --rd: 270ms; }
+
+.js-anim .stagger > * {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.65s cubic-bezier(.2,.7,.3,1);
+  transition-delay: calc(var(--i, 0) * 85ms);
+}
+.js-anim .stagger:not(.in) > * { will-change: opacity, transform; }
+.js-anim .stagger.in > * { opacity: 1; transform: none; }
+
+footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 0 2rem; }
+.foot-grid { display:grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap:2rem; margin-bottom:3rem; }
+.foot-brand .brand { margin-bottom:1rem; }
+.foot-brand p { color:var(--text-2); font-size:0.9rem; max-width:32ch; }
+.foot-col h4 { font-family:'Inter'; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-2); margin-bottom:1rem; font-weight:600; }
+.foot-col a { display:block; font-size:0.92rem; color:var(--text); margin-bottom:0.6rem; transition:color 0.2s; }
+.foot-col a:hover { color:var(--peach-deep); }
+.foot-bottom { display:flex; align-items:center; justify-content:space-between; padding-top:2rem; border-top:1px solid var(--line); flex-wrap:wrap; gap:1rem; }
+.foot-bottom p { font-size:0.85rem; color:var(--text-2); }
+.foot-made { font-size:0.85rem; color:var(--text-2); display:flex; align-items:center; gap:0.4rem; }
+.foot-made svg { width:15px; height:15px; color:var(--peach); }
+@media (max-width: 820px){ .foot-grid { grid-template-columns: 1fr 1fr; } }
+
+.post-label {
+  display: inline-block; align-self: flex-start; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; color: #7A3B36; background: var(--peach-soft);
+  padding: 0.3rem 0.6rem; border-radius: 8px;
+}
+.post-meta { margin-top: 1.1rem; font-size: 0.82rem; color: var(--text-2); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.post-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-2); flex: none; }
+
+/* ---------- Article ---------- */
+.article-head { padding: 4.5rem 0 2.5rem; }
+.back-link { display: flex; width: max-content; align-items: center; gap: 0.45rem; font-size: 0.9rem; color: var(--text-2); margin-bottom: 2rem; transition: color 0.2s, gap 0.2s; }
+.back-link:hover { color: var(--peach-deep); gap: 0.7rem; }
+.back-link svg { width: 15px; height: 15px; }
+.article-head .post-label { margin-top: 0.4rem; }
+.article-head h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); margin: 1rem 0; text-wrap: balance; max-width: 22ch; }
+.article-head .post-meta { margin-top: 1.4rem; }
+
+.article-hero { margin-bottom: 3rem; }
+.article-hero img { width: 100%; border-radius: 20px; box-shadow: 0 20px 50px var(--shadow); border: 1px solid var(--line); }
+.article-hero figcaption { margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-2); text-align: center; }
+
+.article-body { width: min(68ch, 92vw); margin: 0 auto; padding-bottom: 5rem; font-size: 1.08rem; }
+.article-body > * + * { margin-top: 1.5rem; }
+.article-body p { color: var(--text); line-height: 1.75; text-wrap: pretty; }
+.article-body h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-top: 3rem; }
+.article-body h3 { font-size: 1.35rem; margin-top: 2.4rem; }
+.article-body a { color: var(--peach-deep); text-decoration: underline; text-underline-offset: 3px; }
+.article-body a:hover { color: var(--peach); }
+.article-body ul, .article-body ol { padding-left: 1.3rem; color: var(--text); }
+.article-body li + li { margin-top: 0.6rem; }
+.article-body img { width: 100%; border-radius: 16px; border: 1px solid var(--line); margin: 2.5rem 0; }
+.article-body figure { margin: 2.5rem 0; }
+.article-body figcaption { margin-top: 0.7rem; font-size: 0.85rem; color: var(--text-2); text-align: center; }
+.article-body blockquote {
+  border-left: 3px solid var(--peach); padding: 0.4rem 0 0.4rem 1.4rem; margin: 2.5rem 0;
+  font-family: 'Newsreader', Georgia, serif; font-size: 1.3rem; line-height: 1.5; color: var(--ink);
+}
+.article-body hr { border: none; border-top: 1px solid var(--line); margin: 3rem 0; }
+.article-body code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 6px; }
+
+.article-cta {
+  margin-top: 4rem; padding: 2.5rem; border-radius: 22px; text-align: center;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.article-cta h3 { font-size: 1.6rem; margin-bottom: 0.7rem; }
+.article-cta p { color: var(--text-2); margin-bottom: 1.6rem; }
+.article-cta .appstore { margin: 0 auto; }
+
+/* ---------- Article extras ---------- */
+
+/* Theme-paired app assets follow the toggle without a reload */
+.for-light { display: none; }
+[data-theme="light"] .for-dark { display: none; }
+[data-theme="light"] .for-light { display: block; }
+
+/* Inline CTA card */
+.article-body .mini-cta {
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+  margin: 2.5rem 0; padding: 1.5rem 1.75rem; border-radius: 18px;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.mini-cta .mini-copy { flex: 1 1 250px; }
+.mini-cta h4 { font-family: 'Newsreader', Georgia, serif; font-size: 1.3rem; margin-bottom: 0.35rem; }
+.mini-cta p { font-size: 0.92rem; color: var(--text-2); margin: 0; line-height: 1.55; }
+
+/* App screenshot */
+.article-body .app-figure { margin: 2.5rem 0; }
+.app-figure img { width: 100%; margin: 0; border-radius: 20px; border: 1px solid var(--line); box-shadow: 0 18px 44px var(--shadow); }
+
+/* Breaking wider than the reading column. Scoped to .article-body so it beats
+   the bare figure margin rule, and margin-left is calculated rather than auto. */
+.article-body .wide-figure {
+  --wf: min(90vw, 720px);
+  width: var(--wf);
+  margin-left: calc((100% - var(--wf)) / 2);
+  margin-top: 2.75rem; margin-bottom: 2.75rem;
+}
+
+/* The fanned three page PDF stack */
+.pdf-stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; align-items: end; }
+/* Never put a bare img in a grid track. The wrapper owns the aspect ratio. */
+.pdf-page { aspect-ratio: 1 / 1.294; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 14px 34px var(--shadow); background: var(--surface); }
+.pdf-page img { width: 100%; height: 100%; object-fit: cover; margin: 0; border: none; border-radius: 0; }
+.pdf-page:nth-child(1) { transform: rotate(-4deg) translateY(8px); }
+.pdf-page:nth-child(2) { transform: scale(1.05); position: relative; z-index: 2; }
+.pdf-page:nth-child(3) { transform: rotate(4deg) translateY(8px); }
+@media (prefers-reduced-motion: reduce){ .pdf-page { transform: none !important; } }
+
+/* Chart */
+.chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 1.4rem 1.2rem 1rem; }
+.chart-card svg { width: 100%; height: auto; display: block; }
+.chart-legend { display: flex; gap: 1.4rem; flex-wrap: wrap; justify-content: center; margin-top: 0.9rem; font-size: 0.8rem; color: var(--text-2); }
+.chart-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.swatch { width: 14px; height: 10px; border-radius: 3px; flex: none; }
+
+/* Timeline table */
+.article-body .tbl-wrap { overflow-x: auto; margin: 2rem 0; -webkit-overflow-scrolling: touch; }
+.wtns-table { width: 100%; min-width: 540px; border-collapse: collapse; font-size: 0.95rem; }
+.wtns-table th {
+  text-align: left; font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-2);
+  padding: 0.75rem 1rem; border-bottom: 1px solid var(--line);
+}
+.wtns-table td { padding: 0.95rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--text); line-height: 1.6; }
+.wtns-table tr:last-child td { border-bottom: none; }
+.wtns-table td:first-child { color: var(--ink); font-weight: 600; }
+
+/* Callout */
+.article-body .callout {
+  background: var(--surface-2); border: 1px solid var(--line); border-left: 3px solid var(--peach);
+  border-radius: 14px; padding: 1.3rem 1.5rem; margin: 2.5rem 0;
+}
+.callout p { font-size: 0.98rem; margin: 0; }
+.callout strong { color: var(--ink); }
+
+/* Sources and disclaimer */
+.article-body .refs { font-size: 0.88rem; color: var(--text-2); }
+.refs ol { padding-left: 1.2rem; }
+.refs li { margin-top: 0.55rem; line-height: 1.6; }
+.article-body .disclaimer {
+  font-size: 0.82rem; color: var(--text-2); line-height: 1.65;
+  border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 2.5rem;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="../index.html" class="brand">
+      <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="WTNS logo" width="30" height="30">
+      WTNS
+    </a>
+    <div class="navlinks">
+      <a href="../index.html#demo">Overlay</a>
+      <a href="../index.html#metrics">Metrics</a>
+      <a href="../index.html#export">Export</a>
+      <a href="../index.html#privacy">Privacy</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../Blog.html">Blog</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="https://apps.apple.com/app/id6788378357" class="btn btn-primary">Get WTNS</a>
+    </div>
+  </div>
+</nav>
+
+<header class="article-head">
+  <div class="wrap" style="max-width:min(68ch,92vw);margin:0 auto;">
+    <a class="back-link" href="../Blog.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      All articles
+    </a>
+    <span class="post-label" id="artLabel"></span>
+    <h1 id="artTitle"></h1>
+    <div class="post-meta"><span id="artDate"></span><span class="dot" id="artDot" hidden></span><span id="artRead"></span></div>
+  </div>
+</header>
+
+<div class="wrap" style="max-width:min(80ch,92vw);margin:0 auto;">
+  <figure class="article-hero">
+    <img id="artHero" alt="Close-up of a person seating a clear plastic aligner onto their upper teeth">
+    <figcaption>Photo by <a href="https://unsplash.com/@harold_angus">Harold Hisona</a> on <a href="https://unsplash.com/photos/woman-adjusting-clear-dental-aligners-on-teeth-uTUsnv_UCSQ">Unsplash</a></figcaption>
+  </figure>
+</div>
+
+<main class="article-body">
+
+  <p>You swap to a new aligner on Sunday night. It aches for a day, feels ordinary by Wednesday, and the next Sunday you click in the following one having no real idea whether that week did anything.</p>
+
+  <p>That isn't you being unobservant. Each stage shifts a tooth by roughly a quarter of a millimetre, and you look at your own mouth more often than anyone else does, so you absorb the change as fast as it arrives. The only hard evidence you own is a scan the clinic took at your consultation.</p>
+
+  <p>WTNS handles the part that makes this difficult. It floats your previous photo over the camera as a faint outline, so tonight's shot lines up with week one's, and it keeps the photos, your notes and your weekly ratings together in one dated record. Free on iPhone, and nothing gets uploaded anywhere.</p>
+
+  <figure class="app-figure">
+    <img class="for-dark" src="../Record%20WTNS.png" alt="The WTNS record view, showing a dated series of close-up teeth photos with notes and ratings alongside">
+    <img class="for-light" src="../Record%20WTNS-light.png" alt="The WTNS record view, showing a dated series of close-up teeth photos with notes and ratings alongside">
+    <figcaption>A record in WTNS. Every photo dated, in order, with whatever you logged beside it.</figcaption>
+  </figure>
+
+  <div class="mini-cta">
+    <div class="mini-copy">
+      <h4>Start on day one, not month six</h4>
+      <p>The baseline photo is the one you can never go back and take. Two minutes tonight.</p>
+    </div>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <h2>Your eyes are the wrong instrument</h2>
+
+  <p>Straightening is slow on purpose. Push a tooth too fast and the root pays for it, so a well planned course moves things in increments you were never designed to notice. Spread across a fortnight, in a bathroom mirror, at whatever angle you happen to be standing, that increment is invisible.</p>
+
+  <p>The mirror also lies about geometry. Lean in half an inch and a canine looks more prominent. Tilt your chin and the lower arch appears more crowded than it was yesterday. Without a fixed distance and angle, every comparison you make is contaminated by how you were standing, and you end up reading posture as progress.</p>
+
+  <p>Then there's the honest limitation of the plan itself. Predicted movements and achieved movements are not the same thing: reviews of aligner outcomes put overall accuracy somewhere in the region of half to two thirds of what the software drew, with rotations of round teeth like canines the least reliable of all. Refinement sets exist because of that gap. Your own photographs are the only running record you have of which side of the gap you're on.</p>
+
+  <h2>The number that actually decides this</h2>
+
+  <p>Aligners are usually prescribed at 22 hours a day. In a randomised trial that embedded temperature microsensors in adult patients' aligners and measured every minute for twelve weeks, the average was 15.2 hours: about 67% of what was asked for, with individuals ranging from 1.5 hours a day to 22.5. A separate cohort of 2,644 aligner patients found only around a third were fully compliant, and a quarter were poorly compliant.</p>
+
+  <p>Here is the part worth sitting with. In that trial, the patients who had been told the sensor was measuring their compliance wore their aligners <strong>4.41 hours a day longer</strong> than the patients who thought it was only logging temperature. Same appliance, same instructions, same teeth. The only variable was knowing that someone was counting.</p>
+
+  <div class="callout">
+    <p><strong>Four hours a day is not a rounding error.</strong> Over a twelve month course it is roughly six weeks of treatment, which is the difference between finishing on schedule and being told you need another set of refinements. Measurement is the intervention. It just happens to be free.</p>
+  </div>
+
+  <p>Most people have no way of counting. You take the tray out for coffee at eleven, get pulled into something, and it's back in at one. That fortnight nobody logged is exactly the fortnight your orthodontist will ask about when a tooth stops tracking.</p>
+
+  <h2>How to photograph teeth so the photos are worth comparing</h2>
+
+  <p>The whole game is repeatability. A photo that can't be compared to the last one is a nice picture and nothing else. Fix these five things and never change them:</p>
+
+  <ul>
+    <li><strong>Same light.</strong> Overhead bathroom light, artificial, at night. Daylight changes hour to hour and season to season, and enamel shade is one of the things you're trying to read.</li>
+    <li><strong>Same distance and angle.</strong> This is what the ghost overlay is for. Line tonight's mouth up with the faint outline of last week's and the framing takes care of itself.</li>
+    <li><strong>Same retraction.</strong> Two fingers hooking the corners of your mouth, or a cheap pair of plastic cheek retractors from a chemist. Whichever you pick, pick one. Half retracted and fully retracted are different photos.</li>
+    <li><strong>Aligner out, always.</strong> Clear plastic throws highlights across the front teeth and hides exactly the edges you want to see. Take it out, shoot, put it back.</li>
+    <li><strong>After brushing.</strong> Plaque, coffee staining and a stray bit of lunch will all read as change when they aren't.</li>
+  </ul>
+
+  <p>Then the routine itself:</p>
+
+  <ol>
+    <li><strong>Take the baseline before anything goes on.</strong> Before the first tray, before the brackets, before the scan appointment if you can. Three shots: front with the back teeth gently together, upper arch from slightly above, lower arch from slightly below.</li>
+    <li><strong>Repeat the same three every Sunday.</strong> Weekly is the right cadence. Daily shows you noise, monthly loses the detail of which stage did what.</li>
+    <li><strong>Log the hours honestly.</strong> A rough number beats no number. If Thursday was a fourteen hour day, write fourteen. The point of the record is that it can tell you something you didn't already believe.</li>
+    <li><strong>Note anything that changed.</strong> New attachments bonded on, a round of interproximal reduction, a tray that won't seat fully at the back, elastics started, a lost tray and four days in the old one.</li>
+    <li><strong>Check the fit at each swap.</strong> Look for a visible air gap between the plastic and the biting edge of a tooth. A small one at first is normal. One that's still there two stages later is information your orthodontist wants.</li>
+  </ol>
+
+  <h2>Rate the feeling, not just the photograph</h2>
+
+  <p>Most people are not straightening their teeth for millimetres. They're doing it because they cover their mouth when they laugh, or they've learned to smile with their lips closed in photographs. That's the thing worth measuring, and it moves on a different schedule from the teeth.</p>
+
+  <p>Score it out of ten every week, same question every time: how self-conscious did I feel about my teeth this week? Add your average daily wear hours beside it. After a couple of months you have something the mirror can't give you.</p>
+
+  <figure class="wide-figure">
+    <div class="chart-card">
+      <svg viewBox="0 0 700 355" role="img" aria-label="Chart of weekly self-consciousness score falling from 8.5 to 2.5 over 24 weeks, with average daily aligner wear hours shown as bars. Wear hours drop to about 15 hours around weeks 12 to 14 and the self-consciousness score ticks upward in the same period.">
+        <!-- gridlines -->
+        <g stroke="var(--line)" stroke-width="1">
+          <line x1="60" y1="30"  x2="650" y2="30"/>
+          <line x1="60" y1="84"  x2="650" y2="84"/>
+          <line x1="60" y1="138" x2="650" y2="138"/>
+          <line x1="60" y1="192" x2="650" y2="192"/>
+          <line x1="60" y1="246" x2="650" y2="246"/>
+          <line x1="60" y1="300" x2="650" y2="300"/>
+        </g>
+
+        <!-- wear hour bars -->
+        <g fill="var(--peach-soft)" opacity="0.38">
+          <rect x="51"  y="58"  width="18" height="242"/>
+          <rect x="100" y="52"  width="18" height="248"/>
+          <rect x="149" y="64"  width="18" height="236"/>
+          <rect x="199" y="58"  width="18" height="242"/>
+          <rect x="248" y="69"  width="18" height="231"/>
+          <rect x="297" y="64"  width="18" height="236"/>
+          <rect x="346" y="120" width="18" height="180"/>
+          <rect x="395" y="137" width="18" height="163"/>
+          <rect x="444" y="75"  width="18" height="225"/>
+          <rect x="494" y="58"  width="18" height="242"/>
+          <rect x="543" y="64"  width="18" height="236"/>
+          <rect x="592" y="52"  width="18" height="248"/>
+          <rect x="641" y="58"  width="18" height="242"/>
+        </g>
+
+        <!-- self-consciousness line -->
+        <polyline fill="none" stroke="var(--peach-deep)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+          points="60,70 109,68 158,84 208,100 257,116 306,133 355,143 404,130 453,154 503,179 552,200 601,219 650,233"/>
+        <g fill="var(--peach-deep)">
+          <circle cx="60"  cy="70"  r="4.5"/><circle cx="109" cy="68"  r="4.5"/>
+          <circle cx="158" cy="84"  r="4.5"/><circle cx="208" cy="100" r="4.5"/>
+          <circle cx="257" cy="116" r="4.5"/><circle cx="306" cy="133" r="4.5"/>
+          <circle cx="355" cy="143" r="4.5"/><circle cx="404" cy="130" r="4.5"/>
+          <circle cx="453" cy="154" r="4.5"/><circle cx="503" cy="179" r="4.5"/>
+          <circle cx="552" cy="200" r="4.5"/><circle cx="601" cy="219" r="4.5"/>
+          <circle cx="650" cy="233" r="4.5"/>
+        </g>
+
+        <!-- annotation -->
+        <line x1="380" y1="185" x2="380" y2="118" stroke="var(--text-2)" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="380" y="205" text-anchor="middle" fill="var(--text-2)" font-family="Inter, sans-serif" font-size="12">Two weeks away.</text>
+        <text x="380" y="221" text-anchor="middle" fill="var(--text-2)" font-family="Inter, sans-serif" font-size="12">Trays out at every meal.</text>
+
+        <!-- axes -->
+        <g fill="var(--text-2)" font-family="Inter, sans-serif" font-size="11.5">
+          <text x="50" y="34"  text-anchor="end">10</text>
+          <text x="50" y="88"  text-anchor="end">8</text>
+          <text x="50" y="142" text-anchor="end">6</text>
+          <text x="50" y="196" text-anchor="end">4</text>
+          <text x="50" y="250" text-anchor="end">2</text>
+          <text x="50" y="304" text-anchor="end">0</text>
+
+          <text x="666" y="34"  text-anchor="start">24h</text>
+          <text x="666" y="169" text-anchor="start">12h</text>
+          <text x="666" y="304" text-anchor="start">0h</text>
+
+          <text x="60"  y="322" text-anchor="middle">Wk 0</text>
+          <text x="158" y="322" text-anchor="middle">4</text>
+          <text x="257" y="322" text-anchor="middle">8</text>
+          <text x="355" y="322" text-anchor="middle">12</text>
+          <text x="453" y="322" text-anchor="middle">16</text>
+          <text x="552" y="322" text-anchor="middle">20</text>
+          <text x="650" y="322" text-anchor="middle">24</text>
+
+          <text x="355" y="347" text-anchor="middle" font-size="12">Weeks in treatment</text>
+        </g>
+      </svg>
+      <div class="chart-legend">
+        <span><i class="swatch" style="background:var(--peach-deep)"></i> Self-consciousness, 0 to 10, lower is better</span>
+        <span><i class="swatch" style="background:var(--peach-soft);opacity:0.5"></i> Average daily wear, hours</span>
+      </div>
+    </div>
+    <figcaption>An illustrative record. The dip is the useful part: a fortnight away, trays out at every meal, and the score moves before the teeth do.</figcaption>
+  </figure>
+
+  <p>Two things tend to fall out of a chart like this. The first is that the felt improvement usually starts earlier than the visible one, which is worth knowing on the week you're convinced nothing is happening. Research on adults in treatment points the same way, with the first six months doing most of the work on how people rate their own dental confidence. The second is that the dips are legible. A fortnight where the number goes backwards almost always has a cause sitting in your notes.</p>
+
+  <h2>Why not just use your camera roll?</h2>
+
+  <p>You can. Nearly everyone starts there, and nearly everyone stops within a few months, because a camera roll is a pile rather than a record.</p>
+
+  <ul>
+    <li><strong>Same angle every time.</strong> Without an overlay to line up against, any apparent difference between two photos might just be where you were standing. This is the one that matters most, and it is the one a gallery cannot do.</li>
+    <li><strong>One place, in order.</strong> Your week 4 photo is somewhere behind a wedding, three receipts and a screenshot of a train time. Nobody scrolls back through four thousand pictures to find it.</li>
+    <li><strong>Notes and numbers beside each photo.</strong> This is how you learn what actually worked. The stage where attachments went on and everything sped up. The month you kept forgetting the tray after lunch. A photo on its own can't tell you which is which.</li>
+    <li><strong>Time-lapse export.</strong> Change you cannot perceive across a week is unmistakable at speed. It is also the only way to show someone what six months looked like without making them swipe.</li>
+    <li><strong>PDF export.</strong> Which brings us to the appointment, below.</li>
+    <li><strong>Privacy.</strong> Retracted close-ups of your own mouth are not photos you want auto-syncing to a cloud account, or resurfacing in a Memories slideshow while someone else is holding your phone. In WTNS the records sit on the device, behind Face ID, and can be hidden entirely.</li>
+  </ul>
+
+  <div class="mini-cta">
+    <div class="mini-copy">
+      <h4>Your first record is free</h4>
+      <p>No account, no card, no upload. Take the baseline tonight and decide about the rest later.</p>
+    </div>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <h2>What to expect, and when</h2>
+
+  <p>Timelines vary enormously with the case, so treat this as the shape rather than the schedule. Your own clinician's plan is the one that counts.</p>
+
+  <div class="tbl-wrap">
+    <table class="wtns-table">
+      <thead>
+        <tr><th>Stage</th><th>What is happening</th><th>What to capture</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Week 0</td>
+          <td>Baseline. Attachments bonded, or brackets placed. Pressure builds within hours and tends to peak in the first day or two.</td>
+          <td>Three shots before anything is fitted. This is the photo you cannot retake.</td>
+        </tr>
+        <tr>
+          <td>Weeks 1 to 3</td>
+          <td>Soreness with each new tray, most often lasting one to three days. A lisp that settles within a fortnight. Nothing visible yet.</td>
+          <td>Weekly photos plus a pain score. You'll want this later when a tray feels unusually rough.</td>
+        </tr>
+        <tr>
+          <td>Months 1 to 3</td>
+          <td>Front teeth usually rotate first. Real movement, still below what you notice in a mirror.</td>
+          <td>Keep the cadence. Compare month 3 against week 0 rather than against last week.</td>
+        </tr>
+        <tr>
+          <td>Months 3 to 9</td>
+          <td>The visible stretch. Gaps close, edges level, other people start commenting.</td>
+          <td>First time-lapse export. Note any interproximal reduction or new attachments.</td>
+        </tr>
+        <tr>
+          <td>Months 9 onward</td>
+          <td>Detailing, and frequently a refinement set if a tooth has not tracked to plan.</td>
+          <td>Photos of the specific tooth in question, dated, to take to the review.</td>
+        </tr>
+        <tr>
+          <td>After debond</td>
+          <td>Retention. The period when teeth are most inclined to drift back.</td>
+          <td>Monthly, then quarterly, indefinitely. Details below.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Take a document to your appointment</h2>
+
+  <p>Review appointments are short, and they run on what your clinician can see in the chair on that particular day. If a tray stopped seating properly six weeks ago and settled down again, that fact has left the building unless you brought it with you.</p>
+
+  <p>WTNS exports the whole record as a PDF: dated photos, your notes, your wear hours, laid out in order. Hand it over at the start of the appointment and the conversation begins somewhere far more useful than "how have you been getting on?"</p>
+
+  <figure class="wide-figure pdf-figure">
+    <div class="pdf-stack">
+      <div class="pdf-page"><img src="../wtns-pdf-1.webp" alt="First page of a WTNS PDF export, showing the record summary"></div>
+      <div class="pdf-page"><img src="../wtns-pdf-2.webp" alt="Second page of a WTNS PDF export, showing dated photos in sequence"></div>
+      <div class="pdf-page"><img src="../wtns-pdf-3.webp" alt="Third page of a WTNS PDF export, showing logged notes and metrics"></div>
+    </div>
+    <figcaption>The PDF export. Print it, email it, or hand over your phone.</figcaption>
+  </figure>
+
+  <h2>The part almost everyone underestimates</h2>
+
+  <p>Finishing is not the finish. Teeth are held in place by fibres that keep a memory of where they used to be, and they start moving back the moment nothing is holding them. Long term follow-up studies of orthodontic patients are sobering on this: a substantial majority show some degree of crowding returning to the lower front teeth after retention ends, and crowding keeps creeping on for a decade or more afterwards.</p>
+
+  <p>This is why the British Orthodontic Society is blunt about it. Retainers are a long term commitment, often for as long as you want the result to last, and their guidance is that you should only start treatment if you're prepared to keep wearing them afterwards. Teeth also drift with age regardless of whether you ever had braces.</p>
+
+  <figure>
+    <img src="https://images.unsplash.com/photo-1694675236489-d73651370688?q=80&amp;w=2340&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="A gloved hand holding a clear plastic retainer beside its case">
+    <figcaption>Photo by <a href="https://unsplash.com/@katasha">Katarzyna Zygnerska</a> on <a href="https://unsplash.com/photos/a-person-in-blue-gloves-holding-a-plastic-object-9weq9N2dnfQ">Unsplash</a></figcaption>
+  </figure>
+
+  <p>The tracking habit is worth more here than it was during treatment, and it costs less. One photo a month for the first year, then one a quarter, in the same three angles. If something starts to rotate you'll see it in the overlay months before you'd notice it in a mirror, and small early relapse is a far easier conversation than a full second course.</p>
+
+  <h2>When to stop looking at photos and call someone</h2>
+
+  <p>Tracking is for documenting change, not for diagnosing it. Book an appointment if you notice:</p>
+
+  <ul>
+    <li>Sharp or throbbing pain, rather than the pressure and tenderness that comes with a new stage.</li>
+    <li>An aligner that will not seat, with a visible gap at the biting edge that persists across several stages.</li>
+    <li>A tooth that feels genuinely loose, or that darkens in colour.</li>
+    <li>Gums that bleed persistently, recede, or dark triangles opening between the front teeth.</li>
+    <li>Chalky white marks appearing around brackets. These are early enamel demineralisation, and they are common: one study found white spot lesions in nearly 47% of patients twelve months into fixed appliance treatment, against roughly 12% at the start.</li>
+    <li>Anything about aligners bought without an in-person clinical examination. The General Dental Council's position is that there is currently no effective substitute for a physical examination as the basis for deciding whether orthodontic treatment is suitable at all.</li>
+  </ul>
+
+  <div class="article-cta">
+    <h3>Start your own record.</h3>
+    <p>Free to download. Everything stays on your iPhone.</p>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <h2>Sources</h2>
+
+  <div class="refs">
+    <ol>
+      <li>Objective assessment of wear time during orthodontic aligner therapy using microsensors: a randomised controlled trial. <em>American Journal of Orthodontics and Dentofacial Orthopedics</em>. <a href="https://www.sciencedirect.com/science/article/pii/S0889540625004780">Read the study</a></li>
+      <li>Factors influencing patient compliance during clear aligner therapy: a retrospective cohort study of 2,644 patients. <em>Journal of Clinical Medicine</em>. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8303492">Read the study</a></li>
+      <li>Factors influencing the predictability and success of clear aligners: a systematic review. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12665358/">Read the review</a></li>
+      <li>Retainers, patient information. British Orthodontic Society. <a href="https://bos.org.uk/patients/retainers/">Read the guidance</a></li>
+      <li>Anterior crowding relapse after retention, and long term post-retention change. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8690515/">Read the study</a></li>
+      <li>Prevalence of white spot lesions during fixed orthodontic treatment at six and twelve months. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10438673/">Read the study</a></li>
+      <li>Influence of pain duration and severity on quality of life during adult aligner treatment. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11056347/">Read the study</a></li>
+      <li>Statement on direct-to-consumer orthodontic treatment. General Dental Council. <a href="https://www.gdc-uk.org/standards-guidance/standards-and-guidance/gdc-guidance-for-dental-professionals/direct-to-consumer-orthodontics/gdc-statement-on-direct-to-consumer-orthodontic-treatment">Read the statement</a></li>
+    </ol>
+  </div>
+
+  <p class="disclaimer">This article is general information, not dental or medical advice, and it is not a substitute for an examination by a registered dentist or orthodontist. Orthodontic treatment is a clinical decision and outcomes differ from person to person. If you have concerns about your teeth, gums or ongoing treatment, speak to your own clinician. WTNS is a photo and note taking app for recording change over time. It does not diagnose anything, provide treatment, or assess whether your treatment is progressing correctly.<br><br>WTNS is an independent app and is not affiliated with, endorsed by, sponsored by or connected to any orthodontic provider, clinic or appliance manufacturer. Invisalign is a registered trademark of Align Technology, Inc., and any reference to it or to other brand names is descriptive only. Questions about the app go to <a href="mailto:Hello@DriveVault.io">Hello@DriveVault.io</a>.</p>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid stagger">
+      <div class="foot-brand">
+        <a href="../index.html" class="brand">
+          <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="WTNS logo" width="30" height="30">
+          WTNS
+        </a>
+        <p>The beautiful, private way to track change over time. Made for iPhone.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="../index.html#demo">Ghost overlay</a>
+        <a href="../index.html#metrics">Metrics</a>
+        <a href="../index.html#export">PDF export</a>
+        <a href="../index.html#journeys">Journeys</a>
+        <a href="../index.html#privacy">Privacy</a>
+        <a href="../index.html#features">Features</a>
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../index.html#usecases">Use cases</a>
+        <a href="../Blog.html">Blog</a>
+        <a href="https://apps.apple.com/app/id6788378357">Download</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <a href="mailto:Hello@DriveVault.io">Hello@DriveVault.io</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 WTNS. All rights reserved.</p>
+      <span class="foot-made"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5c2 0 3.2 1.3 3.7 2.2.5-.9 1.7-2.2 3.7-2.2C16.5 5.5 18 9 16 12.5 13.5 16.5 12 21 12 21z"/></svg> Made with care in the UK</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // The visible title, label, date, read time and hero image are all filled in from
+  // the metadata block at the top of this file, so each is written exactly once.
+  var meta = function (sel) {
+    var el = document.querySelector(sel);
+    return el ? (el.getAttribute('content') || '').trim() : '';
+  };
+  var put = function (id, text) { var el = document.getElementById(id); if (el) el.textContent = text; };
+  var title = meta('meta[property="og:title"]');
+  var label = meta('meta[property="article:section"]');
+  var iso   = meta('meta[property="article:published_time"]');
+  var read  = meta('meta[name="wtns:readtime"]');
+  var hero  = meta('meta[property="og:image"]');
+
+  put('artTitle', title);
+  put('artLabel', label);
+  if (!label) { var lb = document.getElementById('artLabel'); if (lb) lb.hidden = true; }
+  var d = iso ? new Date(iso) : null;
+  put('artDate', d && !isNaN(d) ? d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+  put('artRead', read);
+  var dot = document.getElementById('artDot');
+  if (dot) dot.hidden = !(iso && read);
+  var heroImg = document.getElementById('artHero');
+  if (heroImg) { if (hero) { heroImg.src = hero; } else { heroImg.closest('figure').hidden = true; } }
+  if (title) document.title = title + ' | WTNS';
+
+  var root = document.documentElement;
+  var tBtn = document.getElementById('themeToggle');
+  var tIcon = document.getElementById('themeIcon');
+  var sunPath = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  var moonPath = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+  if (tBtn) {
+    tBtn.addEventListener('click', function () {
+      var dark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', dark ? 'light' : 'dark');
+      if (tIcon) tIcon.innerHTML = dark ? sunPath : moonPath;
+    });
+  }
+})();
+</script>
+</body>
+</html>

@@ -229,9 +229,32 @@ section.block { padding: 6rem 0; position: relative; }
 .brk { display: none; }
 @media (min-width: 560px){ .brk { display: inline; } h2:has(.brk){ text-wrap: initial; } }
 
-/* Progressive enhancement: only hide for animation once JS confirms it can reveal them */
-.js-anim .reveal { opacity:0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.3,1); }
-.js-anim .reveal.in { opacity:1; transform:none; }
+/* Progressive enhancement: only hide for animation once JS confirms it can reveal them.
+   Elements start offset and settle as they enter the lower part of the viewport. */
+.js-anim .reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.75s cubic-bezier(.2,.7,.3,1);
+  transition-delay: var(--rd, 0ms);
+}
+.js-anim .reveal:not(.in) { will-change: opacity, transform; }
+.js-anim .reveal.in { opacity: 1; transform: none; }
+/* Direction variants, so a split section's two halves arrive from their own sides */
+.js-anim .reveal.rv-l { transform: translate3d(-36px, 0, 0); }
+.js-anim .reveal.rv-r { transform: translate3d(36px, 0, 0); }
+.js-anim .reveal.rv-up { transform: translateY(46px); }
+.js-anim .reveal.rv-pop { transform: translateY(20px) scale(0.965); }
+.js-anim .reveal.in { transform: none; }
+/* Small offsets so paired elements land one after the other rather than together */
+.rd1 { --rd: 90ms; } .rd2 { --rd: 180ms; } .rd3 { --rd: 270ms; }
+
+/* Staggered containers: the children animate in sequence, the container itself doesn't move */
+.js-anim .stagger > * {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.65s cubic-bezier(.2,.7,.3,1);
+  transition-delay: calc(var(--i, 0) * 85ms);
+}
+.js-anim .stagger:not(.in) > * { will-change: opacity, transform; }
+.js-anim .stagger.in > * { opacity: 1; transform: none; }
 
 /* Alternating page bands. The demo section reads as a tint band, so every band after it
    flips, and the footer moves to --bg to keep the final CTA from merging into it. */
@@ -293,7 +316,7 @@ section.block { padding: 6rem 0; position: relative; }
 .section-head.center .step-num { margin-left: auto; margin-right: auto; }
 
 /* ---------- App demo: stacked screen sequence over a fixed hand ---------- */
-.demo { background: var(--surface-2); }
+.demo { background: var(--surface-2); overflow: hidden; }
 .demo-split { display: grid; grid-template-columns: 1fr 0.95fr; gap: 3.5rem; align-items: center; }
 .demo-copy { align-self: center; }
 .demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; }
@@ -777,7 +800,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       </div>
     </div>
 
-    <div class="demo-figure reveal" id="demoSeq">
+    <div class="demo-figure reveal rv-r rd1" id="demoSeq">
       <img class="demo-base for-dark" src="wtns-hand-base.webp" width="1400" height="1769"
            alt="An iPhone held in one hand, cycling through WTNS: the records grid, a hair regrowth record, its progress chart, and a scrub through the time-lapse">
       <img class="demo-base for-light" src="wtns-hand-base-light.webp" width="1400" height="1769" alt="" aria-hidden="true">
@@ -796,11 +819,11 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block demo" id="demo">
   <div class="wrap demo-split">
-    <div class="demo-copy reveal">
+    <div class="demo-copy reveal rv-l">
       <span class="step-num">1</span>
       <h2 class="demo-title">Track change precisely, with <em>overlay photo technology</em></h2>
     </div>
-    <div class="ghost-demo reveal">
+    <div class="ghost-demo reveal rv-r rd1">
       <div class="ghost-stage" id="ghostStage">
         <img class="stage-img" data-stage="0" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample1.png?v=1783356546" alt="Cactus at month 1" style="opacity:1">
         <img class="stage-img" data-stage="1" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample2.png?v=1783356546" alt="Cactus at month 4" style="opacity:0">
@@ -846,13 +869,13 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block" id="metrics">
   <div class="wrap">
-    <div class="section-head center reveal">
+    <div class="section-head center stagger">
       <span class="step-num">2</span>
       <h2>Add data points and notes beside every photo, so you know <em>why</em> something changed.</h2>
       <p>A photo shows you that something changed. The number you logged and the note you wrote that week tell you what caused it: the new product, the higher dose, the fortnight you skipped. Say goodbye to placebos.</p>
     </div>
 
-    <div class="metric-card reveal">
+    <div class="metric-card reveal rv-pop rd1">
       <div class="metric-head">
         <div>
           <span class="metric-title" id="metricTitle">Skin confidence journey</span>
@@ -886,9 +909,9 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       <p class="metric-foot" id="metricFoot">Self-consciousness started high and happiness low. Nine months on, with the real dips and setbacks along the way, the lines have crossed. That's the story the photos alone can't tell you.</p>
     </div>
 
-    <div class="metric-tags reveal" id="metricTags">
+    <div class="metric-tags reveal rd2" id="metricTags">
       <p class="metric-tags-hint">Tap a metric to plot a different journey</p>
-      <div class="metric-tag-row" role="group" aria-label="Choose a metric to plot">
+      <div class="metric-tag-row stagger" role="group" aria-label="Choose a metric to plot">
         <button type="button" class="mtag active" data-scn="skin" aria-pressed="true">Skin clarity</button>
         <button type="button" class="mtag" data-scn="weight" aria-pressed="false">Weight</button>
         <button type="button" class="mtag" data-scn="mood" aria-pressed="false">Mood</button>
@@ -913,11 +936,11 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 <section class="block pdfx tint" id="export">
   <div class="wrap">
     <div class="pdfx-split">
-      <div class="pdfx-copy reveal">
+      <div class="pdfx-copy reveal rv-l">
         <span class="step-num">3</span>
         <h2>Need a second opinion? Export your record as a <em>PDF</em>.</h2>
         <p>Everything you captured, laid out as a clean document: the photos in order, the date on each one, the metrics you logged and the note you wrote at the time. Hand it to a dentist, a dermatologist, a contractor, or the friend who keeps asking how it's going.</p>
-        <ul class="pdfx-list">
+        <ul class="pdfx-list stagger rd2">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Choose how many photos to include</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Keep your notes in, or leave them out</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Show the metrics, or just the images</span></li>
@@ -925,7 +948,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         </ul>
         <p class="pdfx-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Nothing leaves your iPhone until you choose to send it.</p>
       </div>
-      <div class="pdfx-figure reveal">
+      <div class="pdfx-figure reveal rv-r rd1">
         <span class="pdfx-chip">A4 PDF</span>
         <div class="pdfx-page">
           <img src="WTNS%20PDF%20Export.jpg" alt="An exported WTNS record shown as an A4 PDF page, with three dated photos of a whitening toothpaste journey, each with its metric reading and a written note." loading="lazy" width="2138" height="2768">
@@ -937,13 +960,13 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block" id="journeys">
   <div class="wrap">
-    <div class="section-head center reveal">
+    <div class="section-head center stagger">
       <div class="kicker">A few of the journeys worth keeping</div>
       <h2>If it changes,<br class="brk">you can witness it.</h2>
       <p><em>Anything</em> that changes visually counts: the results of your new whitening toothpaste, a hair loss and regrowth journey, a baby bump, or simply the view from your window turning through the seasons. WTNS can witness it all.</p>
     </div>
 
-    <div class="jx reveal" id="jx">
+    <div class="jx reveal rv-pop rd1" id="jx">
       <div class="jx-item">
         <button class="jx-tab" type="button" id="jx-tab-skin" aria-expanded="false" aria-controls="jx-panel-skin">
           <img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="" loading="lazy">
@@ -1049,7 +1072,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block tint" id="privacy">
   <div class="wrap">
-    <div class="privacy reveal">
+    <div class="privacy reveal rv-pop">
       <div class="inner">
         <div class="privacy-copy">
           <div>
@@ -1057,7 +1080,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
             <h2>Your change is personal.<br class="brk">It stays that way.</h2>
             <p>Everything lives on your device, protected by Face ID. No account, no cloud sync required, no third-party sharing.</p>
           </div>
-        <div class="privacy-list">
+        <div class="privacy-list stagger rd1">
           <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Face ID / Touch ID lock</strong><span>Auto-lock from immediate to 5 minutes.</span></div></div>
           <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>Local photo storage</strong><span>No cloud required. Optional Camera Roll backup.</span></div></div>
           <div class="privacy-item"><div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 4 4 10-10"/></svg></div><div><strong>No account needed</strong><span>Open the app and start. Nothing to sign up for.</span></div></div>
@@ -1087,13 +1110,13 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block features" id="features">
   <div class="wrap">
-    <div class="section-head reveal">
+    <div class="section-head stagger">
       <div class="kicker">Built for the long game</div>
       <h2>Everything you need to document change honestly.</h2>
       <p>The photo is only half the story. WTNS keeps the numbers, the feelings, and the context right beside it.</p>
     </div>
     <div class="features-split">
-      <div class="facc reveal" id="facc">
+      <div class="facc stagger" id="facc">
       <div class="facc-item open">
         <button class="facc-head" type="button" id="fh-ghost" aria-expanded="true" aria-controls="fp-ghost">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></span>
@@ -1145,7 +1168,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         </div>
       </div>
       </div>
-      <div class="features-figure reveal">
+      <div class="features-figure reveal rv-r rd1">
         <img class="for-dark" src="WTNSGraph.png" alt="An iPhone held in two hands, showing a WTNS record charting whitening progress over eight weeks" loading="lazy">
         <img class="for-light" src="WTNSGraph-light.png" alt="" aria-hidden="true" loading="lazy">
       </div>
@@ -1155,7 +1178,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block pricing tint" id="pricing">
   <div class="wrap">
-    <div class="section-head center reveal">
+    <div class="section-head center stagger">
       <div class="kicker">Pricing</div>
       <h2>Start free. Stay free if that suits you.</h2>
       <p>Your first record and your first five photos are free forever. Don't like it, don't pay. Only ever need five photos? It's yours.</p>
@@ -1168,7 +1191,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       </div>
     </div>
 
-    <div class="plans reveal">
+    <div class="plans stagger rd1">
       <div class="plan">
         <h3>Free</h3>
         <div class="plan-price"><span class="amt">$0</span><span class="per">free forever</span></div>
@@ -1206,7 +1229,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="block" id="usecases">
   <div class="wrap">
-    <div class="section-head center reveal">
+    <div class="section-head center stagger">
       <div class="kicker">One app, countless journeys</div>
       <h2>What will you <em>WTNS</em>?</h2>
       <p>If it changes visually, WTNS can track it. A few of the ways people use it.</p>
@@ -1272,7 +1295,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <section class="finalcta tint" id="download">
   <div class="wrap cta-split">
-    <div class="cta-copy reveal">
+    <div class="cta-copy reveal rv-l">
     <h2>Start the record you'll be glad you <em>kept</em>.</h2>
     <p>Free to download. Everything stays on your iPhone.</p>
     <a href="#" class="appstore" aria-label="Download WTNS on the App Store">
@@ -1280,7 +1303,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       <div><small>Download on the</small><span>App Store</span></div>
     </a>
     </div>
-    <div class="cta-figure reveal">
+    <div class="cta-figure reveal rv-r rd1">
       <img class="for-dark" src="Record%20WTNS.png" alt="An iPhone held in one hand showing a WTNS record: four dated photos of a whitening journey, each tagged with its whiteness score" loading="lazy">
       <img class="for-light" src="Record%20WTNS-light.png" alt="" aria-hidden="true" loading="lazy">
     </div>
@@ -1289,7 +1312,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
 <footer>
   <div class="wrap">
-    <div class="foot-grid">
+    <div class="foot-grid stagger">
       <div class="foot-brand">
         <a href="#" class="brand">
           <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="WTNS logo" width="30" height="30">
@@ -1921,22 +1944,43 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
     }
   }
 
-  // Scroll reveal: enable hide-then-reveal ONLY if IntersectionObserver is supported.
-  // If anything here fails, content stays fully visible (no blank page).
+  // Scroll reveal. Elements settle as they cross into the lower part of the viewport,
+  // so nothing is already in place by the time you scroll to it.
   if ('IntersectionObserver' in window) {
     document.body.classList.add('js-anim');
+
+    var animated = document.querySelectorAll('.reveal, .stagger');
+
+    // Number the children of staggered containers so CSS can space their delays
+    var staggers = document.querySelectorAll('.stagger');
+    for (var s = 0; s < staggers.length; s++) {
+      var kids = staggers[s].children;
+      for (var c = 0; c < kids.length; c++) kids[c].style.setProperty('--i', c);
+    }
+
+    var revealEl = function (el) { el.classList.add('in'); };
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        if (en.isIntersecting) { revealEl(en.target); io.unobserve(en.target); }
       });
-    }, { threshold: 0.12 });
-    var reveals = document.querySelectorAll('.reveal');
-    for (var i = 0; i < reveals.length; i++) io.observe(reveals[i]);
-    // Safety net: if any reveal hasn't fired within 2.5s, show everything.
+    // Trigger once an element is ~12% up from the bottom edge, which reads as "on arrival"
+    }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+
+    for (var i = 0; i < animated.length; i++) io.observe(animated[i]);
+
+    // Safety net: if anything visible is still hidden after a few seconds (observer never
+    // fired, images shifted the layout), reveal only what's on or above the fold.
+    // Everything further down keeps its scroll animation.
     setTimeout(function () {
-      var r = document.querySelectorAll('.reveal:not(.in)');
-      for (var j = 0; j < r.length; j++) r[j].classList.add('in');
-    }, 2500);
+      var pending = document.querySelectorAll('.reveal:not(.in), .stagger:not(.in)');
+      for (var j = 0; j < pending.length; j++) {
+        if (pending[j].getBoundingClientRect().top < window.innerHeight) {
+          revealEl(pending[j]);
+          io.unobserve(pending[j]);
+        }
+      }
+    }, 3000);
   }
 })();
 </script>

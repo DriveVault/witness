@@ -292,9 +292,13 @@ table.wtns-table tr:last-child td { border-bottom: none; }
 /* The exported PDF. Same fanned stack as the home page: three pages overlapping by
    about half, so each stays readable. Breaks out wider than the reading column,
    because three A4 sheets inside 68ch would be unreadable postage stamps. */
-.pdf-figure {
-  position: relative; width: min(90vw, 700px);
-  margin-left: 50%; transform: translateX(-50%);
+/* Wider than the reading column and centred on it. The negative left margin does the
+   centring; note this has to out-specify `.article-body figure`, which sets margin: 2.5rem 0. */
+.article-body .pdf-figure {
+  --pdfw: min(90vw, 700px);
+  position: relative; width: var(--pdfw);
+  margin: 3.5rem 0 2.5rem;
+  margin-left: calc((100% - var(--pdfw)) / 2);
 }
 .pdf-figure figcaption { max-width: 58ch; margin-left: auto; margin-right: auto; }
 .pdf-stack {
@@ -315,13 +319,7 @@ table.wtns-table tr:last-child td { border-bottom: none; }
 .pdf-page.p1 { z-index: 3; --tx:  50%; --ty:  7%; --rz:  4deg; --ry: -6deg; --sc: 1;    }
 .pdf-page.p2 { z-index: 2; --tx:   0%; --ty:  0%; --rz:  0deg; --ry:  4deg; --sc: 0.96; }
 .pdf-page.p3 { z-index: 1; --tx: -50%; --ty: -6%; --rz: -5deg; --ry: 12deg; --sc: 0.92; }
-.pdf-chip {
-  position: absolute; top: -0.7rem; right: 0.4rem; z-index: 5;
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #fff;
-  padding: 0.38rem 0.72rem; border-radius: 10px;
-  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); box-shadow: 0 8px 20px var(--glow);
-}
-@media (max-width: 700px) { .pdf-figure { width: 100%; margin-left: 0; transform: none; } }
+@media (max-width: 700px) { .article-body .pdf-figure { width: 100%; margin-left: 0; } }
 
 .refs { font-size: 0.88rem; color: var(--text-2); }
 .refs li { margin-top: 0.55rem; line-height: 1.5; }
@@ -493,7 +491,6 @@ table.wtns-table tr:last-child td { border-bottom: none; }
       <div class="pdf-page p3"><img src="../wtns-pdf-3.webp" width="900" height="1165" loading="lazy" alt="Page three of the exported record: further dated photos with the notes written at the time"></div>
       <div class="pdf-page p2"><img src="../wtns-pdf-2.webp" width="900" height="1168" loading="lazy" alt="Page two of the exported record: dated photos of the hair regrowth journey with their coverage readings"></div>
       <div class="pdf-page p1"><img src="../wtns-pdf-1.webp" width="900" height="1165" loading="lazy" alt="Page one of an exported WTNS record: a progress chart of hair coverage across two years"></div>
-      <span class="pdf-chip">A4 PDF</span>
     </div>
     <figcaption>A two-year hair regrowth record as a three-page A4 PDF. Nothing leaves your iPhone until you choose to send it.</figcaption>
   </figure>

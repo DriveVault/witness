@@ -289,13 +289,39 @@ table.wtns-table tr:last-child td { border-bottom: none; }
 .app-shot { width: 100%; max-width: 430px; margin: 2.5rem auto 0; }
 .article-body .app-shot img { margin: 0; border: none; border-radius: 0; width: 100%; }
 
-/* The exported PDF, three A4 pages side by side */
-.pdf-pages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; margin: 2.5rem 0 0; }
-.article-body .pdf-pages img {
-  width: 100%; margin: 0; border-radius: 8px; border: 1px solid var(--line);
-  box-shadow: 0 12px 30px var(--shadow);
+/* The exported PDF. Same fanned stack as the home page: three pages overlapping by
+   about half, so each stays readable. Breaks out wider than the reading column,
+   because three A4 sheets inside 68ch would be unreadable postage stamps. */
+.pdf-figure {
+  position: relative; width: min(90vw, 700px);
+  margin-left: 50%; transform: translateX(-50%);
 }
-@media (max-width: 620px) { .pdf-pages { grid-template-columns: 1fr; gap: 1.4rem; max-width: 340px; margin-left: auto; margin-right: auto; } }
+.pdf-figure figcaption { max-width: 58ch; margin-left: auto; margin-right: auto; }
+.pdf-stack {
+  position: relative; perspective: 1500px; perspective-origin: 50% 40%;
+  aspect-ratio: 1.32 / 1; width: 100%; margin-bottom: 0.6rem;
+  /* Deliberately NOT preserve-3d: that would put all three pages in one 3D space,
+     where their rotated planes intersect and slice through each other. */
+  transform-style: flat;
+}
+.pdf-page {
+  position: absolute; top: 0; left: 0; right: 0; width: 50%; margin: 0 auto;
+  border-radius: 6px; overflow: hidden; background: #fff;
+  box-shadow: 0 24px 50px var(--shadow), 0 0 0 1px var(--line);
+  transform-origin: 50% 60%;
+  transform: translate3d(var(--tx), var(--ty), 0) rotateY(var(--ry)) rotateZ(var(--rz)) scale(var(--sc));
+}
+.article-body .pdf-page img { width: 100%; height: auto; display: block; margin: 0; border: none; border-radius: 0; }
+.pdf-page.p1 { z-index: 3; --tx:  50%; --ty:  7%; --rz:  4deg; --ry: -6deg; --sc: 1;    }
+.pdf-page.p2 { z-index: 2; --tx:   0%; --ty:  0%; --rz:  0deg; --ry:  4deg; --sc: 0.96; }
+.pdf-page.p3 { z-index: 1; --tx: -50%; --ty: -6%; --rz: -5deg; --ry: 12deg; --sc: 0.92; }
+.pdf-chip {
+  position: absolute; top: -0.7rem; right: 0.4rem; z-index: 5;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #fff;
+  padding: 0.38rem 0.72rem; border-radius: 10px;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); box-shadow: 0 8px 20px var(--glow);
+}
+@media (max-width: 700px) { .pdf-figure { width: 100%; margin-left: 0; transform: none; } }
 
 .refs { font-size: 0.88rem; color: var(--text-2); }
 .refs li { margin-top: 0.55rem; line-height: 1.5; }
@@ -349,60 +375,11 @@ table.wtns-table tr:last-child td { border-bottom: none; }
 
 <main class="article-body">
 
-  <p>You cannot tell whether your hair is thinning, holding steady, or growing back by looking in the mirror. Not because you are bad at it — because hair moves at about a centimetre a month across roughly 100,000 follicles, and you reset your baseline every time you look.</p>
+  <p>You cannot tell whether your hair is thinning, holding steady, or growing back by looking in the mirror. Not because you are bad at it, but because hair moves at about a centimetre a month across roughly 100,000 follicles, and you reset your baseline every time you look.</p>
 
   <p>The fix is the one dermatology trials have used for decades: fixed, dated photographs of the same four views, shot the same way, once a month. That is the whole method.</p>
 
   <p><strong>WTNS does the hard part.</strong> It holds your last photo over the live camera as a translucent ghost overlay so every shot lands in the same position, keeps the series dated in one record, and exports it as a PDF you can hand to a dermatologist. Free, on your iPhone, nothing uploaded anywhere.</p>
-
-  <div class="mini-cta">
-    <div class="mini-copy">
-      <h4>Take your baseline today.</h4>
-      <p>Day zero is the most valuable photo in the series, and it is the only one you can never go back and get.</p>
-    </div>
-    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
-      <div><small>Download on the</small><span>App Store</span></div>
-    </a>
-  </div>
-
-  <p>The rest of this piece is the short version of why the mirror fails, exactly which four photos to take, and the timeline to expect — so you don't quit three months before it would have worked.</p>
-
-  <h2>Why you can't see it happening</h2>
-
-  <p>Each follicle runs its own cycle. In the growth phase a scalp hair adds roughly 0.3&nbsp;mm a day, and you shed 50 to 100 hairs daily without going bald. Loss also starts invisibly: follicles <em>miniaturise</em> first, producing progressively finer, shorter hairs over several cycles before they stop.</p>
-
-  <p>The consequence is brutal. A figure that recurs throughout the hair literature is that <strong>more than half the hair in an area can be gone before thinning is obvious</strong> to a casual observer. By the time it looks thinner, it has been happening, unrecorded, for years.</p>
-
-  <h2>The mistake that wastes a year</h2>
-
-  <p>This is where tracking stops being optional. In a retrospective study of 400 patients prescribed topical minoxidil, <strong>86.3% had discontinued it</strong>. In a separate clinic survey, non-adherent patients stopped after a median of <strong>3.5 months</strong> — and the single most common reason given, by half of them, was <em>no improvement</em>.</p>
-
-  <p>Now set that against the American Academy of Dermatology, which says minoxidil <a href="https://www.aad.org/public/diseases/hair-loss/treatment/diagnosis-treat">usually takes about 6 to 12 months</a> to show regrowth. So the commonest reason people quit is a verdict they could not possibly have reached yet, using an instrument that cannot measure the thing in question.</p>
-
-  <p>The reverse failure costs just as much and gets discussed less: years and a lot of money spent on a routine doing nothing measurable, because no baseline existed to prove it. Tracking is not cheerleading. It tells you when to stop, too.</p>
-
-  <h2>The four photos to take, once a month</h2>
-
-  <p>Set these conditions once, then never change them:</p>
-
-  <ul>
-    <li>Same spot, indirect daylight. Overhead bathroom lights rake across the crown and can make the same head look dramatically thinner or fuller.</li>
-    <li>Hair clean, fully dry, no product, combed to your usual parting.</li>
-    <li>Flash off, filters off, portrait mode off — they alter the hair-to-scalp contrast, which is the exact signal you're measuring.</li>
-    <li>Shoot before a haircut, not after. A length change invalidates the comparison.</li>
-  </ul>
-
-  <p>Then capture all four views, every time — including the ones that currently look fine, because a view you didn't need is proof nothing changed there.</p>
-
-  <ol>
-    <li><strong>Frontal hairline</strong> — straight on, hair off the face. Watch the temples and the midline.</li>
-    <li><strong>Mid-scalp parting</strong> — looking down, parting combed open. The most sensitive view for diffuse thinning and for female pattern loss, where a widening part is often the first real sign.</li>
-    <li><strong>Crown</strong> — the whorl at the back. Hardest to shoot yourself, and the area most trials quantify. Worth the hassle.</li>
-    <li><strong>Temporal</strong> — side profile, for recession at the temples.</li>
-  </ol>
-
-  <p>Monthly, not daily. Hair grows about a centimetre a month, so thirty days is roughly the shortest interval where a real difference can accumulate. Checking weekly gives you noise and anxiety, not data.</p>
 
   <figure>
     <div class="app-seq" id="hairSeq">
@@ -424,6 +401,56 @@ table.wtns-table tr:last-child td { border-bottom: none; }
 
   <div class="mini-cta">
     <div class="mini-copy">
+      <h4>Take your baseline today.</h4>
+      <p>Day zero is the most valuable photo in the series, and it is the only one you can never go back and get.</p>
+    </div>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <p>The rest of this piece is the short version of why the mirror fails, exactly which four photos to take, and the timeline to expect, so you don't quit three months before it would have worked.</p>
+
+  <h2>Why you can't see it happening</h2>
+
+  <p>Each follicle runs its own cycle. In the growth phase a scalp hair adds roughly 0.3&nbsp;mm a day, and you shed 50 to 100 hairs daily without going bald. Loss also starts invisibly: follicles <em>miniaturise</em> first, producing progressively finer, shorter hairs over several cycles before they stop.</p>
+
+  <p>The consequence is brutal. A figure that recurs throughout the hair literature is that <strong>more than half the hair in an area can be gone before thinning is obvious</strong> to a casual observer. By the time it looks thinner, it has been happening, unrecorded, for years.</p>
+
+  <h2>The mistake that wastes a year</h2>
+
+  <p>This is where tracking stops being optional. In a retrospective study of 400 patients prescribed topical minoxidil, <strong>86.3% had discontinued it</strong>. In a separate clinic survey, non-adherent patients stopped after a median of <strong>3.5 months</strong> - and the single most common reason given, by half of them, was <em>no improvement</em>.</p>
+
+  <p>Now set that against the American Academy of Dermatology, which says minoxidil <a href="https://www.aad.org/public/diseases/hair-loss/treatment/diagnosis-treat">usually takes about 6 to 12 months</a> to show regrowth. So the commonest reason people quit is a verdict they could not possibly have reached yet, using an instrument that cannot measure the thing in question.</p>
+
+  <p>The reverse failure costs just as much and gets discussed less: years and a lot of money spent on a routine doing nothing measurable, because no baseline existed to prove it. Tracking is not cheerleading. It tells you when to stop, too.</p>
+
+  <h2>The four photos to take, once a month</h2>
+
+  <p>Set these conditions once, then never change them:</p>
+
+  <ul>
+    <li>Same spot, indirect daylight. Overhead bathroom lights rake across the crown and can make the same head look dramatically thinner or fuller.</li>
+    <li>Hair clean, fully dry, no product, combed to your usual parting.</li>
+    <li>Flash off, filters off, portrait mode off - they alter the hair-to-scalp contrast, which is the exact signal you're measuring.</li>
+    <li>Shoot before a haircut, not after. A length change invalidates the comparison.</li>
+  </ul>
+
+  <p>Then capture all four views, every time, including the ones that currently look fine, because a view you didn't need is proof nothing changed there.</p>
+
+  <ol>
+    <li><strong>Frontal hairline</strong> - straight on, hair off the face. Watch the temples and the midline.</li>
+    <li><strong>Mid-scalp parting</strong> - looking down, parting combed open. The most sensitive view for diffuse thinning and for female pattern loss, where a widening part is often the first real sign.</li>
+    <li><strong>Crown</strong> - the whorl at the back. Hardest to shoot yourself, and the area most trials quantify. Worth the hassle.</li>
+    <li><strong>Temporal</strong> - side profile, for recession at the temples.</li>
+  </ol>
+
+  <p>Monthly, not daily. Hair grows about a centimetre a month, so thirty days is roughly the shortest interval where a real difference can accumulate. Checking weekly gives you noise and anxiety, not data.</p>
+
+
+  <div class="mini-cta">
+    <div class="mini-copy">
       <h4>Every failure above is an alignment problem.</h4>
       <p>The ghost overlay shows last month's photo over the live camera, so you don't have to remember where you stood. Set a monthly reminder and it runs itself.</p>
     </div>
@@ -441,10 +468,10 @@ table.wtns-table tr:last-child td { border-bottom: none; }
         <tr><th>Window</th><th>What's typically happening</th></tr>
       </thead>
       <tbody>
-        <tr><td>Weeks 2–8</td><td>The "dread shed" with minoxidil: old resting hairs pushed out as follicles restart. Alarming, temporary, often a sign of response.</td></tr>
-        <tr><td>Months 3–4</td><td>Shedding settles back toward baseline. Early regrowth appears as short, fine hairs. Fuzz, not density.</td></tr>
-        <tr><td>Months 6–12</td><td>The AAD's window for visible minoxidil regrowth. This is your first honest verdict — against day zero, not last month.</td></tr>
-        <tr><td>Months 12–24</td><td>With finasteride, most regrowth lands in the first two years. Continued use maintains it.</td></tr>
+        <tr><td>Weeks 2-8</td><td>The "dread shed" with minoxidil: old resting hairs pushed out as follicles restart. Alarming, temporary, often a sign of response.</td></tr>
+        <tr><td>Months 3-4</td><td>Shedding settles back toward baseline. Early regrowth appears as short, fine hairs. Fuzz, not density.</td></tr>
+        <tr><td>Months 6-12</td><td>The AAD's window for visible minoxidil regrowth. This is your first honest verdict - against day zero, not last month.</td></tr>
+        <tr><td>Months 12-24</td><td>With finasteride, most regrowth lands in the first two years. Continued use maintains it.</td></tr>
       </tbody>
     </table>
   </div>
@@ -453,19 +480,20 @@ table.wtns-table tr:last-child td { border-bottom: none; }
 
   <blockquote>Stability is a result. In a progressive condition, month twelve looking the same as day zero means the treatment did something.</blockquote>
 
-  <p>That is the point most people miss — and it is completely invisible without a dated baseline, because "the same as a year ago" and "slightly worse than a year ago" feel identical in the mirror.</p>
+  <p>That is the point most people miss, and it is completely invisible without a dated baseline, because "the same as a year ago" and "slightly worse than a year ago" feel identical in the mirror.</p>
 
   <h2>Take a document to your appointment</h2>
 
-  <p>Hair loss appointments are hard because the clinician meets your scalp cold and has to reconstruct months of history from your account of it. Scrolling a camera roll in a consulting room isn't that. A dated sequence — photos in order, date on each, the notes you wrote at the time — turns "I think it's getting worse" into a documented rate of change, and gives them a real baseline for whatever they prescribe.</p>
+  <p>Hair loss appointments are hard because the clinician meets your scalp cold and has to reconstruct months of history from your account of it. Scrolling a camera roll in a consulting room isn't that. A dated sequence - photos in order, date on each, the notes you wrote at the time - turns "I think it's getting worse" into a documented rate of change, and gives them a real baseline for whatever they prescribe.</p>
 
   <p>WTNS exports any record as a clean A4 PDF for exactly this. Same file works for a trichologist, a transplant consultation, or whoever runs your treatment plan. Strip the notes or metrics out first if you'd rather keep them to yourself.</p>
 
-  <figure>
-    <div class="pdf-pages">
-      <img src="../wtns-pdf-1.webp" width="900" height="1165" loading="lazy" alt="Page one of an exported WTNS record: a progress chart of hair coverage across two years">
-      <img src="../wtns-pdf-2.webp" width="900" height="1168" loading="lazy" alt="Page two of the exported record: dated photos of the hair regrowth journey with their metric readings">
-      <img src="../wtns-pdf-3.webp" width="900" height="1165" loading="lazy" alt="Page three of the exported record: further dated photos with notes written at the time">
+  <figure class="pdf-figure">
+    <div class="pdf-stack">
+      <div class="pdf-page p3"><img src="../wtns-pdf-3.webp" width="900" height="1165" loading="lazy" alt="Page three of the exported record: further dated photos with the notes written at the time"></div>
+      <div class="pdf-page p2"><img src="../wtns-pdf-2.webp" width="900" height="1168" loading="lazy" alt="Page two of the exported record: dated photos of the hair regrowth journey with their coverage readings"></div>
+      <div class="pdf-page p1"><img src="../wtns-pdf-1.webp" width="900" height="1165" loading="lazy" alt="Page one of an exported WTNS record: a progress chart of hair coverage across two years"></div>
+      <span class="pdf-chip">A4 PDF</span>
     </div>
     <figcaption>A two-year hair regrowth record as a three-page A4 PDF. Nothing leaves your iPhone until you choose to send it.</figcaption>
   </figure>
@@ -499,7 +527,7 @@ table.wtns-table tr:last-child td { border-bottom: none; }
     <li>Dhurat R, Saraogi P. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2938572/">Hair evaluation methods: merits and demerits</a>. <em>International Journal of Trichology</em>, 2009.</li>
   </ul>
 
-  <p class="disclaimer">General information about documenting change in your own hair, not medical advice. WTNS is a photographic tracking tool, not a diagnostic device. Hair loss has many causes, some needing prompt attention — if you're concerned, see a doctor or a board-certified dermatologist. App questions: <a href="mailto:Hello@DriveVault.io" style="color:var(--peach-deep);">Hello@DriveVault.io</a>.</p>
+  <p class="disclaimer">General information about documenting change in your own hair, not medical advice. WTNS is a photographic tracking tool, not a diagnostic device. Hair loss has many causes, some needing prompt attention - if you're concerned, see a doctor or a board-certified dermatologist. App questions: <a href="mailto:Hello@DriveVault.io" style="color:var(--peach-deep);">Hello@DriveVault.io</a>.</p>
 
 </main>
 

@@ -609,13 +609,34 @@ button.mtag { cursor:pointer; }
   background: radial-gradient(circle, var(--glow) 0%, transparent 65%);
   pointer-events: none;
 }
+/* Three pages fanned in 3D, driven by scroll position rather than a timer.
+   Page 1 sits at the front, page 3 at the back; the deeper pages drift further
+   as the section travels through the viewport, which reads as parallax. */
+.pdfx-stack {
+  position: relative; perspective: 1400px; perspective-origin: 55% 45%;
+  aspect-ratio: 0.772 / 1; max-width: 480px; margin-left: auto;
+  transform-style: preserve-3d;
+}
 .pdfx-page {
-  position: relative; border-radius: 8px; overflow: hidden; background: #fff;
+  position: absolute; inset: 0; width: 76%; margin: 0 auto;
+  border-radius: 8px; overflow: hidden; background: #fff;
   box-shadow: 0 30px 66px var(--shadow), 0 0 0 1px var(--line);
+  transform-origin: 50% 100%;
+  transform:
+    translate3d(var(--fx), calc(var(--fy) + var(--py, 0px)), 0)
+    rotateY(var(--ry))
+    rotateZ(calc(var(--rz) + var(--pr, 0deg)))
+    scale(var(--sc));
 }
 .pdfx-page img { width: 100%; height: auto; display: block; }
+/* Front page, the one you read */
+.pdfx-page.p1 { z-index: 3; --fx:  14%; --fy:  3%; --rz:  3deg; --ry:  5deg; --sc: 1;    }
+/* Middle */
+.pdfx-page.p2 { z-index: 2; --fx:   0%; --fy: -2%; --rz: -3deg; --ry: 10deg; --sc: 0.95; }
+/* Back */
+.pdfx-page.p3 { z-index: 1; --fx: -16%; --fy: -7%; --rz: -9deg; --ry: 15deg; --sc: 0.90; }
 .pdfx-chip {
-  position: absolute; top: -0.8rem; right: -0.6rem; z-index: 2;
+  position: absolute; top: -0.8rem; right: -0.6rem; z-index: 5;
   font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #fff;
   padding: 0.4rem 0.75rem; border-radius: 10px;
   background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); box-shadow: 0 8px 20px var(--glow);
@@ -956,8 +977,10 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       </div>
       <div class="pdfx-figure reveal rv-r rd1">
         <span class="pdfx-chip">A4 PDF</span>
-        <div class="pdfx-page">
-          <img src="WTNS%20PDF%20Export.jpg" alt="An exported WTNS record shown as an A4 PDF page, with three dated photos of a whitening toothpaste journey, each with its metric reading and a written note." loading="lazy" width="2138" height="2768">
+        <div class="pdfx-stack" id="pdfStack">
+          <div class="pdfx-page p1"><img src="wtns-pdf-1.webp" alt="An exported WTNS record as a three page A4 PDF: a progress chart of hair coverage over two years, then the dated photos with their metric readings and notes" loading="lazy" width="900" height="1165"></div>
+          <div class="pdfx-page p2"><img src="wtns-pdf-2.webp" alt="" aria-hidden="true" loading="lazy" width="900" height="1168"></div>
+          <div class="pdfx-page p3"><img src="wtns-pdf-3.webp" alt="" aria-hidden="true" loading="lazy" width="900" height="1165"></div>
         </div>
       </div>
     </div>
@@ -1947,6 +1970,56 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
     } else {
       fInView = true;
       fSchedule();
+    }
+  }
+
+  // PDF stack parallax: the three pages drift at different rates as the section
+  // passes through the viewport, so the fan opens and closes with the scroll.
+  var pdfStack = document.getElementById('pdfStack');
+  if (pdfStack) {
+    var pReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!pReduce) {
+      var pages = [
+        pdfStack.querySelector('.p1'),
+        pdfStack.querySelector('.p2'),
+        pdfStack.querySelector('.p3')
+      ];
+      var DRIFT = [26, 62, 104];    // px of travel, front page moves least
+      var TILT  = [1.4, -2.6, -4.6]; // degrees, so the fan opens as it drifts
+      var queued = false, pInView = false;
+
+      var applyParallax = function () {
+        queued = false;
+        var rect = pdfStack.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        // -1 when the stack sits a screen below centre, +1 when a screen above
+        var r = ((rect.top + rect.height / 2) - vh / 2) / vh;
+        r = Math.max(-1, Math.min(1, r));
+        for (var i = 0; i < pages.length; i++) {
+          if (!pages[i]) continue;
+          pages[i].style.setProperty('--py', (r * DRIFT[i]).toFixed(1) + 'px');
+          pages[i].style.setProperty('--pr', (r * TILT[i]).toFixed(2) + 'deg');
+        }
+      };
+      var onScroll = function () {
+        if (queued || !pInView) return;
+        queued = true;
+        if (window.requestAnimationFrame) { window.requestAnimationFrame(applyParallax); }
+        else { applyParallax(); }
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', applyParallax);
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          pInView = entries[0].isIntersecting;
+          if (pInView) applyParallax();
+        }, { rootMargin: '20% 0px 20% 0px' }).observe(pdfStack);
+      } else {
+        pInView = true;
+      }
+      applyParallax();
     }
   }
 

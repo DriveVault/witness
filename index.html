@@ -85,13 +85,33 @@ img { display: block; max-width: 100%; }
 :focus-visible { outline: 3px solid var(--peach); outline-offset: 3px; border-radius: 6px; }
 
 .appstore {
-  display: inline-flex; align-items: center; gap: 0.65rem;
-  background: var(--ink); color: var(--bg); padding: 0.75rem 1.35rem; border-radius: 14px;
-  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  background: var(--ink); color: var(--bg); padding: 0.8rem 1.5rem; border-radius: 14px;
+  box-shadow: 0 6px 18px var(--shadow);
+  transition: transform 0.32s cubic-bezier(.34,1.4,.64,1),
+              box-shadow 0.32s ease, letter-spacing 0.32s ease;
 }
 [data-theme="dark"] .appstore { background: #fff; color: #111; }
-.appstore:hover { transform: translateY(-3px); }
-.appstore svg { width: 22px; height: 22px; flex: none; }
+/* A peach sheen sweeps across on hover, and the whole button lifts into its own glow */
+.appstore::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 20%, var(--peach-soft) 50%, transparent 80%);
+  opacity: 0; transform: translateX(-120%);
+  transition: opacity 0.3s ease, transform 0.65s cubic-bezier(.3,.8,.3,1);
+}
+.appstore:hover, .appstore:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px var(--shadow), 0 0 0 1px var(--peach), 0 0 30px 2px var(--glow);
+}
+.appstore:hover::before, .appstore:focus-visible::before { opacity: 0.55; transform: translateX(120%); }
+.appstore:active { transform: translateY(-1px); transition-duration: 0.09s; }
+.appstore svg { width: 22px; height: 22px; flex: none; transition: transform 0.32s cubic-bezier(.34,1.4,.64,1); }
+.appstore:hover svg { transform: scale(1.12) rotate(-4deg); }
+@media (prefers-reduced-motion: reduce){
+  .appstore, .appstore svg, .appstore::before { transition: none; }
+  .appstore:hover { transform: none; }
+}
 .appstore small { display: block; font-size: 0.62rem; opacity: 0.8; line-height: 1; margin-bottom: 2px; }
 .appstore span { font-weight: 600; font-size: 1.05rem; line-height: 1; }
 
@@ -341,6 +361,18 @@ section.block { padding: 6rem 0; position: relative; }
   .demo-copy { text-align: center; }
   .demo-title { max-width: none; }
 }
+
+/* The three example tiles arrive one after another rather than together.
+   .jx-item is display:contents, so the animation lives on the tiles themselves. */
+.js-anim .jx-stagger .jx-tab {
+  opacity: 0; transform: translateY(30px) scale(0.97);
+  transition: opacity 0.65s ease, transform 0.7s cubic-bezier(.2,.7,.3,1);
+}
+.js-anim .jx-stagger.in .jx-tab { opacity: 1; transform: none; }
+.js-anim .jx-stagger .jx-item:nth-child(1) .jx-tab { transition-delay: 0ms; }
+.js-anim .jx-stagger .jx-item:nth-child(2) .jx-tab { transition-delay: 130ms; }
+.js-anim .jx-stagger .jx-item:nth-child(3) .jx-tab { transition-delay: 260ms; }
+.js-anim .jx-stagger:not(.in) .jx-tab { will-change: opacity, transform; }
 
 /* ---------- Expandable journey examples ---------- */
 .jx { display:grid; grid-template-columns: repeat(3, 1fr); column-gap: 1.1rem; row-gap: 0; }
@@ -651,18 +683,29 @@ button.mtag { cursor:pointer; }
 
 /* ---------- Pricing ---------- */
 .bill-toggle {
-  display: inline-flex; gap: 0.3rem; padding: 0.3rem; margin: 0 auto 2.6rem; border-radius: 16px;
-  background: var(--surface); border: 1px solid var(--line);
+  position: relative; display: inline-flex; gap: 0.3rem; padding: 0.3rem; margin: 0 auto 2.6rem;
+  border-radius: 16px; background: var(--surface); border: 1px solid var(--line);
 }
+/* One pill slides between the options rather than each button repainting */
+.bill-thumb {
+  position: absolute; top: 0.3rem; bottom: 0.3rem; left: 0; width: 0; border-radius: 13px;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%);
+  box-shadow: 0 6px 18px var(--glow);
+  transform: translateX(var(--tx, 0px)); width: var(--tw, 0px);
+  transition: transform 0.42s cubic-bezier(.4,1.3,.5,1), width 0.42s cubic-bezier(.4,1.3,.5,1);
+  pointer-events: none;
+}
+.bill-thumb.no-anim { transition: none; }
 .pricing .bill-wrap { text-align: center; }
 .bill-opt {
+  position: relative; z-index: 1;
   display: inline-flex; align-items: center; gap: 0.5rem; border: none; cursor: pointer;
   font-family: inherit; font-size: 0.92rem; font-weight: 600; color: var(--text-2);
   background: transparent; border-radius: 13px; padding: 0.7rem 1.2rem;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: color 0.28s ease;
 }
 .bill-opt:hover { color: var(--ink); }
-.bill-opt.active { background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); color: #fff; box-shadow: 0 6px 18px var(--glow); }
+.bill-opt.active { color: #fff; }
 .bill-opt .save {
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; padding: 0.18rem 0.45rem; border-radius: 7px;
   background: var(--peach-soft); color: #7A3B36;
@@ -682,6 +725,9 @@ button.mtag { cursor:pointer; }
 }
 .plan h3 { font-size: 1.5rem; margin-bottom: 0.9rem; }
 .plan-price { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+/* Price and its note fade down and back as the billing period changes */
+.plan-swap { transition: opacity 0.22s ease, transform 0.22s ease; }
+.plan-swap.out { opacity: 0; transform: translateY(6px); }
 .plan-price .amt { font-family: 'Newsreader', Georgia, serif; font-size: 2.9rem; color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums; }
 .plan-price .per { font-size: 0.95rem; color: var(--text-2); }
 .plan-note { color: var(--text-2); font-size: 0.9rem; margin-top: 0.6rem; min-height: 2.6em; }
@@ -997,7 +1043,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       <p><em>Anything</em> that changes visually counts: the results of your new whitening toothpaste, a hair loss and regrowth journey, a baby bump, or simply the view from your window turning through the seasons. WTNS can witness it all.</p>
     </div>
 
-    <div class="jx reveal rv-pop rd1" id="jx">
+    <div class="jx jx-stagger" id="jx">
       <div class="jx-item">
         <button class="jx-tab" type="button" id="jx-tab-skin" aria-expanded="false" aria-controls="jx-panel-skin">
           <img src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessAcneExample5.png?v=1783356542" alt="" loading="lazy">
@@ -1217,6 +1263,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
 
     <div class="bill-wrap reveal">
       <div class="bill-toggle" role="group" aria-label="Billing period">
+        <span class="bill-thumb" aria-hidden="true"></span>
         <button type="button" class="bill-opt active" data-bill="year" aria-pressed="true">Yearly <span class="save">Save 58%</span></button>
         <button type="button" class="bill-opt" data-bill="month" aria-pressed="false">Monthly</button>
       </div>
@@ -1241,8 +1288,8 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       <div class="plan featured">
         <span class="plan-flag">Unlimited</span>
         <h3>Premium</h3>
-        <div class="plan-price"><span class="amt" id="planAmt">$19.99</span><span class="per" id="planPer">per year</span></div>
-        <p class="plan-note" id="planNote">That's $1.67 a month, a 58% saving against paying monthly.</p>
+        <div class="plan-price plan-swap" id="planPrice"><span class="amt" id="planAmt">$19.99</span><span class="per" id="planPer">per year</span></div>
+        <p class="plan-note plan-swap" id="planNote">That's $1.67 a month, a 58% saving against paying monthly.</p>
         <ul class="plan-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited records</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Unlimited photos in every record</span></li>
@@ -1263,7 +1310,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
     <div class="section-head center stagger">
       <div class="kicker">One app, countless journeys</div>
       <h2>What will you <em>WTNS</em>?</h2>
-      <p>If it changes visually, WTNS can track it. A few of the ways people use it.</p>
+      <p>If it changes visually, WTNS can track it.<br class="brk">A few of the ways people use it.</p>
     </div>
   </div>
   <div class="marquee marquee-left" aria-label="Use cases, row one">
@@ -1875,157 +1922,67 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
   var planAmt = document.getElementById('planAmt');
   var planPer = document.getElementById('planPer');
   var planNote = document.getElementById('planNote');
+  var planPrice = document.getElementById('planPrice');
+  var billThumb = document.querySelector('.bill-thumb');
   if (billOpts.length && planAmt) {
     var billing = {
       year: { amt: '$19.99', per: 'per year', note: "That's $1.67 a month, a 58% saving against paying monthly." },
       month: { amt: '$3.99', per: 'per month', note: 'Billed monthly. Switch to yearly whenever you like and save 58%.' }
     };
-    var setBilling = function (key) {
+    var swaps = [planPrice, planNote];
+
+    // Park the sliding pill under whichever option is active
+    var moveThumb = function (btn, instant) {
+      if (!billThumb || !btn) return;
+      if (instant) billThumb.classList.add('no-anim');
+      billThumb.style.setProperty('--tx', btn.offsetLeft + 'px');
+      billThumb.style.setProperty('--tw', btn.offsetWidth + 'px');
+      if (instant) {
+        void billThumb.offsetWidth;
+        billThumb.classList.remove('no-anim');
+      }
+    };
+
+    var setBilling = function (key, instant) {
       var b = billing[key];
       if (!b) return;
-      planAmt.textContent = b.amt;
-      planPer.textContent = b.per;
-      planNote.textContent = b.note;
+      var active = null;
       for (var m = 0; m < billOpts.length; m++) {
         var on = billOpts[m].getAttribute('data-bill') === key;
         billOpts[m].classList.toggle('active', on);
         billOpts[m].setAttribute('aria-pressed', on ? 'true' : 'false');
+        if (on) active = billOpts[m];
       }
+      moveThumb(active, instant);
+
+      var write = function () {
+        planAmt.textContent = b.amt;
+        planPer.textContent = b.per;
+        planNote.textContent = b.note;
+      };
+      if (instant) { write(); return; }
+      // fade the old figures out, swap the text, fade the new ones back in
+      for (var s = 0; s < swaps.length; s++) { if (swaps[s]) swaps[s].classList.add('out'); }
+      setTimeout(function () {
+        write();
+        for (var s2 = 0; s2 < swaps.length; s2++) { if (swaps[s2]) swaps[s2].classList.remove('out'); }
+      }, 220);
     };
+
     for (var b2 = 0; b2 < billOpts.length; b2++) {
       billOpts[b2].addEventListener('click', function () {
         setBilling(this.getAttribute('data-bill'));
       });
     }
-  }
-
-  // Feature accordion: one row open at a time, cycling so the rows read as interactive
-  var facc = document.getElementById('facc');
-  if (facc) {
-    var faccHeads = facc.querySelectorAll('.facc-head');
-    facc.classList.add('facc-init');
-    facc.classList.add('facc-on');
-    var faccUnlock = function () { facc.classList.remove('facc-init'); };
-    if (window.requestAnimationFrame) { window.requestAnimationFrame(faccUnlock); } else { setTimeout(faccUnlock, 30); }
-
-    var F_AUTO_MS = 3800;     // time on each row
-    var F_RESUME_MS = 40000;  // quiet period after someone opens one themselves
-    var fReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var fIdx = 0, fTimer = null, fResume = null;
-    var fPaused = false, fHover = false, fInView = false;
-
-    var faccPanel = function (head) {
-      return document.getElementById(head.getAttribute('aria-controls'));
-    };
-    var faccSet = function (idx, instantClose) {
-      for (var i = 0; i < faccHeads.length; i++) {
-        var on = (i === idx);
-        var panel = faccPanel(faccHeads[i]);
-        faccHeads[i].setAttribute('aria-expanded', on ? 'true' : 'false');
-        faccHeads[i].parentNode.classList.toggle('open', on);
-        if (!panel) continue;
-        if (!on && instantClose) {
-          panel.classList.add('instant');
-          panel.classList.remove('open');
-          void panel.offsetHeight;
-          panel.classList.remove('instant');
-        } else {
-          panel.classList.toggle('open', on);
-        }
-      }
-      fIdx = idx;
-    };
-
-    var fClear = function () { if (fTimer) { clearTimeout(fTimer); fTimer = null; } };
-    var fSchedule = function () {
-      fClear();
-      if (fReduce || fPaused || fHover || !fInView || document.hidden) return;
-      fTimer = setTimeout(function () {
-        faccSet((fIdx + 1) % faccHeads.length, false);
-        fSchedule();
-      }, F_AUTO_MS);
-    };
-
-    for (var h = 0; h < faccHeads.length; h++) {
-      (function (idx) {
-        faccHeads[idx].addEventListener('click', function () {
-          fPaused = true;
-          fClear();
-          if (fResume) clearTimeout(fResume);
-          fResume = setTimeout(function () { fPaused = false; fSchedule(); }, F_RESUME_MS);
-          // clicking the open row closes it and leaves the list collapsed
-          faccSet(idx === fIdx && this.getAttribute('aria-expanded') === 'true' ? -1 : idx, false);
-        });
-      })(h);
-    }
-
-    facc.addEventListener('mouseenter', function () { fHover = true; fClear(); });
-    facc.addEventListener('mouseleave', function () { fHover = false; fSchedule(); });
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { fClear(); } else { fSchedule(); }
+    setBilling('year', true);
+    window.addEventListener('resize', function () {
+      moveThumb(document.querySelector('.bill-opt.active'), true);
     });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        fInView = entries[0].isIntersecting;
-        if (fInView) { fSchedule(); } else { fClear(); }
-      }, { threshold: 0.25 }).observe(facc);
-    } else {
-      fInView = true;
-      fSchedule();
-    }
-  }
-
-  // PDF stack parallax: the three pages drift at different rates as the section
-  // passes through the viewport, so the fan opens and closes with the scroll.
-  var pdfStack = document.getElementById('pdfStack');
-  if (pdfStack) {
-    var pReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!pReduce) {
-      var pages = [
-        pdfStack.querySelector('.p1'),
-        pdfStack.querySelector('.p2'),
-        pdfStack.querySelector('.p3')
-      ];
-      // front, middle, back. The outer pages slide apart horizontally as you scroll,
-      // and all three drift vertically at different rates.
-      var SPREAD = [46, 0, -46];     // px sideways
-      var DRIFT  = [30, -6, -34];    // px vertically
-      var TILT   = [2.2, -0.8, -3.4]; // degrees
-      var queued = false, pInView = false;
-
-      var applyParallax = function () {
-        queued = false;
-        var rect = pdfStack.getBoundingClientRect();
-        var vh = window.innerHeight || document.documentElement.clientHeight;
-        // -1 when the stack sits a screen below centre, +1 when a screen above
-        var r = ((rect.top + rect.height / 2) - vh / 2) / vh;
-        r = Math.max(-1, Math.min(1, r));
-        for (var i = 0; i < pages.length; i++) {
-          if (!pages[i]) continue;
-          pages[i].style.setProperty('--px', (r * SPREAD[i]).toFixed(1) + 'px');
-          pages[i].style.setProperty('--py', (r * DRIFT[i]).toFixed(1) + 'px');
-          pages[i].style.setProperty('--pr', (r * TILT[i]).toFixed(2) + 'deg');
-        }
-      };
-      var onScroll = function () {
-        if (queued || !pInView) return;
-        queued = true;
-        if (window.requestAnimationFrame) { window.requestAnimationFrame(applyParallax); }
-        else { applyParallax(); }
-      };
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', applyParallax);
-
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          pInView = entries[0].isIntersecting;
-          if (pInView) applyParallax();
-        }, { rootMargin: '20% 0px 20% 0px' }).observe(pdfStack);
-      } else {
-        pInView = true;
-      }
-      applyParallax();
+    // Web fonts can land after first paint and change the button widths
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        moveThumb(document.querySelector('.bill-opt.active'), true);
+      });
     }
   }
 
@@ -2034,7 +1991,7 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
   if ('IntersectionObserver' in window) {
     document.body.classList.add('js-anim');
 
-    var animated = document.querySelectorAll('.reveal, .stagger');
+    var animated = document.querySelectorAll('.reveal, .stagger, .jx-stagger');
 
     // Number the children of staggered containers so CSS can space their delays
     var staggers = document.querySelectorAll('.stagger');

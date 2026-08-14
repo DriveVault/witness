@@ -125,7 +125,8 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
   background: radial-gradient(circle, var(--glow) 0%, transparent 62%);
   pointer-events:none; z-index:0;
 }
-.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; align-items: center; }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; }
+.hero-copy { align-self: center; }
 .hero-appicon-frame {
   width: 92px; height: 92px; border-radius: 21px; margin-bottom: 1.4rem;
   box-shadow: 0 14px 34px var(--glow); background: var(--surface-2);
@@ -213,6 +214,7 @@ input[type=range]::-moz-range-thumb {
 @media (max-width: 900px){
   .hero .wrap { grid-template-columns: 1fr; gap: 2.5rem; }
   .ghost-demo { max-width: 400px; margin: 0 auto; }
+  .demo-figure { max-width: 460px; margin: 0 auto -3rem; }
   .hero .lede { max-width: none; }
 }
 
@@ -283,11 +285,15 @@ section.block { padding: 6rem 0; position: relative; }
 
 /* ---------- App demo: stacked screen sequence over a fixed hand ---------- */
 .demo { background: var(--surface-2); }
-.demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; }
+.demo-split { display: grid; grid-template-columns: 1fr 0.95fr; gap: 3.5rem; align-items: center; }
 .demo-title { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.12; max-width: 15ch; margin: 0; align-self: center; }
 .demo-title em { font-style: italic; color: var(--peach-deep); }
-.demo-figure { position: relative; width: 100%; max-width: 620px; margin-left: auto; margin-bottom: -6rem; }
+/* The sequence sits in the hero now, sized generously and running off the section floor */
+.demo-figure { position: relative; width: 100%; max-width: 760px; margin: 0 0 -4rem auto; }
 .demo-base { display: block; width: 100%; height: auto; }
+.demo-base.for-light { display: none; }
+[data-theme="light"] .demo-base.for-dark { display: none; }
+[data-theme="light"] .demo-base.for-light { display: block; }
 /* Placed off the shared bounding box the nine screens were exported with, so they register exactly */
 .demo-screen {
   position: absolute; left: 13.866%; top: 2.04%; width: 44.9485%; height: auto;
@@ -298,7 +304,6 @@ section.block { padding: 6rem 0; position: relative; }
 @media (max-width: 900px){
   .demo-split { grid-template-columns: 1fr; gap: 2rem; }
   .demo-title { max-width: none; text-align: center; }
-  .demo-figure { max-width: 420px; margin: 0 auto -3.75rem; }
 }
 
 /* ---------- Expandable journey examples ---------- */
@@ -757,6 +762,26 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
       </div>
     </div>
 
+    <div class="demo-figure reveal" id="demoSeq">
+      <img class="demo-base for-dark" src="wtns-hand-base.webp" width="1400" height="1769"
+           alt="An iPhone held in one hand, cycling through WTNS: the records grid, a hair regrowth record, its progress chart, and a scrub through the time-lapse">
+      <img class="demo-base for-light" src="wtns-hand-base-light.webp" width="1400" height="1769" alt="" aria-hidden="true">
+        <img class="demo-screen" src="wtns-screen-1.webp" alt="" aria-hidden="true">
+        <img class="demo-screen" src="wtns-screen-2.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-3.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-4.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-5.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-6.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-7.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-8.webp" alt="" aria-hidden="true" fetchpriority="low">
+        <img class="demo-screen" src="wtns-screen-9.webp" alt="" aria-hidden="true" fetchpriority="low">
+    </div>
+  </div>
+</header>
+
+<section class="block demo" id="demo">
+  <div class="wrap demo-split">
+    <h2 class="demo-title reveal">Track change precisely, with <em>overlay photo technology</em></h2>
     <div class="ghost-demo reveal">
       <div class="ghost-stage" id="ghostStage">
         <img class="stage-img" data-stage="0" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/WitnessCactusExample1.png?v=1783356546" alt="Cactus at month 1" style="opacity:1">
@@ -797,25 +822,6 @@ footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 
         <input type="range" id="growth" min="0" max="100" value="0" step="1" style="--fill:0%" aria-label="Cactus growth timeline">
         <p class="ghost-hint" id="ghostHint">Playing. Drag the slider any time to take over.</p>
       </div>
-    </div>
-  </div>
-</header>
-
-<section class="block demo" id="demo">
-  <div class="wrap demo-split">
-    <h2 class="demo-title reveal">An app built around the way that <em>you</em> change</h2>
-    <div class="demo-figure reveal" id="demoSeq">
-      <img class="demo-base" src="wtns-hand-base.webp" width="1400" height="1769"
-           alt="An iPhone held in one hand, cycling through WTNS: the records grid, a hair regrowth record, its progress chart, and a scrub through the time-lapse">
-        <img class="demo-screen" src="wtns-screen-1.webp" alt="" aria-hidden="true">
-        <img class="demo-screen" src="wtns-screen-2.webp" alt="" aria-hidden="true" fetchpriority="low">
-        <img class="demo-screen" src="wtns-screen-3.webp" alt="" aria-hidden="true" fetchpriority="low">
-        <img class="demo-screen" src="wtns-screen-4.webp" alt="" aria-hidden="true" fetchpriority="low">
-        <img class="demo-screen" src="wtns-screen-5.webp" alt="" aria-hidden="true" fetchpriority="low">
-        <img class="demo-screen" src="wtns-screen-6.webp" alt="" aria-hidden="true" fetchpriority="low">
-        <img class="demo-screen" src="wtns-screen-7.webp" alt="" aria-hidden="true" fetchpriority="low">
-        <img class="demo-screen" src="wtns-screen-8.webp" alt="" aria-hidden="true" fetchpriority="low">
-        <img class="demo-screen" src="wtns-screen-9.webp" alt="" aria-hidden="true" fetchpriority="low">
     </div>
   </div>
 </section>

@@ -614,7 +614,10 @@ button.mtag { cursor:pointer; }
 .pdfx-stack {
   position: relative; perspective: 1500px; perspective-origin: 50% 40%;
   aspect-ratio: 1.32 / 1; max-width: 620px; margin-left: auto;
-  transform-style: preserve-3d;
+  /* Deliberately NOT preserve-3d: that would put all three pages in one 3D space,
+     where their rotated planes intersect and slice through each other. Flat keeps
+     the perspective on each page but paints them in z-index order, as whole sheets. */
+  transform-style: flat;
 }
 .pdfx-page {
   position: absolute; top: 0; left: 0; right: 0; width: 50%; margin: 0 auto;

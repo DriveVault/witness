@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ==============================================================
+     EVERYTHING THE BLOG INDEX NEEDS IS IN THIS BLOCK.
+     Fill in these six lines and the article appears on Blog.html
+     automatically, in the right order, with its image and excerpt.
+     Nothing on Blog.html needs editing, ever.
+     ============================================================== -->
+
+<title>How to track your progress on a GLP-1 | WTNS</title>
+<meta property="og:title"              content="How to track your progress on a GLP-1">
+<meta property="og:description"        content="The scale is the least reliable instrument you own. Here is what to record from day one, so you can tell whether your treatment is actually working.">
+<meta property="article:section"       content="Health">
+<meta property="article:published_time" content="2026-08-16">
+<meta property="og:image"              content="https://images.unsplash.com/photo-1522844990619-4951c40f7eda?fm=jpg&q=70&w=2000&auto=format&fit=crop&ixlib=rb-4.1.0">
+<meta name="wtns:readtime"             content="7 min read">
+
+<!-- Notes on the six above:
+     og:title               the headline shown on the index and when shared
+     og:description         the excerpt on the index card
+     article:section        the little label chip. Anything you like: Skin, Hair,
+                            Plants, Renovation, Product, Behind the scenes
+     article:published_time YYYY-MM-DD. This is what sorts the index, newest first,
+                            so it must be present and correct
+     og:image               the hero image, written relative to THIS file, e.g.
+                            images/foo.jpg for blog/images/foo.jpg. It is used both
+                            on the index card and as the hero at the top of this page
+     wtns:readtime          optional; omit the line if you'd rather not show one
+     ============================================================== -->
+
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" href="../Favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="theme-color" content="#1C1C1E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --peach: #ED8C85;
+  --peach-deep: #E0736B;
+  --peach-soft: #F6B4AE;
+  --bg: #FDF5F0;
+  --surface: #FFFFFF;
+  --surface-2: #FBEFE8;
+  --ink: #2A2226;
+  --text: #333333;
+  --text-2: #808080;
+  --line: #EADFD7;
+  --glow: rgba(237,140,133,0.22);
+  --shadow: rgba(103, 74, 68, 0.12);
+  --frost: rgba(255,255,255,0.62);
+}
+[data-theme="dark"] {
+  --bg: #1C1C1E;
+  --surface: #2C2C2E;
+  --surface-2: #262628;
+  --ink: #F2F2F2;
+  --text: #E7E4E2;
+  --text-2: #B3B3B3;
+  --line: #3A3A3D;
+  --glow: rgba(237,140,133,0.20);
+  --shadow: rgba(0,0,0,0.45);
+  --frost: rgba(44,44,46,0.55);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+h1,h2,h3,h4 { font-family: 'Newsreader', Georgia, serif; color: var(--ink); font-weight: 400; letter-spacing: -0.01em; line-height: 1.08; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.wrap { width: min(1160px, 92vw); margin: 0 auto; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.6rem; border-radius: 14px; font-weight: 600; font-size: 0.95rem;
+  cursor: pointer; border: none; transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%);
+  color: #fff; box-shadow: 0 8px 24px var(--glow);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 34px var(--glow); }
+.btn-primary:active { transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { border-color: var(--peach); color: var(--peach-deep); }
+:focus-visible { outline: 3px solid var(--peach); outline-offset: 3px; border-radius: 6px; }
+
+.appstore {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  background: var(--ink); color: var(--bg); padding: 0.8rem 1.5rem; border-radius: 14px;
+  box-shadow: 0 6px 18px var(--shadow);
+  transition: transform 0.32s cubic-bezier(.34,1.4,.64,1),
+              box-shadow 0.32s ease, letter-spacing 0.32s ease;
+}
+[data-theme="dark"] .appstore { background: #fff; color: #111; }
+/* A peach sheen sweeps across on hover, and the whole button lifts into its own glow */
+.appstore::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 20%, var(--peach-soft) 50%, transparent 80%);
+  opacity: 0; transform: translateX(-120%);
+  transition: opacity 0.3s ease, transform 0.65s cubic-bezier(.3,.8,.3,1);
+}
+.appstore:hover, .appstore:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px var(--shadow), 0 0 0 1px var(--peach), 0 0 30px 2px var(--glow);
+}
+.appstore:hover::before, .appstore:focus-visible::before { opacity: 0.55; transform: translateX(120%); }
+.appstore:active { transform: translateY(-1px); transition-duration: 0.09s; }
+.appstore svg { width: 22px; height: 22px; flex: none; transition: transform 0.32s cubic-bezier(.34,1.4,.64,1); }
+.appstore:hover svg { transform: scale(1.12) rotate(-4deg); }
+@media (prefers-reduced-motion: reduce){
+  .appstore, .appstore svg, .appstore::before { transition: none; }
+  .appstore:hover { transform: none; }
+}
+.appstore small { display: block; font-size: 0.62rem; opacity: 0.8; line-height: 1; margin-bottom: 2px; }
+.appstore span { font-weight: 600; font-size: 1.05rem; line-height: 1; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  background: var(--frost); border-bottom: 1px solid var(--line);
+}
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.brand { display: flex; align-items: center; gap: 0.6rem; font-family: 'Newsreader'; font-size: 1.4rem; color: var(--ink); font-weight: 500; letter-spacing: -0.02em; }
+.brand .aperture { width: 26px; height: 26px; flex: none; }
+.brand .brand-logo { width: 30px; height: 30px; flex: none; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 8px var(--shadow); }
+.navlinks { display: flex; align-items: center; gap: 2rem; }
+.navlinks a { font-size: 0.9rem; color: var(--text-2); transition: color 0.2s; }
+.navlinks a:hover { color: var(--peach-deep); }
+.nav-actions { display: flex; align-items: center; gap: 0.9rem; }
+.theme-toggle {
+  width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); cursor: pointer; display: grid; place-items: center; color: var(--ink);
+  transition: border-color 0.2s, transform 0.3s;
+}
+.theme-toggle:hover { border-color: var(--peach); transform: rotate(15deg); }
+.theme-toggle svg { width: 20px; height: 20px; }
+@media (max-width: 1060px){ .navlinks{ gap: 1.15rem; } .navlinks a{ font-size: 0.85rem; } }
+@media (max-width: 900px){ .navlinks{ display:none; } }
+
+.section-head { max-width: 52ch; margin-bottom: 3.5rem; }
+.section-head.center { margin-left:auto; margin-right:auto; text-align:center; }
+.kicker { font-size:0.78rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color: var(--peach-deep); margin-bottom: 1rem; }
+.section-head h2 { font-size: clamp(2rem, 3.8vw, 2.9rem); margin-bottom: 1rem; text-wrap: balance; }
+.section-head p { font-size: 1.1rem; color: var(--text-2); text-wrap: pretty; }
+.section-head.center p { max-width: 56ch; margin-left:auto; margin-right:auto; }
+
+/* Progressive enhancement: only hide for animation once JS confirms it can reveal them.
+   Elements start offset and settle as they enter the lower part of the viewport. */
+.js-anim .reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.75s cubic-bezier(.2,.7,.3,1);
+  transition-delay: var(--rd, 0ms);
+}
+.js-anim .reveal:not(.in) { will-change: opacity, transform; }
+.js-anim .reveal.in { opacity: 1; transform: none; }
+/* Direction variants, so a split section's two halves arrive from their own sides */
+.js-anim .reveal.rv-l { transform: translate3d(-36px, 0, 0); }
+.js-anim .reveal.rv-r { transform: translate3d(36px, 0, 0); }
+.js-anim .reveal.rv-up { transform: translateY(46px); }
+.js-anim .reveal.rv-pop { transform: translateY(20px) scale(0.965); }
+.js-anim .reveal.in { transform: none; }
+/* Small offsets so paired elements land one after the other rather than together */
+.rd1 { --rd: 90ms; } .rd2 { --rd: 180ms; } .rd3 { --rd: 270ms; }
+
+/* Staggered containers: the children animate in sequence, the container itself doesn't move */
+.js-anim .stagger > * {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.65s cubic-bezier(.2,.7,.3,1);
+  transition-delay: calc(var(--i, 0) * 85ms);
+}
+.js-anim .stagger:not(.in) > * { will-change: opacity, transform; }
+.js-anim .stagger.in > * { opacity: 1; transform: none; }
+
+footer { background: var(--bg); border-top:1px solid var(--line); padding: 4rem 0 2rem; }
+.foot-grid { display:grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap:2rem; margin-bottom:3rem; }
+.foot-brand .brand { margin-bottom:1rem; }
+.foot-brand p { color:var(--text-2); font-size:0.9rem; max-width:32ch; }
+.foot-col h4 { font-family:'Inter'; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-2); margin-bottom:1rem; font-weight:600; }
+.foot-col a { display:block; font-size:0.92rem; color:var(--text); margin-bottom:0.6rem; transition:color 0.2s; }
+.foot-col a:hover { color:var(--peach-deep); }
+.foot-bottom { display:flex; align-items:center; justify-content:space-between; padding-top:2rem; border-top:1px solid var(--line); flex-wrap:wrap; gap:1rem; }
+.foot-bottom p { font-size:0.85rem; color:var(--text-2); }
+.foot-made { font-size:0.85rem; color:var(--text-2); display:flex; align-items:center; gap:0.4rem; }
+.foot-made svg { width:15px; height:15px; color:var(--peach); }
+
+/* Shared bits between the index and the articles */
+.post-label {
+  /* inline-block for the article head, flex-start so it doesn't stretch inside the cards */
+  display: inline-block; align-self: flex-start; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; color: #7A3B36; background: var(--peach-soft);
+  padding: 0.3rem 0.6rem; border-radius: 8px;
+}
+.post-meta { margin-top: 1.1rem; font-size: 0.82rem; color: var(--text-2); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.post-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-2); flex: none; }
+
+/* ---------- Article ---------- */
+.article-head { padding: 4.5rem 0 2.5rem; }
+.back-link { display: flex; width: max-content; align-items: center; gap: 0.45rem; font-size: 0.9rem; color: var(--text-2); margin-bottom: 2rem; transition: color 0.2s, gap 0.2s; }
+.back-link:hover { color: var(--peach-deep); gap: 0.7rem; }
+.back-link svg { width: 15px; height: 15px; }
+.article-head .post-label { margin-top: 0.4rem; }
+.article-head h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); margin: 1rem 0; text-wrap: balance; max-width: 22ch; }
+.article-head .post-meta { margin-top: 1.4rem; }
+
+.article-hero { margin-bottom: 3rem; }
+.article-hero img { width: 100%; border-radius: 20px; box-shadow: 0 20px 50px var(--shadow); border: 1px solid var(--line); }
+.article-hero figcaption { margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-2); text-align: center; }
+
+/* One column, measured for reading */
+.article-body { width: min(68ch, 92vw); margin: 0 auto; padding-bottom: 5rem; font-size: 1.08rem; }
+.article-body > * + * { margin-top: 1.5rem; }
+.article-body p { color: var(--text); line-height: 1.75; text-wrap: pretty; }
+.article-body h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-top: 3rem; }
+.article-body h3 { font-size: 1.35rem; margin-top: 2.4rem; }
+.article-body a { color: var(--peach-deep); text-decoration: underline; text-underline-offset: 3px; }
+.article-body a:hover { color: var(--peach); }
+.article-body ul, .article-body ol { padding-left: 1.3rem; color: var(--text); }
+.article-body li + li { margin-top: 0.6rem; }
+.article-body img { width: 100%; border-radius: 16px; border: 1px solid var(--line); margin: 2.5rem 0; }
+.article-body figure { margin: 2.5rem 0; }
+.article-body figcaption { margin-top: 0.7rem; font-size: 0.85rem; color: var(--text-2); text-align: center; }
+.article-body blockquote {
+  border-left: 3px solid var(--peach); padding: 0.4rem 0 0.4rem 1.4rem; margin: 2.5rem 0;
+  font-family: 'Newsreader', Georgia, serif; font-size: 1.3rem; line-height: 1.5; color: var(--ink);
+}
+.article-body hr { border: none; border-top: 1px solid var(--line); margin: 3rem 0; }
+.article-body code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; background: var(--surface-2); padding: 0.15rem 0.4rem; border-radius: 6px; }
+
+/* Closing prompt */
+.article-cta {
+  margin-top: 4rem; padding: 2.5rem; border-radius: 22px; text-align: center;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.article-cta h3 { font-size: 1.6rem; margin-bottom: 0.7rem; }
+.article-cta p { color: var(--text-2); margin-bottom: 1.6rem; }
+.article-cta .appstore { margin: 0 auto; }
+
+/* ============================================================
+   Article extras. Shared across every WTNS article.
+   ============================================================ */
+
+/* Theme-paired mockups: both sit in the DOM, CSS picks one. No reload on toggle. */
+.for-light { display: none !important; }
+[data-theme="light"] .for-dark { display: none !important; }
+[data-theme="light"] .for-light { display: block !important; }
+
+/* The hero sequence from the home page: nine screen captures stacked over one fixed hand.
+   The percentages are the shared bounding box the nine screens were exported with. */
+.app-seq { position: relative; width: 100%; max-width: 540px; margin: 2.5rem auto 0; }
+.article-body .app-seq img { margin: 0; border: none; border-radius: 0; }
+.article-body .app-seq .seq-base { display: block; width: 100%; height: auto; }
+.article-body .app-seq .seq-screen {
+  position: absolute; left: 13.866%; top: 2.04%; width: 44.9485%; height: auto;
+  opacity: 0; transition: opacity 0.4s ease;
+}
+.article-body .app-seq .seq-screen.on { opacity: 1; }
+.article-body .app-seq .seq-screen.snap { transition: opacity 0.14s ease; }
+@media (prefers-reduced-motion: reduce) { .article-body .app-seq .seq-screen { transition: none; } }
+
+/* The exported PDF. Same fanned stack as the home page: three pages overlapping by
+   about half, so each stays readable. Breaks out wider than the reading column,
+   because three A4 sheets inside 68ch would be unreadable postage stamps.
+   Scoped to .article-body so it outranks `.article-body figure { margin: 2.5rem 0 }`. */
+.article-body .pdf-figure {
+  --pdfw: min(90vw, 700px);
+  position: relative; width: var(--pdfw);
+  margin: 3rem 0; margin-left: calc((100% - var(--pdfw)) / 2);
+}
+.article-body .pdf-figure figcaption { max-width: 58ch; margin-left: auto; margin-right: auto; }
+.pdf-stack {
+  position: relative; perspective: 1500px; perspective-origin: 50% 40%;
+  aspect-ratio: 1.32 / 1; width: 100%; margin-bottom: 0.6rem;
+  /* Deliberately NOT preserve-3d: that would put all three pages in one 3D space,
+     where their rotated planes intersect and slice through each other. */
+  transform-style: flat;
+}
+.pdf-page {
+  position: absolute; top: 0; left: 0; right: 0; width: 50%; margin: 0 auto;
+  border-radius: 6px; overflow: hidden; background: #fff;
+  box-shadow: 0 24px 50px var(--shadow), 0 0 0 1px var(--line);
+  transform-origin: 50% 60%;
+  transform: translate3d(var(--tx), var(--ty), 0) rotateY(var(--ry)) rotateZ(var(--rz)) scale(var(--sc));
+}
+.article-body .pdf-page img { width: 100%; height: auto; display: block; margin: 0; border: none; border-radius: 0; }
+.pdf-page.p1 { z-index: 3; --tx:  50%; --ty:  7%; --rz:  4deg; --ry: -6deg; --sc: 1;    }
+.pdf-page.p2 { z-index: 2; --tx:   0%; --ty:  0%; --rz:  0deg; --ry:  4deg; --sc: 0.96; }
+.pdf-page.p3 { z-index: 1; --tx: -50%; --ty: -6%; --rz: -5deg; --ry: 12deg; --sc: 0.92; }
+.pdf-chip {
+  position: absolute; top: -0.7rem; right: 0.4rem; z-index: 5;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: #fff;
+  padding: 0.38rem 0.72rem; border-radius: 10px;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%); box-shadow: 0 8px 20px var(--glow);
+}
+@media (max-width: 700px) { .article-body .pdf-figure { --pdfw: 100%; margin-left: 0; } }
+
+.callout {
+  margin: 2.8rem 0; padding: 1.6rem 1.7rem; border-radius: 18px;
+  background: var(--surface-2); border: 1px solid var(--line);
+}
+.callout h4 { font-family: 'Inter', sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--peach-deep); margin-bottom: 0.7rem; font-weight: 600; }
+.callout p { font-size: 1rem; }
+.callout p + p { margin-top: 0.85rem; }
+
+.tbl-wrap { overflow-x: auto; margin: 2.5rem 0; }
+table.wtns-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; min-width: 460px; }
+table.wtns-table th, table.wtns-table td { text-align: left; padding: 0.85rem 0.9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.wtns-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-2); font-weight: 600; }
+table.wtns-table td:first-child { color: var(--ink); font-weight: 500; white-space: nowrap; }
+table.wtns-table tr:last-child td { border-bottom: none; }
+
+.mini-cta {
+  margin: 3rem 0; padding: 1.7rem 1.8rem; border-radius: 20px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.3rem;
+}
+.mini-cta .mini-copy { flex: 1 1 250px; }
+.mini-cta h4 { font-family: 'Newsreader', Georgia, serif; font-size: 1.3rem; margin-bottom: 0.35rem; }
+.mini-cta p { font-size: 0.93rem; color: var(--text-2); margin: 0; line-height: 1.55; }
+
+.refs { font-size: 0.88rem; color: var(--text-2); }
+.refs li { margin-top: 0.55rem; line-height: 1.5; }
+.disclaimer { font-size: 0.85rem; color: var(--text-2); border-top: 1px solid var(--line); padding-top: 1.6rem; margin-top: 3rem; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="../index.html" class="brand">
+      <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="WTNS logo" width="30" height="30">
+      WTNS
+    </a>
+    <div class="navlinks">
+      <a href="../index.html#demo">Overlay</a>
+      <a href="../index.html#metrics">Metrics</a>
+      <a href="../index.html#export">Export</a>
+      <a href="../index.html#privacy">Privacy</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../Blog.html">Blog</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="https://apps.apple.com/app/id6788378357" class="btn btn-primary">Get WTNS</a>
+    </div>
+  </div>
+</nav>
+
+<header class="article-head">
+  <div class="wrap" style="max-width:min(68ch,92vw);margin:0 auto;">
+    <a class="back-link" href="../Blog.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      All articles
+    </a>
+    <span class="post-label" id="artLabel"></span>
+    <h1 id="artTitle"></h1>
+    <div class="post-meta"><span id="artDate"></span><span class="dot" id="artDot" hidden></span><span id="artRead"></span></div>
+  </div>
+</header>
+
+<div class="wrap" style="max-width:min(80ch,92vw);margin:0 auto;">
+  <figure class="article-hero">
+    <img id="artHero" alt="Bare feet standing on a white digital bathroom scale">
+    <figcaption>The instrument most people judge their treatment by, and the one that tells them least. Photo by i yunmai on <a href="https://unsplash.com/photos/person-standing-on-white-digital-bathroom-scale-5jctAMjz21A">Unsplash</a>.</figcaption>
+  </figure>
+</div>
+
+<main class="article-body">
+
+  <p>You stepped on the scale this morning and it said what it said on Friday. Nine weeks in, and the number has parked itself. Something deflates, and a thought you have been keeping at arm's length finally arrives: maybe this isn't working for me.</p>
+
+  <p>The mirror is no help either. You look at yourself every single day, which is precisely why you cannot see yourself changing. Slow change is invisible to the person living inside it.</p>
+
+  <p>Then you arrive at your review appointment carrying nothing but an impression, and someone has to make a real decision about your dose based on it.</p>
+
+  <p>WTNS is built for this. You take a photo, and a ghost overlay lines the new one up against the last so the angle genuinely matches instead of nearly matching. Photos, notes, doses and measurements sit together in one dated record, in order, on your iPhone. It's free to download and nothing is uploaded anywhere.</p>
+
+  <figure>
+    <div class="app-seq" id="glpSeq">
+      <img class="seq-base for-dark" src="../wtns-hand-base.webp" alt="A hand holding an iPhone running WTNS" width="1080" height="1080">
+      <img class="seq-base for-light" src="../wtns-hand-base-light.webp" alt="" aria-hidden="true" width="1080" height="1080">
+      <img class="seq-screen on" src="../wtns-screen-1.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-2.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-3.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-4.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-5.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-6.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-7.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-8.webp" alt="" aria-hidden="true">
+      <img class="seq-screen" src="../wtns-screen-9.webp" alt="" aria-hidden="true">
+    </div>
+    <figcaption>Overlay, record, notes, metrics and export. The whole loop takes about twenty seconds a week.</figcaption>
+  </figure>
+
+  <div class="mini-cta">
+    <div class="mini-copy">
+      <h4>Take your day zero today.</h4>
+      <p>Even if you started the medication months ago. A record is only useless if it never begins.</p>
+    </div>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <h2>The scale is the least reliable instrument you own</h2>
+
+  <p>A bathroom scale measures total mass. That means water, the contents of your gut, stored glycogen, last night's salt, where you are in your cycle. Those alone can swing a reading by a kilo or two across a few days while nothing meaningful has changed underneath.</p>
+
+  <p>It also cannot tell you what is coming off. In the STEP-1 trial of semaglutide, lean mass accounted for roughly <a href="https://dom-pubs.onlinelibrary.wiley.com/doi/10.1111/dom.15728">45% of the total weight lost, against about 26% in the SURMOUNT-1 trial of tirzepatide</a>. Two people can watch the same number fall and be having quite different experiences below the surface. A photo, a tape measure and one measure of physical capacity can see what the scale is blind to.</p>
+
+  <h2>Most people give up while they are still titrating</h2>
+
+  <p>This is the finding that should change how you keep score. Cleveland Clinic researchers followed real-world patients on semaglutide and tirzepatide and found that <a href="https://www.ajmc.com/view/real-world-use-of-glp-1s-yields-less-weight-loss-than-clinical-trials">21.6% of semaglutide users stopped within the first three months, and a further 31.4% stopped between three and twelve months</a>. More than 80% of the whole group were still on a low maintenance dose. The people who stopped early lost 3.6% of their body weight. Those who carried on longer lost 6.8%, and those who reached higher doses and stayed on them did better again.</p>
+
+  <p>A nationwide Danish study found much the same pattern, with <a href="https://www.medscape.com/viewarticle/real-world-study-finds-over-50-stop-glp-1s-within-1-year-2025a1000obm">just over half of adults without diabetes discontinuing within a year</a>. Failure to meet expectations sat alongside cost and side effects among the likely reasons.</p>
+
+  <p>Put those together and the picture is uncomfortable. A large share of people who quit are quitting on a dose they have not yet reached, judged against an expectation nobody wrote down, using a measurement that cannot see composition. That is not a treatment failing. That is a scoreboard failing.</p>
+
+  <div class="callout">
+    <h4>How to hold this</h4>
+    <p>A record like this works best kept as information rather than as a verdict on yourself. You are collecting evidence so that you and your prescriber can make a good decision at month four, not building a case for or against your own body.</p>
+    <p>If checking a number or a photo starts making your day worse rather than clearer, that is worth saying out loud to your clinician. Plenty of people track less often, or track only waist and capacity and leave the scale out entirely, and the record still does its job.</p>
+  </div>
+
+  <h2>What to record, and when</h2>
+
+  <p>Six things. None of them takes more than a minute.</p>
+
+  <ol>
+    <li><strong>Day zero.</strong> One photo front on, one side on, same spot, same light. Waist measured at the navel. Your weight. The date, the medication and the starting dose. If you started months ago, today is day zero instead. Start anyway.</li>
+    <li><strong>Weekly, one photo.</strong> Same place, same light, same time of day. Use the overlay to match the angle rather than trusting your memory of where you stood, because a shift in stance can invent or erase change that isn't there.</li>
+    <li><strong>Weekly, one weight.</strong> Under the same conditions each time. Then treat it as one line of evidence among several rather than the answer.</li>
+    <li><strong>Monthly, waist and face.</strong> The tape often moves while the scale sulks. And facial change tends to be one of the first things other people notice and one of the last things you do, so photograph yourself straight on and let the record tell you.</li>
+    <li><strong>Every dose change, a note.</strong> Date and new dose, then log side effects against it. Nausea in the week after a step up is a different conversation from nausea that never settles, and only a dated note can tell those two apart at your next appointment.</li>
+    <li><strong>One thing your body can do.</strong> Grip strength, a plank held to failure, flights of stairs before you're breathing hard. In the SEMALEAN study of semaglutide, <a href="https://pubmed.ncbi.nlm.nih.gov/41068996/">handgrip strength improved by 4.5 kg over twelve months and the share of patients with sarcopenic obesity fell from 49% to 33%</a>. Capacity holding steady or rising while the scale falls is the most reassuring signal in the entire record, and almost nobody writes it down.</li>
+  </ol>
+
+  <p>One more, from around month two. Take a photo of your crown and your hairline. Shedding is a recognised effect in this drug class, with a <a href="https://journals.sagepub.com/doi/10.1177/00368504261444578">systematic review of 24 studies finding a 3.4-fold higher risk of hair loss compared with placebo</a>, and a large <a href="https://www.jaad.org/article/S0190-9622(26)00248-3/fulltext">matched-cohort analysis reporting increased rates across both semaglutide and tirzepatide</a>. It usually appears two to four months after the trigger and it is usually temporary. The reason to photograph it is that a dated shot from before it started is the only thing that will tell you, six months later, whether it recovered. Memory is terrible at this.</p>
+
+  <h2>Why not just use your camera roll?</h2>
+
+  <p>You can. Most people start there, and most people give up within a few months, because a camera roll is a pile, not a record.</p>
+
+  <ul>
+    <li><strong>Same angle every time.</strong> The ghost overlay shows the previous photo faintly on screen as you line up the next one. Without it, any difference you think you see might just be where you were standing.</li>
+    <li><strong>One place, in order.</strong> No scrolling past four thousand photos to find the one from the week before you started.</li>
+    <li><strong>Notes and numbers beside each photo.</strong> This is how you learn what actually happened. The fortnight away when you missed a dose. The month the nausea meant you barely ate. Six months later those are the only things that explain a flat stretch in your record.</li>
+    <li><strong>Time-lapse export.</strong> Change you cannot perceive day to day becomes obvious at speed, and it is the thing worth showing someone.</li>
+    <li><strong>PDF export.</strong> Which is the next section, and the reason it earns its own.</li>
+    <li><strong>Private by default.</strong> These are not photos you want auto-syncing to a cloud account or resurfacing in a Memories slideshow at Christmas. Records stay on the device, can be hidden, and can sit behind Face ID.</li>
+  </ul>
+
+  <div class="mini-cta">
+    <div class="mini-copy">
+      <h4>Your first record is free.</h4>
+      <p>No account, no card, nothing uploaded. Start it before your next dose.</p>
+    </div>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <h2>What the first year tends to look like</h2>
+
+  <p>Individual courses vary enormously and your prescriber sets the pace, but the shape is common enough to plan a record around.</p>
+
+  <div class="tbl-wrap">
+    <table class="wtns-table">
+      <thead>
+        <tr><th>When</th><th>What is usually happening</th><th>Worth capturing</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Weeks 1-4</td>
+          <td>Starting dose. Appetite changes before the scale does. Nausea and gut side effects are common early.</td>
+          <td>Baseline photos, waist, weight. Side effects logged against the dose.</td>
+        </tr>
+        <tr>
+          <td>Weeks 5-16</td>
+          <td>Titration. Doses step up on your prescriber's schedule. Weight starts moving properly for most people.</td>
+          <td>Every dose change with its date. Weekly photo.</td>
+        </tr>
+        <tr>
+          <td>Months 2-4</td>
+          <td>Side effects often settle as the body adjusts. Any shedding tends to show up in this window.</td>
+          <td>Crown and hairline. Face photo monthly.</td>
+        </tr>
+        <tr>
+          <td>Months 4-7</td>
+          <td>Usually the most visible stretch. The tape frequently moves ahead of the scale.</td>
+          <td>Waist monthly. Keep the weekly photo going.</td>
+        </tr>
+        <tr>
+          <td>Months 7-12</td>
+          <td>Pace slows for most people. This is where the record earns everything, because month twelve against day zero looks nothing like this week against last.</td>
+          <td>Your capacity marker. Time-lapse. PDF before the review.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Take a document to your appointment</h2>
+
+  <p>Fifteen minutes with a prescriber, once a quarter, and the decision on the table is a real one: hold the dose, push it higher, switch, or stop. That decision improves enormously when it is made against dated photographs, a side effect log tied to specific doses, and a waist trend, rather than against whatever you can recall while sitting in the chair.</p>
+
+  <p>WTNS exports the whole record as an A4 PDF. Photos in order with their dates, your notes, your metrics charted. Print it or email it, and hand over something that answers the questions before they are asked.</p>
+
+  <figure class="pdf-figure">
+    <div class="pdf-stack">
+      <div class="pdf-page p3"><img src="../wtns-pdf-3.webp" width="900" height="1165" loading="lazy" alt="Page three of the exported record: further dated photos alongside the notes written at the time"></div>
+      <div class="pdf-page p2"><img src="../wtns-pdf-2.webp" width="900" height="1168" loading="lazy" alt="Page two of the exported record: dated photos with their measurements"></div>
+      <div class="pdf-page p1"><img src="../wtns-pdf-1.webp" width="900" height="1165" loading="lazy" alt="Page one of an exported WTNS record: a chart of measurements over twelve months"></div>
+      <span class="pdf-chip">A4 PDF</span>
+    </div>
+    <figcaption>A year of treatment as a three-page A4 PDF. Nothing leaves your iPhone until you choose to send it.</figcaption>
+  </figure>
+
+  <div class="mini-cta">
+    <div class="mini-copy">
+      <h4>Turn up with evidence.</h4>
+      <p>Export the record as a PDF the night before your review.</p>
+    </div>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <h2>When to stop tracking and start talking</h2>
+
+  <p>A record is a tool for a conversation, not a replacement for one. Contact whoever prescribed your medication if you notice:</p>
+
+  <ul>
+    <li>Vomiting or diarrhoea that stops you keeping fluids down</li>
+    <li>Severe or persistent abdominal pain, particularly pain that reaches into your back</li>
+    <li>Your capacity marker falling steadily while the scale falls, which is the pattern worth investigating rather than ignoring</li>
+    <li>Shedding that has not settled after several months, or a hairline that is receding rather than thinning diffusely</li>
+    <li>Low mood, or thoughts about yourself and your body that are getting harder to sit with</li>
+  </ul>
+
+  <p>Never change or stop a dose on the strength of your own record alone. The record is what you bring to that conversation, not what replaces it.</p>
+
+  <div class="article-cta">
+    <h3>Start your own record.</h3>
+    <p>Free to download. Everything stays on your iPhone.</p>
+    <a href="https://apps.apple.com/app/id6788378357" class="appstore" aria-label="Download WTNS on the App Store">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.6 2.13-3.85 2.22-3.91-1.21-1.77-3.09-2.02-3.76-2.05-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.9-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.39.81 1.4-.02 2.29-1.27 3.15-2.53.99-1.45 1.4-2.86 1.42-2.93-.03-.01-2.72-1.04-2.75-4.14zM14.53 4.42c.72-.87 1.2-2.08 1.07-3.28-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.08 3.18 1.15.09 2.32-.58 3.03-1.45z"/></svg>
+      <div><small>Download on the</small><span>App Store</span></div>
+    </a>
+  </div>
+
+  <h2>Sources</h2>
+
+  <ul class="refs">
+    <li>Gasoyan H, Butsch WS, Schulte R, et al. Changes in weight and glycemic control following obesity treatment with semaglutide or tirzepatide by discontinuation status. <em>Obesity</em>, 2025. <a href="https://www.ajmc.com/view/real-world-use-of-glp-1s-yields-less-weight-loss-than-clinical-trials">Summary via AJMC</a></li>
+    <li>Thomsen RW, et al. Nationwide Danish cohort on semaglutide discontinuation in adults without diabetes, presented at EASD. <a href="https://www.medscape.com/viewarticle/real-world-study-finds-over-50-stop-glp-1s-within-1-year-2025a1000obm">Report via Medscape</a></li>
+    <li>Neeland IJ, et al. Changes in lean body mass with GLP-1-based therapies and mitigation strategies. <em>Diabetes, Obesity and Metabolism</em>, 2024. <a href="https://dom-pubs.onlinelibrary.wiley.com/doi/10.1111/dom.15728">Full text</a></li>
+    <li>Alissou S, et al. Impact of semaglutide on fat mass, lean mass and muscle function: the SEMALEAN study. <em>Diabetes, Obesity and Metabolism</em>, 2026. <a href="https://pubmed.ncbi.nlm.nih.gov/41068996/">PubMed</a></li>
+    <li>Gupta AK, Teasell EM, Economopoulos V, Mirmirani P. GLP-1 therapies and hair loss: a systematic review of current evidence and implications for counseling. <em>Science Progress</em>, 2026. <a href="https://journals.sagepub.com/doi/10.1177/00368504261444578">Journal page</a></li>
+    <li>Risk of new-onset hair loss with semaglutide and tirzepatide: a TriNetX cohort study. <em>Journal of the American Academy of Dermatology</em>, 2026. <a href="https://www.jaad.org/article/S0190-9622(26)00248-3/fulltext">Full text</a></li>
+    <li>Real-world titration, persistence and weight loss of semaglutide and tirzepatide in an academic obesity clinic. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12515774/">PMC</a></li>
+  </ul>
+
+  <p class="disclaimer">This article is for general information and is not medical advice. It is not a substitute for guidance from the clinician who prescribed your medication, and nothing here should be used to start, change or stop a dose. WTNS is an independent app with no affiliation to, sponsorship from or endorsement by Novo Nordisk, Eli Lilly, or any manufacturer, pharmacy or weight management service. Product names are the trademarks of their respective owners and are used here only to identify the medications being discussed. If tracking your body is affecting your mental health or your relationship with food, please speak to your GP or clinician. Questions about the app itself go to <a href="mailto:Hello@DriveVault.io">Hello@DriveVault.io</a>.</p>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid stagger">
+      <div class="foot-brand">
+        <a href="../index.html" class="brand">
+          <img class="brand-logo" src="https://cdn.shopify.com/s/files/1/0287/7580/9072/files/Logo1square.png?v=1783427870" alt="WTNS logo" width="30" height="30">
+          WTNS
+        </a>
+        <p>The beautiful, private way to track change over time. Made for iPhone.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="../index.html#demo">Ghost overlay</a>
+        <a href="../index.html#metrics">Metrics</a>
+        <a href="../index.html#export">PDF export</a>
+        <a href="../index.html#journeys">Journeys</a>
+        <a href="../index.html#privacy">Privacy</a>
+        <a href="../index.html#features">Features</a>
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../index.html#usecases">Use cases</a>
+        <a href="../Blog.html">Blog</a>
+        <a href="../index.html#download">Download</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <a href="mailto:Hello@DriveVault.io">Hello@DriveVault.io</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 WTNS. All rights reserved.</p>
+      <span class="foot-made"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-8.5C.5 9 2 5.5 5.5 5.5c2 0 3.2 1.3 3.7 2.2.5-.9 1.7-2.2 3.7-2.2C16.5 5.5 18 9 16 12.5 13.5 16.5 12 21 12 21z"/></svg> Made with care in the UK</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // The visible title, label, date, read time and hero image are all filled in from
+  // the metadata block at the top of this file, so each is written exactly once.
+  var meta = function (sel) {
+    var el = document.querySelector(sel);
+    return el ? (el.getAttribute('content') || '').trim() : '';
+  };
+  var put = function (id, text) { var el = document.getElementById(id); if (el) el.textContent = text; };
+  var title = meta('meta[property="og:title"]');
+  var label = meta('meta[property="article:section"]');
+  var iso   = meta('meta[property="article:published_time"]');
+  var read  = meta('meta[name="wtns:readtime"]');
+  var hero  = meta('meta[property="og:image"]');
+
+  put('artTitle', title);
+  put('artLabel', label);
+  if (!label) { var lb = document.getElementById('artLabel'); if (lb) lb.hidden = true; }
+  var d = iso ? new Date(iso) : null;
+  put('artDate', d && !isNaN(d) ? d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+  put('artRead', read);
+  var dot = document.getElementById('artDot');
+  if (dot) dot.hidden = !(iso && read);
+  var heroImg = document.getElementById('artHero');
+  if (heroImg) { if (hero) { heroImg.src = hero; } else { heroImg.closest('figure').hidden = true; } }
+  if (title) document.title = title + ' | WTNS';
+
+  var root = document.documentElement;
+  var tBtn = document.getElementById('themeToggle');
+  var tIcon = document.getElementById('themeIcon');
+  var sunPath = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  var moonPath = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+  if (tBtn) {
+    tBtn.addEventListener('click', function () {
+      var dark = root.getAttribute('data-theme') === 'dark';
+      root.setAttribute('data-theme', dark ? 'light' : 'dark');
+      if (tIcon) tIcon.innerHTML = dark ? sunPath : moonPath;
+    });
+  }
+})();
+</script>
+<script>
+(function () {
+  // Nine screen captures crossfading over one fixed hand. Nothing starts until every
+  // frame has decoded, otherwise the first pass flickers through empty slots.
+  var seq = document.getElementById('glpSeq');
+  if (!seq) return;
+  var frames = Array.prototype.slice.call(seq.querySelectorAll('.seq-screen'));
+  if (frames.length < 2) return;
+  var i = 0;
+
+  function show(n) {
+    for (var k = 0; k < frames.length; k++) {
+      frames[k].classList.toggle('on', k === n);
+    }
+  }
+  function allLoaded() {
+    for (var k = 0; k < frames.length; k++) {
+      if (!frames[k].complete || frames[k].naturalWidth === 0) return false;
+    }
+    return true;
+  }
+  function tick() {
+    i = (i + 1) % frames.length;
+    show(i);
+  }
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { show(0); return; }
+
+  (function waitThenStart() {
+    if (!allLoaded()) { setTimeout(waitThenStart, 120); return; }
+    show(0);
+    setInterval(tick, 1500);
+  })();
+})();
+</script>
+</body>
+</html>
